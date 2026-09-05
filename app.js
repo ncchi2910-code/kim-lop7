@@ -7,7 +7,9 @@
   const KEY = "kim7.v1";
 
   /* ---------- trạng thái ---------- */
-  const defaultState = () => ({ xu: 0, heo: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {} });
+  const SOAN = window.KIM_SOAN || {};
+  const soanKey = (t, i) => "t" + t + "-s" + i;
+  const defaultState = () => ({ xu: 0, heo: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {} });
   let S = load();
   function load() { try { const r = localStorage.getItem(KEY); return r ? Object.assign(defaultState(), JSON.parse(r)) : defaultState(); } catch (e) { return defaultState(); } }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
@@ -95,8 +97,10 @@
           <a class="btn block ${ok && !td.dong ? "" : "ghost"}" href="#/${ok && !td.dong ? "dong/" + t : "tuan/" + t}">${td.dong ? "Xem tuần " + t : ok ? "Đóng tuần →" : "Xem còn thiếu gì"}</a>
         </div>`;
       }
-      const dc = (w.docTruoc || []).filter((_, i) => !S.doc["t" + t + "-" + i]);
-      main += `<div class="card tight row"><div class="grow"><b>Tuần ${t} · ${esc(w.ten)}</b><div class="muted">${td.xong}/${td.tong} lượt kiểm tra${dc.length ? ` · ${dc.length} bài đọc trước chưa xem` : ""}</div></div><a class="btn sm ghost" href="#/tuan/${t}">Xem tuần</a></div>`;
+      const sl = SOAN[t] || []; const chuaSoan = sl.map((s, i) => ({ s, i })).filter((x) => !S.soan[soanKey(t, x.i)]);
+      if (chuaSoan.length) { const x = chuaSoan[0]; const mi = monInfo(x.s.mon);
+        main += `<a class="card tight row" href="#/soan/${t}/${x.i}"><div class="icon-box" style="background:${mi.nen}">📖</div><div class="grow"><b>Soạn bài trước khi lên lớp</b><div class="muted">${esc(x.s.bai)}${chuaSoan.length > 1 ? ` · còn ${chuaSoan.length} bài` : ""}</div></div><span class="pill">10 phút</span></a>`; }
+      main += `<div class="card tight row"><div class="grow"><b>Tuần ${t} · ${esc(w.ten)}</b><div class="muted">${td.xong}/${td.tong} lượt kiểm tra · ${sl.length - chuaSoan.length}/${sl.length} bài soạn</div></div><a class="btn sm ghost" href="#/tuan/${t}">Xem tuần</a></div>`;
     }
     const kt = C.KIEM_TRA.find((k) => k.tuan >= t);
     const ktHtml = kt ? `<div class="card tight"><div class="row"><div class="grow"><b>Đường đến ${kt.ten}</b><div class="muted">Còn ${kt.tuan - t} tuần (tuần ${kt.tuan})</div></div><span class="pill">Tuần ${t}/${C.TONG_TUAN}</span></div><div class="bar" style="margin-top:10px"><i style="width:${Math.round((t / kt.tuan) * 100)}%"></i></div></div>` : "";
@@ -129,15 +133,44 @@
       return `<a class="day ${r ? "done" : ""}" href="#/lam/${t}/${n.thu}"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><div class="muted">${C.THU[n.thu]} · ${fmt(ngayCuaTuan(t, n.thu))}</div><b>${esc(n.ten)}</b></div>${r ? `<div class="score" style="color:${r.diem / r.tong >= 0.7 ? "var(--ok)" : "#b45309"}">${r.diem}/${r.tong}</div>` : '<span class="pill">chưa làm</span>'}</a>`; }).join("");
     const doc = (w.docTruoc || []).map((d, i) => { const k = "t" + t + "-" + i; const seen = S.doc[k];
       return `<div class="card subj ${seen ? "" : ""}" data-toggle="1" data-doc="${k}"><div class="row"><span style="font-size:22px">${seen ? "✅" : "📖"}</span><div class="grow"><b>${esc(d.tieuDe)}</b><div class="muted">${esc(d.mon)} · ${seen ? "đã đọc" : "chưa đọc"}</div></div><span class="muted">▾</span></div><div class="body"><p class="small">${esc(d.noiDung)}</p></div></div>`; }).join("");
+    const soanList = SOAN[t] || [];
+    const soan = soanList.map((s, i) => { const r = S.soan[soanKey(t, i)]; const mi = monInfo(s.mon);
+      return `<a class="day ${r ? "done" : ""}" href="#/soan/${t}/${i}"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><div class="muted">${esc(s.sgk)}</div><b>${esc(s.bai)}</b></div>${r ? '<span class="pill" style="color:var(--ok)">✓ xong</span>' : '<span class="pill">10 phút</span>'}</a>`; }).join("");
     const ok = td.xong === td.tong;
     app.innerHTML = header(`Tuần ${t} · ${w.icon} ${esc(w.ten)}`) +
       `<div class="card tight row"><div class="grow"><b>Tiến độ tuần</b><div class="bar" style="margin-top:8px"><i style="width:${Math.round((td.xong / td.tong) * 100)}%"></i></div></div><span class="pill">${td.xong}/${td.tong}</span></div>
       <h2>📌 Tuần này học gì</h2>${subj}<p class="note muted">Môn khác: ${esc(w.monKhac || "")}</p>
+      <h2>📖 Soạn bài</h2><p class="muted small" style="margin:-4px 0 10px">Làm trước tiết học trên lớp, mỗi bài khoảng 10 phút, mở sách giáo khoa bên cạnh.</p>${soan || '<p class="muted">Tuần này chưa có bài soạn.</p>'}
       <h2>✏️ Kiểm tra ngày</h2>${days}
-      <h2>📖 Đọc trước</h2>${doc || '<p class="muted">Tuần này không có bài đọc trước.</p>'}
+      ${doc ? `<h2>🔭 Đọc trước tuần sau</h2>${doc}` : ""}
       <h2>🎁 Đóng tuần</h2>
       <div class="card">${td.dong ? `<p>Tuần ${t} đã đóng ngày ${S.dong[t].luc}. Thẻ cào: <b>${money(S.dong[t].theCao)}</b> 🐷</p>` : `<p class="small">Đủ 5 lượt kiểm tra, xem lại chỗ sai cùng mẹ, rồi làm 5 câu chốt để nhận thẻ cào.</p><div style="margin-top:12px"><a class="btn ${ok ? "" : "ghost"}" href="${ok ? "#/dong/" + t : "#"}" ${ok ? "" : 'onclick="return false"'}>${ok ? "Đóng tuần →" : `Còn ${td.tong - td.xong} lượt`}</a></div>`}</div>`;
     app.querySelectorAll("[data-toggle]").forEach((el) => el.addEventListener("click", () => { el.classList.toggle("open"); const k = el.dataset.doc; if (k && !S.doc[k]) { S.doc[k] = true; save(); } }));
+  }
+
+  /* ---------- trang: soạn bài ---------- */
+  function viewSoan(t, i) {
+    setNav("lotrinh");
+    const s = (SOAN[t] || [])[i]; if (!s) { location.hash = "#/tuan/" + t; return; }
+    const k = soanKey(t, i); const r = S.soan[k]; const mi = monInfo(s.mon);
+    const viec = s.viec.map((v, j) => `<label class="check"><input type="checkbox" data-v="${j}" ${r ? "checked" : ""}><span>${esc(v)}</span></label>`).join("");
+    const hoi = s.cauHoi.map((q, j) => `<div style="margin-top:10px"><b class="small">${j + 1}. ${esc(q)}</b><textarea class="ans" data-q="${j}" rows="2" placeholder="Kim trả lời ngắn (1–2 dòng)…">${r ? esc(r.tl[j] || "") : ""}</textarea></div>`).join("");
+    const nho = s.nho.map((n) => `<li>${esc(n)}</li>`).join("");
+    app.innerHTML = header(`Tuần ${t} · Soạn bài`) +
+      `<div class="card"><div class="row"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><b>${esc(s.bai)}</b><div class="muted">📕 ${esc(s.sgk)}</div></div></div></div>
+      <div class="card"><h3>1. Mở sách và làm theo</h3><div style="margin-top:8px">${viec}</div></div>
+      <div class="card"><h3>2. Kim tự trả lời</h3><p class="muted small">Không cần đúng hết. Viết theo cách hiểu của Kim, mẹ sẽ đọc ở Góc của mẹ.</p>${hoi}</div>
+      <div class="card"><h3>3. Cần nhớ</h3><ul class="nho">${nho}</ul></div>
+      <div class="card" style="text-align:center">${r ? `<p class="small">Đã soạn ngày ${r.luc}. Sửa câu trả lời rồi bấm lưu lại cũng được.</p>` : `<p class="small">Xong ba phần trên thì bấm nút. +${C.XU_SOAN_BAI} xu.</p>`}<div style="margin-top:10px"><button class="btn block" id="btnSoanXong">${r ? "Lưu lại" : "Xong soạn bài ✓"}</button></div><div style="margin-top:10px"><a class="btn sm ghost" href="#/tuan/${t}">Về tuần ${t}</a></div></div>`;
+    $("#btnSoanXong").addEventListener("click", () => {
+      const tl = Array.from(app.querySelectorAll(".ans")).map((x) => x.value.trim());
+      const first = !S.soan[k];
+      S.soan[k] = { tl, luc: todayStr() };
+      if (first) { S.xu += C.XU_SOAN_BAI; capNhatStreak(); }
+      save();
+      $("#btnSoanXong").textContent = first ? `Đã lưu · +${C.XU_SOAN_BAI} xu 🎉` : "Đã lưu ✓";
+      setTimeout(() => { location.hash = "#/tuan/" + t; }, 900);
+    });
   }
 
   /* ---------- trang: làm bài ---------- */
@@ -222,6 +255,7 @@
       const cells = w.ngay.map((n) => { const r = S.luot[luotKey(t, n.thu)]; return r ? `<span style="color:${r.diem / r.tong >= 0.7 ? "var(--ok)" : "#b45309"};font-weight:700">${monInfo(n.mon).icon} ${r.diem}/${r.tong}</span>` : `<span class="muted">${monInfo(n.mon).icon} –</span>`; }).join(" · ");
       rows += `<div class="card"><div class="row"><div class="grow"><b>Tuần ${t} · ${esc(w.ten)}</b> ${t === cur ? '<span class="pill">tuần này</span>' : ""}<div class="small" style="margin-top:4px">${cells}</div></div><span class="pill">${td.dong ? "đã đóng · " + money(S.dong[t].theCao) : td.xong + "/" + td.tong}</span></div>
         ${top.length ? `<div style="margin-top:10px"><b class="small">Ba chỗ sai nhiều nhất</b>${top.map(([cd, c]) => `<div class="wrong-item"><b>${esc(cd)}</b> <span class="pill">${c} lần</span></div>`).join("")}</div>` : (td.xong ? '<p class="muted small" style="margin-top:8px">Không sai câu nào.</p>' : "")}
+        ${(() => { const sl = SOAN[t] || []; const done = sl.map((s, i) => ({ s, i, r: S.soan[soanKey(t, i)] })).filter((x) => x.r); if (!sl.length) return ""; return `<details style="margin-top:8px"><summary class="small" style="cursor:pointer;color:var(--accent2);font-weight:700">Soạn bài: ${done.length}/${sl.length} bài${done.length ? " · xem câu trả lời" : ""}</summary>${done.map((x) => `<div class="wrong-item"><b>${monInfo(x.s.mon).icon} ${esc(x.s.bai)}</b> <span class="muted">${x.r.luc}</span>${x.s.cauHoi.map((q, j) => `<div class="small" style="margin-top:4px"><span class="muted">${esc(q)}</span><br>${x.r.tl[j] ? esc(x.r.tl[j]) : "<i class='muted'>(bỏ trống)</i>"}</div>`).join("")}</div>`).join("")}</details>`; })()}
         ${loi.length ? `<details style="margin-top:8px"><summary class="small" style="cursor:pointer;color:var(--accent2);font-weight:700">Xem ${loi.length} câu sai</summary>${loi.map((l) => `<div class="wrong-item"><div class="muted">${monInfo(l.mon).icon} ${C.THU[l.thu]} · ${esc(l.cd)}</div>${esc(l.q)}<div class="small">Kim chọn: <span style="color:var(--bad)">${esc(l.chon)}</span> · Đúng: <span style="color:var(--ok)">${esc(l.dungLa)}</span></div></div>`).join("")}</details>` : ""}
       </div>`; });
     app.innerHTML = header("Góc của mẹ") +
@@ -246,6 +280,7 @@
     if (h[0] === "lo-trinh") return viewLoTrinh();
     if (h[0] === "tuan") return viewTuan(Number(h[1]));
     if (h[0] === "lam") return viewLam(Number(h[1]), Number(h[2]));
+    if (h[0] === "soan") return viewSoan(Number(h[1]), Number(h[2]));
     if (h[0] === "dong") return viewDong(Number(h[1]));
     if (h[0] === "phu-huynh") return viewPhuHuynh();
     viewHome();

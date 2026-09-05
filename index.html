@@ -116,6 +116,16 @@
   .wrong-item{padding:10px 0;border-bottom:1px solid #f0e6dc;font-size:14px}
   .wrong-item:last-child{border-bottom:0}
 
+  /* soạn bài */
+  .check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #f0e6dc;font-size:14px;cursor:pointer}
+  .check:last-child{border-bottom:0}
+  .check input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--ok)}
+  .ans{width:100%;margin-top:6px;padding:10px 12px;border:2px solid #eee3d8;border-radius:12px;font:inherit;font-size:14px;resize:vertical;background:#fffdfa}
+  .ans:focus{outline:none;border-color:#ffb454}
+  ul.nho{margin:8px 0 0 18px;font-size:14px}
+  ul.nho li{margin-bottom:6px}
+  a.card{display:flex}
+
   /* bottom nav */
   nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-top:1px solid var(--ring)}
   nav.bottom .in{max-width:720px;margin:0 auto;display:flex}
@@ -138,6 +148,7 @@
   </div></nav>
 
   <script src="config.js"></script>
+  <script src="soan-bai.js"></script>
   <!-- ====== NỘI DUNG TỪNG TUẦN: thêm tuần mới = thêm 1 dòng ở đây + 1 file tuan-XX.js ở cùng cấp ====== -->
   <script src="tuan-01.js"></script>
   <script src="tuan-02.js"></script>
