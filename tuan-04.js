@@ -1,0 +1,67 @@
+/* TUẦN 4 — Toán: Đại Bài 4 (thứ tự phép tính, chuyển vế); Hình Bài 10 (tiếp) + Bài 11 Định lí. KHTN: Bài 3 (tiếp) + Bài 4 Bảng tuần hoàn. Văn: kết thúc Bài 1, sang Bài 2. */
+window.KIM_WEEKS = window.KIM_WEEKS || {};
+window.KIM_WEEKS[4] = {
+  tuan: 4,
+  ten: "Vững bước",
+  icon: "⚔️",
+  monHoc: [
+    { mon: "Toán", icon: "➗", hoc: "Đại số: Bài 4 Thứ tự thực hiện các phép tính, quy tắc chuyển vế; luyện tập chung. Hình: hết Bài 10; Bài 11 Định lí và chứng minh định lí (giả thiết, kết luận, cách viết một chứng minh).", vap: "Chuyển vế quên đổi dấu. Viết chứng minh mà không ghi căn cứ cho từng bước." },
+    { mon: "Ngữ văn", icon: "✍️", hoc: "Kết thúc Bài 1: Nói và nghe (trao đổi về một vấn đề em quan tâm), củng cố mở rộng. Bắt đầu Bài 2 Khúc nhạc tâm hồn: tri thức về thơ 4 chữ, 5 chữ; bài thơ Đồng dao mùa xuân (Nguyễn Khoa Điềm).", vap: "Đọc thơ mà không để ý vần, nhịp. Thơ 4 chữ nhịp thường 2/2; cần chỉ ra được vần chân (tiếng cuối dòng)." },
+    { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Unit 2: A closer look 2 (câu đơn: S + V, S + V + O...), Communication (lời khuyên sức khoẻ), Skills 1 & 2.", vap: "Không nhận ra cấu trúc câu đơn. Cần tách được đâu là chủ ngữ, đâu là động từ, đâu là tân ngữ." },
+    { mon: "KHTN", icon: "🔬", hoc: "Hết Bài 3. Bài 4 Sơ lược về bảng tuần hoàn các nguyên tố hoá học: nguyên tắc sắp xếp, ô, chu kì, nhóm; vị trí kim loại, phi kim, khí hiếm.", vap: "Lẫn chu kì (hàng ngang) với nhóm (cột dọc). Ghi nhớ: chu kì = số lớp electron; nhóm A = số electron lớp ngoài cùng." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: hết Bài 3 (Cải cách tôn giáo), bắt đầu Bài 4 Trung Quốc từ thế kỉ VII đến giữa thế kỉ XIX (thời Đường thịnh vượng, thành tựu văn hoá). Địa lí: Bài 3 Khai thác, sử dụng và bảo vệ thiên nhiên ở châu Âu.", vap: "Phục hưng và Cải cách tôn giáo là hai phong trào khác nhau: Phục hưng về văn hoá, nghệ thuật (Lê-ô-na đơ Vanh-xi, Sếch-xpia); Cải cách tôn giáo về tôn giáo (Lu-thơ, Can-vanh)." },
+  ],
+  monKhac: "GDCD Bài 2 (tiếp) · Tin học Bài 2 (tiếp) · Công nghệ Bài 3 Gieo trồng, chăm sóc cây · HĐTN Chủ đề 2 Khám phá bản thân.",
+  ngay: [
+    { thu: 2, mon: "toan", ten: "Toán · Thứ tự phép tính, chuyển vế", cauHoi: [
+      { q: "Tính 2 + 3 · (−4).", a: ["−20", "−10", "14", "−2"], dung: 1, gt: "Nhân trước: 3 · (−4) = −12. Rồi 2 + (−12) = −10. Không được cộng 2 + 3 trước.", cd: "Thứ tự phép tính" },
+      { q: "Tính (1/2 + 1/3) · 6.", a: ["5", "3", "4", "6/5"], dung: 0, gt: "Trong ngoặc trước: 1/2 + 1/3 = 5/6. Rồi 5/6 · 6 = 5.", cd: "Thứ tự phép tính" },
+      { q: "Tìm x biết x + 3/4 = 1/2.", a: ["x = 5/4", "x = 1/4", "x = −1/4", "x = −5/4"], dung: 2, gt: "Chuyển 3/4 sang vế phải và đổi dấu: x = 1/2 − 3/4 = 2/4 − 3/4 = −1/4.", cd: "Quy tắc chuyển vế" },
+      { q: "Tìm x biết x − 2/5 = −1/5.", a: ["x = −3/5", "x = 1/5", "x = −1/5", "x = 3/5"], dung: 1, gt: "x = −1/5 + 2/5 = 1/5.", cd: "Quy tắc chuyển vế" },
+      { q: "Tính 1 − (−1/2)^2.", a: ["3/4", "5/4", "1/2", "−3/4"], dung: 0, gt: "Luỹ thừa trước: (−1/2)^2 = 1/4 (số mũ chẵn nên dương). Rồi 1 − 1/4 = 3/4.", cd: "Thứ tự phép tính" },
+      { q: "Tìm x biết 2x = −3/4.", a: ["x = −3/2", "x = −3/8", "x = 3/8", "x = −6/4"], dung: 1, gt: "x = (−3/4) : 2 = (−3/4) · (1/2) = −3/8.", cd: "Tìm x" },
+      { q: "Quy tắc chuyển vế nói gì?", a: ["Chuyển một số hạng sang vế kia thì giữ nguyên dấu", "Chuyển một số hạng sang vế kia thì phải đổi dấu số hạng đó", "Chỉ được chuyển số dương", "Chuyển vế thì nhân hai vế với −1"], dung: 1, gt: "a + b = c ⇒ a = c − b. Dấu cộng thành trừ, trừ thành cộng.", cd: "Quy tắc chuyển vế" },
+    ]},
+    { thu: 3, mon: "van", ten: "Văn · Đồng dao mùa xuân, thơ 4 chữ", cauHoi: [
+      { q: "Tác giả bài thơ Đồng dao mùa xuân là ai?", a: ["Thanh Thảo", "Nguyễn Khoa Điềm", "Võ Quảng", "Tế Hanh"], dung: 1, gt: "Đồng dao mùa xuân của Nguyễn Khoa Điềm. Thanh Thảo viết Gặp lá cơm nếp (học sau).", cd: "Tác giả – tác phẩm" },
+      { q: "Bài thơ được viết theo thể thơ nào?", a: ["Thơ 5 chữ", "Thơ lục bát", "Thơ 4 chữ", "Thơ tự do"], dung: 2, gt: "Mỗi dòng 4 tiếng: 'Có một người lính / Đi vào núi xanh'.", cd: "Thể thơ 4 chữ" },
+      { q: "Nhân vật trung tâm của bài thơ là ai?", a: ["Một em bé chơi đồng dao", "Người lính trẻ đã hi sinh ở Trường Sơn", "Người mẹ chờ con", "Mùa xuân"], dung: 1, gt: "Bài thơ nói về người lính tuổi còn rất trẻ, chưa một lần yêu, hi sinh trong rừng Trường Sơn và mãi mãi ở lại tuổi hai mươi.", cd: "Nội dung bài thơ" },
+      { q: "'Đồng dao' vốn là gì?", a: ["Thơ ca dân gian truyền miệng của trẻ em, nhịp điệu vui tươi", "Bài hát ru của mẹ", "Thơ về đồng ruộng", "Truyện cổ tích"], dung: 0, gt: "Tác giả mượn nhịp đồng dao trong trẻo để nói về sự hi sinh, tạo nên giọng thơ vừa nhẹ nhàng vừa xót xa.", cd: "Nhan đề, từ ngữ" },
+      { q: "Thơ 4 chữ thường ngắt nhịp như thế nào?", a: ["3/1", "2/2", "1/3", "4/0"], dung: 1, gt: "Nhịp 2/2 phổ biến nhất trong thơ 4 chữ, giống nhịp đồng dao.", cd: "Nhịp thơ" },
+      { q: "'Vần chân' là gì?", a: ["Vần ở tiếng đầu dòng", "Vần ở tiếng cuối các dòng thơ", "Vần ở giữa dòng", "Vần trong một tiếng"], dung: 1, gt: "Vần chân gieo ở tiếng cuối dòng (ví dụ xanh – lành). Vần lưng gieo ở giữa dòng.", cd: "Vần thơ" },
+      { q: "Bài thơ thể hiện tình cảm gì của tác giả?", a: ["Vui mừng vì mùa xuân đến", "Thương nhớ, biết ơn và trân trọng người lính đã hi sinh cho đất nước", "Sợ hãi chiến tranh", "Nhớ tuổi thơ chơi đồng dao"], dung: 1, gt: "Giọng thơ dịu dàng nhưng chứa nỗi thương tiếc và lòng biết ơn với người lính trẻ.", cd: "Cảm xúc, chủ đề" },
+    ]},
+    { thu: 4, mon: "anh", ten: "Anh · Unit 2 câu đơn, lời khuyên", cauHoi: [
+      { q: "The sentence 'Kim eats vegetables.' has the structure:", a: ["S + V", "S + V + O", "S + V + A", "V + O"], dung: 1, gt: "Kim (S) eats (V) vegetables (O = tân ngữ).", cd: "Câu đơn" },
+      { q: "Which is a simple sentence?", a: ["I drink water and I eat bread.", "I drink water.", "Because I am thirsty.", "When I get up, I drink water."], dung: 1, gt: "Câu đơn có một chủ ngữ và một động từ chính. Câu A có hai mệnh đề nối bằng 'and'.", cd: "Câu đơn" },
+      { q: "You ______ drink more water when it's hot.", a: ["should", "shouldn't", "don't", "isn't"], dung: 0, gt: "should = nên, dùng để khuyên. Trời nóng thì nên uống nhiều nước.", cd: "Lời khuyên should" },
+      { q: "Don't ______ too much sugar. It's bad for your teeth.", a: ["eating", "eats", "eat", "to eat"], dung: 2, gt: "Câu mệnh lệnh phủ định: Don't + động từ nguyên mẫu.", cd: "Câu mệnh lệnh" },
+      { q: "Which word has the sound /f/?", a: ["very", "fine", "vote", "view"], dung: 1, gt: "fine /faɪn/ có /f/ (không rung). very, vote, view có /v/.", cd: "Phát âm /f/ – /v/" },
+      { q: "'Vegetables' means:", a: ["thịt", "trái cây", "rau củ", "bánh kẹo"], dung: 2, gt: "vegetables = rau củ. fruit = trái cây, meat = thịt.", cd: "Từ vựng sức khoẻ" },
+      { q: "Nam eats a lot of sweets and never brushes his teeth. He has toothache. What should he do?", a: ["Eat more sweets", "Eat less sugar and brush his teeth every day", "Sleep more", "Drink cold water"], dung: 1, gt: "toothache = đau răng. Lời khuyên: ăn ít đường, đánh răng hằng ngày.", cd: "Đọc hiểu, lời khuyên" },
+    ]},
+    { thu: 5, mon: "toan", ten: "Toán · Định lí và chứng minh", cauHoi: [
+      { q: "Một định lí gồm những phần nào?", a: ["Giả thiết và kết luận", "Câu hỏi và trả lời", "Đề bài và đáp số", "Hình vẽ và lời giải"], dung: 0, gt: "Định lí có dạng 'Nếu (giả thiết) thì (kết luận)'.", cd: "Định lí" },
+      { q: "Trong định lí 'Hai góc đối đỉnh thì bằng nhau', giả thiết là gì?", a: ["Hai góc bằng nhau", "Hai góc đối đỉnh", "Hai góc kề bù", "Hai đường thẳng cắt nhau"], dung: 1, gt: "Giả thiết là điều đã cho: hai góc đối đỉnh. Kết luận là điều suy ra: chúng bằng nhau.", cd: "Giả thiết – kết luận" },
+      { q: "Chứng minh một định lí là gì?", a: ["Vẽ hình thật chính xác rồi đo", "Dùng lập luận để từ giả thiết suy ra kết luận", "Tìm một ví dụ đúng", "Học thuộc định lí"], dung: 1, gt: "Đo hay thử ví dụ không phải là chứng minh. Chứng minh là chuỗi suy luận có căn cứ.", cd: "Chứng minh" },
+      { q: "Định lí 'Hai đường thẳng phân biệt cùng vuông góc với một đường thẳng thứ ba thì song song với nhau' có kết luận là gì?", a: ["Hai đường thẳng cùng vuông góc với đường thứ ba", "Hai đường thẳng song song với nhau", "Hai đường thẳng phân biệt", "Có đường thẳng thứ ba"], dung: 1, gt: "Phần sau chữ 'thì' là kết luận.", cd: "Giả thiết – kết luận" },
+      { q: "Cách ghi giả thiết (GT), kết luận (KL) đúng cho định lí 'Nếu a ∥ b và c ⊥ a thì c ⊥ b' là:", a: ["GT: c ⊥ b; KL: a ∥ b, c ⊥ a", "GT: a ∥ b, c ⊥ a; KL: c ⊥ b", "GT: a ∥ b; KL: c ⊥ a", "GT: c ⊥ a; KL: a ∥ b"], dung: 1, gt: "Điều cho là a ∥ b và c ⊥ a. Điều cần chứng minh là c ⊥ b.", cd: "Giả thiết – kết luận" },
+      { q: "Kí hiệu '⇒' đọc là gì?", a: ["Bằng", "Suy ra", "Song song", "Vuông góc"], dung: 1, gt: "A ⇒ B: từ A suy ra B.", cd: "Kí hiệu" },
+      { q: "Mỗi bước trong một bài chứng minh cần có điều gì?", a: ["Hình vẽ riêng", "Căn cứ: một giả thiết, định nghĩa, tiên đề hoặc định lí đã biết", "Đáp số", "Máy tính"], dung: 1, gt: "Mỗi khẳng định phải kèm lí do (vì sao đúng). Đây là chỗ nhiều bạn mất điểm.", cd: "Chứng minh" },
+    ]},
+    { thu: 6, mon: "khtn", ten: "KHTN · Bảng tuần hoàn", cauHoi: [
+      { q: "Các nguyên tố trong bảng tuần hoàn được sắp xếp theo nguyên tắc nào?", a: ["Theo thứ tự chữ cái", "Theo chiều tăng dần điện tích hạt nhân (số proton)", "Theo khối lượng giảm dần", "Theo màu sắc"], dung: 1, gt: "Số hiệu nguyên tử = số proton, tăng dần từ trái sang phải, trên xuống dưới.", cd: "Nguyên tắc sắp xếp" },
+      { q: "Chu kì trong bảng tuần hoàn là gì?", a: ["Cột dọc", "Hàng ngang, các nguyên tố có cùng số lớp electron", "Ô chứa một nguyên tố", "Nhóm khí hiếm"], dung: 1, gt: "Chu kì = hàng ngang. Số thứ tự chu kì = số lớp electron.", cd: "Chu kì" },
+      { q: "Các nguyên tố trong cùng một nhóm A có đặc điểm gì?", a: ["Cùng số lớp electron", "Cùng số electron ở lớp ngoài cùng, tính chất hoá học tương tự nhau", "Cùng khối lượng", "Cùng màu"], dung: 1, gt: "Nhóm = cột dọc. Số thứ tự nhóm A = số electron lớp ngoài cùng.", cd: "Nhóm" },
+      { q: "Nguyên tử sodium (Na) có 11 electron, xếp thành các lớp 2 – 8 – 1. Na thuộc chu kì và nhóm nào?", a: ["Chu kì 1, nhóm IA", "Chu kì 3, nhóm IA", "Chu kì 11, nhóm IIIA", "Chu kì 3, nhóm VIIIA"], dung: 1, gt: "3 lớp electron ⇒ chu kì 3. 1 electron lớp ngoài cùng ⇒ nhóm IA.", cd: "Xác định vị trí" },
+      { q: "Trong bảng tuần hoàn, các nguyên tố kim loại nằm ở đâu?", a: ["Bên phải", "Bên trái và ở giữa bảng", "Chỉ ở cột cuối", "Chỉ ở hàng đầu"], dung: 1, gt: "Kim loại chiếm phần lớn bên trái và giữa; phi kim ở bên phải; khí hiếm ở cột cuối cùng (VIIIA).", cd: "Kim loại – phi kim" },
+      { q: "Nhóm khí hiếm là nhóm nào?", a: ["IA", "IIA", "VIIA", "VIIIA"], dung: 3, gt: "Nhóm VIIIA gồm He, Ne, Ar, Kr, Xe, Rn: các khí rất kém hoạt động hoá học.", cd: "Nhóm" },
+      { q: "Ô nguyên tố trong bảng tuần hoàn cho biết những thông tin gì?", a: ["Chỉ tên nguyên tố", "Số hiệu nguyên tử, kí hiệu hoá học, tên nguyên tố, khối lượng nguyên tử", "Chỉ khối lượng", "Màu của nguyên tố"], dung: 1, gt: "Ví dụ ô số 8: O, oxygen, khối lượng nguyên tử 16.", cd: "Ô nguyên tố" },
+    ]},
+  ],
+  docTruoc: [
+    { mon: "Toán", tieuDe: "Tuần sau: Ôn tập chương I và Bài 5 Số thập phân vô hạn tuần hoàn", noiDung: "Chương I kết thúc bằng bài tập cuối chương, nên tuần này ôn lại: bốn phép tính số hữu tỉ, luỹ thừa, thứ tự phép tính, chuyển vế. Bài 5 mở đầu chương II: khi chia 1 cho 3 được 0,333... lặp mãi, gọi là số thập phân vô hạn tuần hoàn, viết 0,(3). Số hữu tỉ nào cũng viết được thành số thập phân hữu hạn hoặc vô hạn tuần hoàn." },
+    { mon: "KHTN", tieuDe: "Tuần sau: ôn chương I, chuẩn bị chương II Phân tử", noiDung: "Chương I (nguyên tử, nguyên tố, bảng tuần hoàn) là nền của cả hoá học. Trước khi sang chương II, cần thuộc: cấu tạo nguyên tử, số p = số e, kí hiệu 20 nguyên tố đầu, cách xác định chu kì và nhóm. Chương II sẽ nói về phân tử: nhiều nguyên tử liên kết với nhau tạo thành phân tử, ví dụ nước H₂O gồm 2 H và 1 O." },
+    { mon: "Tiếng Anh", tieuDe: "Ôn cấu trúc câu đơn", noiDung: "S + V: Birds fly. · S + V + O: I like music. · S + V + A (trạng ngữ): She lives in Hanoi. · S + be + adj/noun: He is tall. Tách câu thành từng phần khi đọc để hiểu nhanh hơn." },
+  ],
+};

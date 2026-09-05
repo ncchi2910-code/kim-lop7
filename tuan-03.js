@@ -1,0 +1,67 @@
+/* TUẦN 3 — Toán: Đại luyện tập + Bài 3 Luỹ thừa; Hình Bài 9 (tiếp) + Bài 10 Tiên đề Euclid. KHTN: Bài 2 (tiếp) + Bài 3 Nguyên tố hoá học. */
+window.KIM_WEEKS = window.KIM_WEEKS || {};
+window.KIM_WEEKS[3] = {
+  tuan: 3,
+  ten: "Tăng tốc",
+  icon: "🔓",
+  monHoc: [
+    { mon: "Toán", icon: "➗", hoc: "Đại số: Luyện tập chung Bài 1–2 và Bài 3 Luỹ thừa với số mũ tự nhiên của số hữu tỉ (nhân, chia luỹ thừa cùng cơ số; luỹ thừa của luỹ thừa). Hình: luyện tập Bài 9, bắt đầu Bài 10 Tiên đề Euclid và tính chất hai đường thẳng song song.", vap: "Nhầm x^3 · x^2 = x^6 (đúng là x^5, cộng số mũ). Quên dấu: (−1/2)^3 là số âm." },
+    { mon: "Ngữ văn", icon: "✍️", hoc: "Bài thơ Ngàn sao làm việc (Võ Quảng); Thực hành tiếng Việt: mở rộng thành phần chính của câu bằng cụm từ; Viết: tóm tắt văn bản theo yêu cầu khác nhau về độ dài.", vap: "Tóm tắt mà chép lại lời văn gốc hoặc thêm ý kiến riêng. Tóm tắt phải ngắn hơn, giữ sự việc chính và đúng thứ tự." },
+    { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Unit 1: Looking back & Project. Unit 2 Healthy living: Getting started, A closer look 1 (từ vựng sức khoẻ, phát âm /f/ và /v/).", vap: "Từ vựng sức khoẻ khá nhiều và lạ (sore throat, sunburn, spots, put on weight). Nên học theo cặp vấn đề – lời khuyên." },
+    { mon: "KHTN", icon: "🔬", hoc: "Hết Bài 2 (mô hình nguyên tử, khối lượng amu). Bài 3 Nguyên tố hoá học: khái niệm, tên và kí hiệu hoá học của 20 nguyên tố đầu.", vap: "Viết kí hiệu sai kiểu chữ: 'CA' hoặc 'ca' thay vì 'Ca'. Chữ đầu in hoa, chữ sau viết thường." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: Bài 2 (hệ quả phát kiến địa lí, quan hệ sản xuất tư bản chủ nghĩa) và Bài 3 Phong trào Văn hoá Phục hưng, Cải cách tôn giáo. Địa lí: Bài 2 Đặc điểm dân cư, xã hội châu Âu (dân số già, đô thị hoá).", vap: "Hệ quả phát kiến địa lí có hai mặt: tích cực (mở rộng hiểu biết, giao lưu) và tiêu cực (buôn bán nô lệ, xâm chiếm thuộc địa). Đề hay hỏi cả hai." },
+  ],
+  monKhac: "GDCD Bài 2 Quan tâm, cảm thông và chia sẻ · Tin học Bài 2 Phần mềm máy tính · Công nghệ Bài 2 Làm đất trồng cây · HĐTN Chủ đề 1 (kết thúc).",
+  ngay: [
+    { thu: 2, mon: "toan", ten: "Toán · Luỹ thừa của số hữu tỉ", cauHoi: [
+      { q: "Tính (−1/2)^3.", a: ["−1/8", "1/8", "−3/2", "−1/6"], dung: 0, gt: "(−1/2)·(−1/2)·(−1/2) = −1/8. Số mũ lẻ nên kết quả âm.", cd: "Luỹ thừa số âm" },
+      { q: "Tính (2/3)^2.", a: ["4/3", "2/9", "4/9", "4/6"], dung: 2, gt: "(a/b)^n = a^n / b^n: 2^2 / 3^2 = 4/9.", cd: "Luỹ thừa của phân số" },
+      { q: "Rút gọn x^3 · x^2.", a: ["x^6", "x^5", "2x^5", "x"], dung: 1, gt: "Nhân hai luỹ thừa cùng cơ số: giữ cơ số, cộng số mũ: x^(3+2) = x^5.", cd: "Nhân luỹ thừa cùng cơ số" },
+      { q: "Tính (0,5)^0.", a: ["0", "0,5", "1", "Không xác định"], dung: 2, gt: "Mọi số khác 0 luỹ thừa 0 đều bằng 1.", cd: "Luỹ thừa số mũ 0" },
+      { q: "Tính 3^4 : 3^2.", a: ["3^2 = 9", "3^6", "1^2 = 1", "3^8"], dung: 0, gt: "Chia hai luỹ thừa cùng cơ số: trừ số mũ: 3^(4−2) = 3^2 = 9.", cd: "Chia luỹ thừa cùng cơ số" },
+      { q: "Tính (2^3)^2.", a: ["2^5 = 32", "2^6 = 64", "2^9", "4^3"], dung: 1, gt: "Luỹ thừa của luỹ thừa: nhân số mũ: 2^(3·2) = 2^6 = 64.", cd: "Luỹ thừa của luỹ thừa" },
+      { q: "Tính (−1)^2026.", a: ["−1", "1", "2026", "−2026"], dung: 1, gt: "(−1) luỹ thừa chẵn bằng 1, luỹ thừa lẻ bằng −1. 2026 là số chẵn.", cd: "Luỹ thừa số âm" },
+    ]},
+    { thu: 3, mon: "van", ten: "Văn · Ngàn sao làm việc, tóm tắt văn bản", cauHoi: [
+      { q: "Bài thơ Ngàn sao làm việc của tác giả nào, thuộc thể thơ gì?", a: ["Võ Quảng, thơ 5 chữ", "Nguyễn Quang Thiều, thơ 4 chữ", "Đoàn Giỏi, thơ lục bát", "Thanh Hải, thơ 5 chữ"], dung: 0, gt: "Võ Quảng viết Ngàn sao làm việc bằng thể thơ 5 chữ, giọng vui tươi cho thiếu nhi.", cd: "Tác giả – tác phẩm" },
+      { q: "Trong bài thơ, các vì sao được hình dung như thế nào?", a: ["Như những viên ngọc", "Như những người đang lao động (tung lưới, chở đá, gánh nước...)", "Như bầy chim", "Như những ngọn đèn"], dung: 1, gt: "Tác giả nhân hoá sao Thần Nông tung lưới, sao Hôm gánh nước, nhóm Đại Hùng chở đá... Cả bầu trời như một cánh đồng đang làm việc.", cd: "Hình ảnh thơ, nhân hoá" },
+      { q: "Thành phần chính của câu gồm những gì?", a: ["Trạng ngữ và chủ ngữ", "Chủ ngữ và vị ngữ", "Vị ngữ và trạng ngữ", "Chủ ngữ và bổ ngữ"], dung: 1, gt: "Chủ ngữ và vị ngữ là hai thành phần bắt buộc của câu. Trạng ngữ là thành phần phụ.", cd: "Thành phần chính của câu" },
+      { q: "Câu nào mở rộng thành phần chính của câu 'Chim hót.' bằng cụm từ?", a: ["Chim hót!", "Hôm nay, chim hót.", "Đàn chim chìa vôi non hót líu lo trên bãi cát.", "Chim đang hót."], dung: 2, gt: "Chủ ngữ 'Chim' mở rộng thành cụm 'Đàn chim chìa vôi non'; vị ngữ 'hót' mở rộng thành 'hót líu lo trên bãi cát'. Câu B chỉ thêm trạng ngữ.", cd: "Mở rộng thành phần chính" },
+      { q: "Khi tóm tắt một văn bản, cần đảm bảo điều gì?", a: ["Giữ nguyên tất cả chi tiết", "Giữ sự việc chính, đúng trình tự, ngắn hơn bản gốc, không thêm ý kiến cá nhân", "Thêm nhận xét của người tóm tắt", "Viết dài hơn bản gốc"], dung: 1, gt: "Tóm tắt là kể lại ngắn gọn bằng lời mình, trung thành với nội dung gốc.", cd: "Tóm tắt văn bản" },
+      { q: "Khi tóm tắt truyện Bầy chim chìa vôi trong 3–4 câu, điều nào KHÔNG nên làm?", a: ["Nêu nhân vật chính", "Nêu sự việc mở đầu và kết thúc", "Chép nguyên lời thoại và đoạn miêu tả", "Kể theo đúng thứ tự sự việc"], dung: 2, gt: "Lời thoại và miêu tả là chi tiết phụ, phải lược bỏ khi tóm tắt ngắn.", cd: "Tóm tắt văn bản" },
+      { q: "Tóm tắt cùng một văn bản với độ dài khác nhau thì khác nhau ở chỗ nào?", a: ["Bản dài kể sự việc khác bản ngắn", "Bản dài giữ thêm một số chi tiết phụ quan trọng, bản ngắn chỉ giữ sự việc cốt lõi", "Bản ngắn được thêm ý kiến riêng", "Không khác gì nhau"], dung: 1, gt: "Cùng bộ khung sự việc, chỉ khác mức độ chi tiết.", cd: "Tóm tắt văn bản" },
+    ]},
+    { thu: 4, mon: "anh", ten: "Anh · Unit 2 Healthy living (từ vựng)", cauHoi: [
+      { q: "I have a ______. My throat hurts when I speak.", a: ["headache", "sore throat", "sunburn", "stomachache"], dung: 1, gt: "sore throat = đau họng. headache = đau đầu, stomachache = đau bụng, sunburn = cháy nắng.", cd: "Từ vựng sức khoẻ" },
+      { q: "'Sunburn' is:", a: ["a kind of food", "red, painful skin from too much sun", "a sport", "a healthy habit"], dung: 1, gt: "sunburn = cháy nắng, da đỏ rát vì ở ngoài nắng quá lâu.", cd: "Từ vựng sức khoẻ" },
+      { q: "Which word has the sound /v/?", a: ["fan", "van", "laugh", "phone"], dung: 1, gt: "van /væn/ có /v/ (rung dây thanh). fan, laugh, phone đều có /f/.", cd: "Phát âm /f/ – /v/" },
+      { q: "To keep fit, you should ______ every day.", a: ["exercise", "sleep all day", "eat sweets", "watch TV"], dung: 0, gt: "keep fit = giữ dáng, khoẻ mạnh; exercise = tập thể dục.", cd: "Từ vựng sức khoẻ" },
+      { q: "'Eat less junk food.' Junk food means:", a: ["fresh fruit", "unhealthy food like chips and sweets", "rice and vegetables", "food from the sea"], dung: 1, gt: "junk food = đồ ăn vặt không tốt cho sức khoẻ.", cd: "Từ vựng sức khoẻ" },
+      { q: "The opposite of 'healthy' is:", a: ["unhealthy", "healthful", "dishealthy", "nonhealth"], dung: 0, gt: "Thêm tiền tố un-: unhealthy.", cd: "Từ vựng sức khoẻ" },
+      { q: "He ______ karate twice a week.", a: ["do", "does", "doing", "is do"], dung: 1, gt: "Ôn hiện tại đơn: he does karate.", cd: "Present simple: ngôi thứ ba" },
+    ]},
+    { thu: 5, mon: "toan", ten: "Toán · Tiên đề Euclid, tính chất song song", cauHoi: [
+      { q: "Tiên đề Euclid phát biểu điều gì?", a: ["Qua một điểm có vô số đường thẳng song song với đường thẳng cho trước", "Qua một điểm nằm ngoài một đường thẳng, chỉ có một đường thẳng song song với đường thẳng đó", "Hai đường thẳng bất kì đều song song", "Hai đường thẳng song song thì cắt nhau ở vô cực"], dung: 1, gt: "Đây là tiên đề: thừa nhận, không chứng minh.", cd: "Tiên đề Euclid" },
+      { q: "Nếu a ∥ b và đường thẳng c cắt cả a và b thì cặp góc so le trong như thế nào?", a: ["Bù nhau", "Phụ nhau", "Bằng nhau", "Không có quan hệ"], dung: 2, gt: "Tính chất: hai đường thẳng song song thì góc so le trong bằng nhau, góc đồng vị bằng nhau.", cd: "Tính chất song song" },
+      { q: "a ∥ b, c cắt a và b. Một góc đồng vị bằng 75°. Góc đồng vị còn lại bằng?", a: ["105°", "75°", "15°", "150°"], dung: 1, gt: "Hai đường thẳng song song thì hai góc đồng vị bằng nhau: 75°.", cd: "Tính chất song song" },
+      { q: "a ∥ b, c cắt a và b. Một góc trong cùng phía bằng 110°. Góc trong cùng phía còn lại bằng?", a: ["110°", "70°", "20°", "250°"], dung: 1, gt: "Hai góc trong cùng phía của hai đường thẳng song song thì bù nhau: 180° − 110° = 70°.", cd: "Góc trong cùng phía" },
+      { q: "Hai đường thẳng phân biệt cùng song song với đường thẳng thứ ba thì:", a: ["Vuông góc với nhau", "Cắt nhau", "Song song với nhau", "Trùng nhau"], dung: 2, gt: "Nếu a ∥ c và b ∥ c thì a ∥ b (hệ quả của tiên đề Euclid).", cd: "Tính chất song song" },
+      { q: "a ∥ b và c ⊥ a. Kết luận?", a: ["c ∥ b", "c ⊥ b", "c cắt b tạo góc 45°", "Không kết luận được"], dung: 1, gt: "Đường thẳng vuông góc với một trong hai đường thẳng song song thì vuông góc với đường còn lại.", cd: "Tính chất song song" },
+      { q: "Cho điểm M không nằm trên đường thẳng a. Có bao nhiêu đường thẳng đi qua M và song song với a?", a: ["0", "Đúng 1", "2", "Vô số"], dung: 1, gt: "Theo tiên đề Euclid: đúng một đường.", cd: "Tiên đề Euclid" },
+    ]},
+    { thu: 6, mon: "khtn", ten: "KHTN · Nguyên tố hoá học", cauHoi: [
+      { q: "Nguyên tố hoá học là tập hợp những nguyên tử có cùng:", a: ["Số neutron", "Số proton", "Khối lượng", "Số lớp electron"], dung: 1, gt: "Số proton quyết định nguyên tử thuộc nguyên tố nào. Số neutron có thể khác nhau.", cd: "Khái niệm nguyên tố" },
+      { q: "Kí hiệu hoá học của nguyên tố oxygen là gì?", a: ["Ox", "O", "Og", "0"], dung: 1, gt: "Oxygen: O. Nhiều kí hiệu lấy chữ cái đầu của tên tiếng Anh/La-tinh.", cd: "Kí hiệu hoá học" },
+      { q: "Kí hiệu 'Na' là của nguyên tố nào?", a: ["Nitrogen", "Sodium", "Neon", "Nickel"], dung: 1, gt: "Na = sodium (natri), từ tên La-tinh natrium. Nitrogen là N, neon là Ne.", cd: "Kí hiệu hoá học" },
+      { q: "Cách viết kí hiệu nào đúng cho calcium?", a: ["CA", "ca", "Ca", "cA"], dung: 2, gt: "Quy tắc: chữ cái đầu in hoa, chữ cái thứ hai (nếu có) viết thường.", cd: "Kí hiệu hoá học" },
+      { q: "Nguyên tố nào chiếm tỉ lệ lớn nhất trong vỏ Trái Đất?", a: ["Iron (sắt)", "Silicon", "Oxygen", "Carbon"], dung: 2, gt: "Oxygen chiếm gần một nửa khối lượng vỏ Trái Đất, sau đó là silicon.", cd: "Nguyên tố trong tự nhiên" },
+      { q: "Hai nguyên tử đều có 8 proton nhưng một có 8 neutron, một có 9 neutron. Chúng thuộc:", a: ["Hai nguyên tố khác nhau", "Cùng một nguyên tố", "Không phải nguyên tử", "Hai nguyên tố kim loại"], dung: 1, gt: "Cùng số proton nên cùng nguyên tố (oxygen), dù khối lượng khác nhau.", cd: "Khái niệm nguyên tố" },
+      { q: "Kí hiệu 'Cl' là của nguyên tố nào?", a: ["Calcium", "Carbon", "Chlorine", "Copper"], dung: 2, gt: "Cl = chlorine. Calcium là Ca, carbon là C, copper là Cu.", cd: "Kí hiệu hoá học" },
+    ]},
+  ],
+  docTruoc: [
+    { mon: "Toán", tieuDe: "Tuần sau: Thứ tự thực hiện phép tính và quy tắc chuyển vế", noiDung: "Thứ tự: trong ngoặc trước; rồi luỹ thừa; rồi nhân chia; rồi cộng trừ; cùng cấp thì làm từ trái sang phải. Quy tắc chuyển vế: khi chuyển một số hạng từ vế này sang vế kia của đẳng thức thì phải đổi dấu. Ví dụ x + 3/4 = 1/2 ⇒ x = 1/2 − 3/4 = −1/4." },
+    { mon: "KHTN", tieuDe: "Tuần sau: Sơ lược bảng tuần hoàn", noiDung: "Các nguyên tố xếp theo chiều tăng dần số proton. Hàng ngang gọi là chu kì (số chu kì = số lớp electron). Cột dọc gọi là nhóm (số nhóm A = số electron lớp ngoài cùng). Kim loại ở bên trái và giữa, phi kim ở bên phải, khí hiếm ở cột cuối cùng." },
+    { mon: "Tiếng Anh", tieuDe: "Từ vựng Unit 2 cần thuộc", noiDung: "sore throat (đau họng) · headache (đau đầu) · stomachache (đau bụng) · sunburn (cháy nắng) · spots (mụn) · tired (mệt) · put on weight (tăng cân) · keep fit (giữ dáng) · junk food (đồ ăn vặt) · vegetables (rau) · exercise (tập thể dục) · brush your teeth (đánh răng)." },
+  ],
+};

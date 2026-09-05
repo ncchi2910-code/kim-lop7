@@ -1,0 +1,67 @@
+/* TUẦN 2 — Toán: Đại Bài 2 (cộng trừ nhân chia) + Hình Bài 9 (song song, dấu hiệu). KHTN: Bài 2 Nguyên tử. */
+window.KIM_WEEKS = window.KIM_WEEKS || {};
+window.KIM_WEEKS[2] = {
+  tuan: 2,
+  ten: "Vào nhịp",
+  icon: "🚪",
+  monHoc: [
+    { mon: "Toán", icon: "➗", hoc: "Đại số: Bài 2 Cộng, trừ, nhân, chia số hữu tỉ (quy đồng, nhân tử với tử, chia là nhân nghịch đảo). Hình: Bài 9 Hai đường thẳng song song và dấu hiệu nhận biết (góc so le trong, góc đồng vị).", vap: "Sai dấu khi trừ số âm: 3/4 − (−1/4) phải thành 3/4 + 1/4. Lẫn góc so le trong với góc đồng vị: so le trong ở hai phía cát tuyến, đồng vị ở cùng phía." },
+    { mon: "Ngữ văn", icon: "✍️", hoc: "Văn bản Đi lấy mật (trích Đất rừng phương Nam, Đoàn Giỏi) và Thực hành tiếng Việt: mở rộng trạng ngữ của câu bằng cụm từ.", vap: "Nhận ra trạng ngữ nhưng không giải thích được mở rộng bằng cụm từ thì câu rõ hơn ở chỗ nào." },
+    { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Unit 1: A closer look 2 (thì hiện tại đơn, trạng từ tần suất), Communication, Skills 1 & 2 (đọc, nói, nghe, viết về sở thích).", vap: "Câu phủ định và câu hỏi với does: 'She doesn't likes' là sai, phải 'doesn't like'." },
+    { mon: "KHTN", icon: "🔬", hoc: "Bài 2 Nguyên tử: mô hình nguyên tử (hạt nhân gồm proton, neutron; vỏ gồm electron xếp theo lớp), số p = số e, khối lượng nguyên tử tính theo amu.", vap: "Nhầm điện tích: proton dương, electron âm, neutron không mang điện. Quên lớp 1 tối đa 2 e, lớp 2 tối đa 8 e." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: hết Bài 1 (thành thị trung đại), sang Bài 2 Các cuộc phát kiến địa lí (Đi-a-xơ, Va-xcô đơ Ga-ma, Cô-lôm-bô, Ma-gien-lăng). Địa lí: tiếp Bài 1 châu Âu (khí hậu, sông ngòi, thực vật).", vap: "Lẫn tên nhà thám hiểm với hành trình: Cô-lôm-bô tìm ra châu Mỹ (1492), Ma-gien-lăng đi vòng quanh thế giới (1519–1522)." },
+  ],
+  monKhac: "GDCD Bài 1 (tiếp) · Tin học Bài 1 (tiếp) · Công nghệ Bài 1 (tiếp) · HĐTN Chủ đề 1.",
+  ngay: [
+    { thu: 2, mon: "toan", ten: "Toán · Cộng trừ nhân chia số hữu tỉ", cauHoi: [
+      { q: "Tính −1/2 + 1/3.", a: ["−1/6", "1/6", "−1/5", "−5/6"], dung: 0, gt: "Quy đồng mẫu 6: −3/6 + 2/6 = −1/6.", cd: "Cộng trừ số hữu tỉ" },
+      { q: "Tính 3/4 − (−1/4).", a: ["1/2", "1", "−1", "2/4"], dung: 1, gt: "Trừ một số âm là cộng số đối: 3/4 + 1/4 = 4/4 = 1.", cd: "Cộng trừ số hữu tỉ" },
+      { q: "Tính (−2/5) · (5/6).", a: ["−10/30 = −1/3", "1/3", "−7/11", "−2/6"], dung: 0, gt: "Nhân tử với tử, mẫu với mẫu: −10/30, rút gọn được −1/3. Âm nhân dương ra âm.", cd: "Nhân số hữu tỉ" },
+      { q: "Tính (−3/7) : (−6/14).", a: ["−1", "1", "−18/98", "2"], dung: 1, gt: "Chia là nhân nghịch đảo: (−3/7) · (−14/6) = 42/42 = 1. Âm chia âm ra dương.", cd: "Chia số hữu tỉ" },
+      { q: "Tính 0,5 + 1/4.", a: ["0,6", "1/2", "3/4", "5/4"], dung: 2, gt: "0,5 = 1/2 = 2/4. 2/4 + 1/4 = 3/4 (= 0,75).", cd: "Cộng trừ số hữu tỉ" },
+      { q: "Tính (−1,5) · 2/3.", a: ["−1", "1", "−3", "−0,5"], dung: 0, gt: "−1,5 = −3/2. (−3/2) · (2/3) = −6/6 = −1.", cd: "Nhân số hữu tỉ" },
+      { q: "Tính nhanh 2/7 · 3/5 + 2/7 · 2/5.", a: ["2/7", "4/7", "10/35", "1"], dung: 0, gt: "Đặt 2/7 làm thừa số chung: 2/7 · (3/5 + 2/5) = 2/7 · 1 = 2/7.", cd: "Tính chất phân phối" },
+    ]},
+    { thu: 3, mon: "van", ten: "Văn · Đi lấy mật, mở rộng trạng ngữ", cauHoi: [
+      { q: "Văn bản Đi lấy mật được trích từ tác phẩm nào?", a: ["Dế Mèn phiêu lưu kí", "Đất rừng phương Nam", "Quê nội", "Tuổi thơ dữ dội"], dung: 1, gt: "Đi lấy mật trích từ tiểu thuyết Đất rừng phương Nam của Đoàn Giỏi, viết về vùng rừng U Minh.", cd: "Tác giả – tác phẩm" },
+      { q: "Người kể chuyện trong Đi lấy mật là ai, kể theo ngôi nào?", a: ["Cò, ngôi thứ ba", "An, ngôi thứ nhất", "Tía nuôi, ngôi thứ nhất", "Tác giả, ngôi thứ ba"], dung: 1, gt: "An xưng 'tôi' kể lại chuyến đi rừng cùng tía nuôi và Cò: ngôi thứ nhất.", cd: "Ngôi kể" },
+      { q: "'Gác kèo ong' là gì?", a: ["Bắt ong bằng lưới", "Đặt những thanh kèo trong rừng để ong về làm tổ, sau đó lấy mật", "Nuôi ong trong thùng gỗ", "Đốt tổ ong rừng"], dung: 1, gt: "Đây là cách lấy mật độc đáo của người dân U Minh, được tía nuôi và Cò giảng cho An.", cd: "Nội dung văn bản" },
+      { q: "Nhân vật An trong đoạn trích có đặc điểm gì nổi bật?", a: ["Lười biếng, hay cáu", "Ham hiểu biết, quan sát tinh tế, biết lắng nghe", "Sợ rừng, đòi về", "Thạo rừng hơn cả Cò"], dung: 1, gt: "An liên tục quan sát cảnh rừng, so sánh với lời má nuôi kể, hỏi và lắng nghe Cò, tía nuôi giải thích.", cd: "Tính cách nhân vật" },
+      { q: "Trạng ngữ trong câu 'Buổi sáng, chúng tôi đi lấy mật.' là gì?", a: ["chúng tôi", "đi lấy mật", "Buổi sáng", "mật"], dung: 2, gt: "Trạng ngữ chỉ thời gian, đứng đầu câu, ngăn cách bằng dấu phẩy.", cd: "Trạng ngữ" },
+      { q: "Câu nào có trạng ngữ được mở rộng thành cụm từ?", a: ["Sáng, An đi rừng.", "Vào một buổi sáng mùa hè nắng đẹp, An đi rừng cùng tía nuôi.", "An đi rừng sáng nay.", "An và Cò đi rừng."], dung: 1, gt: "'Vào một buổi sáng mùa hè nắng đẹp' là trạng ngữ được mở rộng từ 'Sáng' thành cụm từ, cho biết rõ thời điểm và không khí.", cd: "Mở rộng trạng ngữ" },
+      { q: "Mở rộng trạng ngữ bằng cụm từ có tác dụng gì?", a: ["Làm câu ngắn hơn", "Làm thông tin về thời gian, nơi chốn, cách thức… cụ thể, rõ ràng hơn", "Đổi nghĩa của câu", "Bỏ được chủ ngữ"], dung: 1, gt: "Trạng ngữ càng cụ thể thì người đọc hình dung hoàn cảnh càng rõ.", cd: "Mở rộng trạng ngữ" },
+    ]},
+    { thu: 4, mon: "anh", ten: "Anh · Present simple", cauHoi: [
+      { q: "She ______ to school by bus every day.", a: ["go", "goes", "going", "is go"], dung: 1, gt: "Ngôi thứ ba số ít (she) ở thì hiện tại đơn: goes.", cd: "Present simple: ngôi thứ ba" },
+      { q: "My father ______ fishing.", a: ["don't like", "doesn't likes", "doesn't like", "not like"], dung: 2, gt: "Phủ định với he/she/it: doesn't + động từ nguyên mẫu (không thêm s).", cd: "Present simple: phủ định" },
+      { q: "______ your brother play football?", a: ["Do", "Does", "Is", "Are"], dung: 1, gt: "Câu hỏi với he/she/it: Does + S + V nguyên mẫu?", cd: "Present simple: câu hỏi" },
+      { q: "We ______ TV every evening.", a: ["watches", "watch", "watching", "are watch"], dung: 1, gt: "Chủ ngữ 'we' không thêm s: watch.", cd: "Present simple: ngôi thứ ba" },
+      { q: "I ______ late for school.", a: ["never am", "am never", "never is", "is never"], dung: 1, gt: "Trạng từ tần suất (always, usually, often, sometimes, never) đứng SAU động từ 'be' và TRƯỚC động từ thường.", cd: "Trạng từ tần suất" },
+      { q: "He ______ (study) English on Mondays.", a: ["studys", "studies", "studyes", "study"], dung: 1, gt: "Động từ tận cùng là phụ âm + y: đổi y thành i rồi thêm es: studies.", cd: "Present simple: chính tả" },
+      { q: "Tom and I ______ in the same class.", a: ["is", "am", "are", "be"], dung: 2, gt: "'Tom and I' = we, dùng are.", cd: "Động từ be" },
+    ]},
+    { thu: 5, mon: "toan", ten: "Toán · Dấu hiệu hai đường thẳng song song", cauHoi: [
+      { q: "Đường thẳng c cắt hai đường thẳng a, b. Cặp góc so le trong là cặp góc nằm ở đâu?", a: ["Cùng phía với c, cùng ở ngoài a và b", "Hai phía của c, ở giữa a và b", "Cùng phía với c, một trong một ngoài", "Cùng đỉnh"], dung: 1, gt: "So le = khác phía đối với cát tuyến c; trong = nằm giữa hai đường thẳng a, b.", cd: "Góc so le trong" },
+      { q: "Nếu đường thẳng c cắt a và b, trong các góc tạo thành có một cặp góc so le trong bằng nhau thì:", a: ["a vuông góc với b", "a cắt b", "a song song với b", "a trùng b"], dung: 2, gt: "Đây là dấu hiệu nhận biết hai đường thẳng song song.", cd: "Dấu hiệu song song" },
+      { q: "Cặp góc đồng vị là cặp góc nằm ở đâu?", a: ["Hai phía của c, ở giữa a và b", "Cùng phía với c, một góc ở trong, một góc ở ngoài", "Hai phía của c, ở ngoài a và b", "Đối đỉnh nhau"], dung: 1, gt: "Đồng vị = 'cùng vị trí': cùng phía cát tuyến, một ở trong, một ở ngoài, ở vị trí tương ứng nhau.", cd: "Góc đồng vị" },
+      { q: "c cắt a, b; một cặp góc so le trong lần lượt bằng 60° và 60°. Kết luận?", a: ["a ∥ b", "a ⊥ b", "a cắt b tại một điểm", "Chưa đủ dữ kiện"], dung: 0, gt: "Cặp so le trong bằng nhau ⇒ a ∥ b.", cd: "Dấu hiệu song song" },
+      { q: "Kí hiệu 'a song song với b' được viết là gì?", a: ["a ⊥ b", "a ∥ b", "a = b", "a ∩ b"], dung: 1, gt: "∥ là kí hiệu song song, ⊥ là vuông góc.", cd: "Kí hiệu" },
+      { q: "c cắt a, b; một cặp góc đồng vị lần lượt bằng 110° và 100°. Kết luận?", a: ["a ∥ b", "a ⊥ b", "Không kết luận được a ∥ b", "a trùng b"], dung: 2, gt: "Góc đồng vị không bằng nhau nên không thể kết luận song song.", cd: "Dấu hiệu song song" },
+      { q: "Để vẽ đường thẳng đi qua điểm M và song song với đường thẳng a, ta dùng dụng cụ nào?", a: ["Chỉ cần compa", "Thước thẳng và êke", "Thước đo góc", "Chỉ cần thước thẳng"], dung: 1, gt: "Dùng êke áp vào a, trượt êke dọc theo thước thẳng đến M rồi kẻ đường thẳng qua M.", cd: "Vẽ hình" },
+    ]},
+    { thu: 6, mon: "khtn", ten: "KHTN · Nguyên tử", cauHoi: [
+      { q: "Nguyên tử gồm những phần nào?", a: ["Chỉ có hạt nhân", "Hạt nhân (proton, neutron) và vỏ (electron)", "Chỉ có electron", "Proton và electron nằm chung ở hạt nhân"], dung: 1, gt: "Hạt nhân ở giữa gồm proton và neutron; electron chuyển động xung quanh tạo thành vỏ.", cd: "Cấu tạo nguyên tử" },
+      { q: "Hạt nào mang điện tích dương?", a: ["Electron", "Neutron", "Proton", "Cả ba"], dung: 2, gt: "Proton (+), electron (−), neutron không mang điện.", cd: "Điện tích các hạt" },
+      { q: "Vì sao nguyên tử trung hoà về điện?", a: ["Vì không có hạt nào mang điện", "Vì số proton bằng số electron", "Vì neutron triệt tiêu điện", "Vì hạt nhân rất nhỏ"], dung: 1, gt: "Số điện tích dương (p) bằng số điện tích âm (e) nên tổng bằng 0.", cd: "Điện tích các hạt" },
+      { q: "Một nguyên tử có 6 proton. Số electron của nó là bao nhiêu?", a: ["3", "6", "12", "Không biết được"], dung: 1, gt: "Số e = số p = 6 (đây là nguyên tử carbon).", cd: "Số p = số e" },
+      { q: "Khối lượng nguyên tử tập trung chủ yếu ở đâu?", a: ["Vỏ electron", "Hạt nhân", "Phân bố đều", "Ở lớp ngoài cùng"], dung: 1, gt: "Electron rất nhẹ (khoảng 1/1836 khối lượng proton) nên gần như toàn bộ khối lượng nằm ở hạt nhân.", cd: "Khối lượng nguyên tử" },
+      { q: "Nguyên tử oxygen có 8 proton và 8 neutron. Khối lượng nguyên tử xấp xỉ bao nhiêu?", a: ["8 amu", "16 amu", "24 amu", "1 amu"], dung: 1, gt: "Mỗi proton và neutron nặng khoảng 1 amu: 8 + 8 = 16 amu. Bỏ qua electron vì quá nhẹ.", cd: "Khối lượng nguyên tử" },
+      { q: "Lớp electron thứ nhất (gần hạt nhân nhất) chứa tối đa bao nhiêu electron?", a: ["1", "2", "8", "18"], dung: 1, gt: "Lớp 1 tối đa 2 e, lớp 2 tối đa 8 e. Ví dụ oxygen (8 e): lớp 1 có 2, lớp 2 có 6.", cd: "Lớp electron" },
+    ]},
+  ],
+  docTruoc: [
+    { mon: "Toán", tieuDe: "Tuần sau: Luỹ thừa với số mũ tự nhiên của số hữu tỉ", noiDung: "x^n là tích của n thừa số x. Với phân số: (a/b)^n = a^n / b^n, ví dụ (2/3)^2 = 4/9. Số âm luỹ thừa chẵn ra dương, luỹ thừa lẻ ra âm: (−1/2)^3 = −1/8. Nhân hai luỹ thừa cùng cơ số thì cộng số mũ, chia thì trừ số mũ, luỹ thừa của luỹ thừa thì nhân số mũ." },
+    { mon: "KHTN", tieuDe: "Tuần sau: Nguyên tố hoá học", noiDung: "Nguyên tố hoá học là tập hợp những nguyên tử có cùng số proton. Mỗi nguyên tố có tên và kí hiệu hoá học (1 hoặc 2 chữ cái, chữ đầu in hoa): H hydrogen, O oxygen, C carbon, N nitrogen, Na sodium, Cl chlorine, Ca calcium, Fe iron. Nên bắt đầu học thuộc 20 nguyên tố đầu bảng." },
+    { mon: "Tiếng Anh", tieuDe: "Ôn trạng từ tần suất", noiDung: "always (luôn luôn) > usually (thường) > often (hay) > sometimes (thỉnh thoảng) > rarely (hiếm khi) > never (không bao giờ). Đứng trước động từ thường, đứng sau am/is/are: I usually get up at 6. She is never late." },
+  ],
+};
