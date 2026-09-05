@@ -10,8 +10,8 @@ Toán được xếp theo cách trường dạy song song Đại số và Hình 
 index.html        giao diện + danh sách file tuần
 app.js            logic (không cần sửa)
 config.js         ngày bắt đầu tuần 1, mức thưởng, tên môn
-data/tuan-01.js   nội dung tuần 1 … tuan-04.js
-data/MAU-tuan-XX.js   mẫu để soạn tuần mới
+tuan-01.js … tuan-04.js   nội dung từng tuần
+MAU-tuan-XX.js    mẫu để soạn tuần mới
 test/check.mjs    kiểm thử tự động (tuỳ chọn, cần Node + Playwright)
 ```
 
@@ -27,9 +27,9 @@ Mỗi lần thêm tuần mới chỉ cần đẩy file lên GitHub, Vercel tự 
 
 ## Thêm tuần mới (mỗi cuối tuần, 15–20 phút)
 
-1. Sao chép `data/MAU-tuan-XX.js` thành `data/tuan-05.js`, đổi `KIM_WEEKS[99]` và `tuan: 99` thành 5.
+1. Sao chép `MAU-tuan-XX.js` thành `tuan-05.js`, đổi `KIM_WEEKS[99]` và `tuan: 99` thành 5.
 2. Điền nội dung: 5 thẻ môn, 5 lượt × 7 câu, 2–3 bài đọc trước. Có thể nhờ Claude soạn từ bản tổng quan chương trình trong Project, rồi mẹ duyệt lại đáp án.
-3. Thêm dòng `<script src="data/tuan-05.js"></script>` vào `index.html`, ngay dưới dòng tuần 4.
+3. Thêm dòng `<script src="tuan-05.js"></script>` vào `index.html`, ngay dưới dòng tuần 4.
 4. Mở `index.html` trong trình duyệt để xem thử, rồi đẩy lên GitHub.
 
 ## Chỉnh lịch

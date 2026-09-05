@@ -75,7 +75,7 @@
     let main = "";
     if (!w) {
       const co = tuanCoNoiDung();
-      main = `<div class="card"><h3>Tuần ${t} chưa có nội dung</h3><p class="muted" style="margin-top:6px">Mẹ cần thêm file <code>data/tuan-${String(t).padStart(2, "0")}.js</code>. Trong lúc chờ, Kim có thể làm lại các tuần đã có.</p>
+      main = `<div class="card"><h3>Tuần ${t} chưa có nội dung</h3><p class="muted" style="margin-top:6px">Mẹ cần thêm file <code>tuan-${String(t).padStart(2, "0")}.js</code>. Trong lúc chờ, Kim có thể làm lại các tuần đã có.</p>
         <div style="margin-top:12px"><a class="btn sm" href="#/tuan/${co[co.length - 1]}">Mở tuần ${co[co.length - 1]}</a></div></div>`;
     } else {
       const td = tienDoTuan(t);

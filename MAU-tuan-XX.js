@@ -1,5 +1,5 @@
 /* MẪU TUẦN MỚI — sao chép file này thành tuan-05.js (đổi số), điền nội dung, rồi thêm dòng
-   <script src="data/tuan-05.js"></script> vào index.html.
+   <script src="tuan-05.js"></script> vào index.html.
    Quy ước: thu = 2..6 (Thứ Hai → Thứ Sáu); mon = toan | van | anh | khtn | sudia;
    mỗi lượt 7 câu, mỗi câu 4 lựa chọn; dung = chỉ số đáp án đúng (0 = A, 1 = B, 2 = C, 3 = D);
    cd = chủ đề ngắn để gom lỗi (viết giống nhau cho các câu cùng chủ đề). */
