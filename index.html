@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff7ed">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Kim Lớp 7 — Học cùng trường mỗi tuần</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#fff7ed; --bg2:#ffe9d6; --ink:#3a2a1a; --muted:#8a6d57;
+    --card:#ffffff; --ring:rgba(0,0,0,.06); --ok:#1f9d57; --bad:#d64545; --accent:#ff7a18; --accent2:#e0367a;
+    --shadow:0 10px 24px rgba(58,42,26,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:"Be Vietnam Pro",system-ui,sans-serif; color:var(--ink); line-height:1.5;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, #ffd9a8 0%, transparent 55%),
+      radial-gradient(900px 500px at -10% 110%, #ffc1c1 0%, transparent 50%),
+      linear-gradient(160deg,var(--bg1),var(--bg2));
+    background-attachment:fixed; min-height:100vh; padding:16px 14px 90px;
+  }
+  body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,.6) 1px,transparent 1px);background-size:22px 22px;opacity:.4;pointer-events:none}
+  #app{max-width:720px;margin:0 auto;position:relative;z-index:1}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,.baloo{font-family:"Baloo 2",cursive}
+  h1{font-size:30px;line-height:1.1;background:linear-gradient(120deg,#ff7a18,#e0367a);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{font-size:21px;margin:22px 0 10px}
+  h3{font-size:17px}
+  .muted{color:var(--muted);font-size:13px}
+  .small{font-size:13px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .top h1{white-space:nowrap}
+  .badges{flex-basis:100%;justify-content:flex-start}
+  @media (min-width:560px){ .badges{flex-basis:auto;justify-content:flex-end} }
+  .logo{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;font-size:26px;background:linear-gradient(145deg,#ffb454,#ff8a3d);box-shadow:0 8px 20px rgba(255,138,61,.35);transform:rotate(-4deg);flex:none}
+  .top .grow{flex:1;min-width:0}
+  .badges{display:flex;gap:6px;flex-wrap:wrap}
+  .badge{background:#fff;border:1px solid var(--ring);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:700;box-shadow:var(--shadow);white-space:nowrap}
+
+  /* cards */
+  .card{background:var(--card);border:1px solid var(--ring);border-radius:22px;padding:18px;box-shadow:var(--shadow);margin-bottom:12px;animation:rise .45s ease both}
+  .card.tight{padding:14px 16px}
+  .row{display:flex;align-items:center;gap:12px}
+  .row .grow{flex:1;min-width:0}
+  .chip{display:inline-block;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+  .icon-box{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-size:22px;flex:none}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font:inherit;font-weight:700;border-radius:999px;padding:12px 20px;background:linear-gradient(120deg,#ff7a18,#e0367a);color:#fff;box-shadow:0 8px 20px rgba(224,54,122,.25);transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--ring);box-shadow:none}
+  .btn.sm{padding:8px 14px;font-size:13px}
+  .btn.block{width:100%}
+
+  /* progress */
+  .bar{height:10px;border-radius:999px;background:#f3ede7;overflow:hidden}
+  .bar > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#ffb454,#ff7a18);transition:width .4s}
+
+  /* week list */
+  .weeks{display:grid;gap:8px}
+  .week{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--ring);border-radius:16px;padding:12px 14px;box-shadow:var(--shadow)}
+  .week.locked{opacity:.55}
+  .week .n{font-family:"Baloo 2";font-weight:800;font-size:18px;width:74px}
+  .week .dots{display:flex;gap:4px}
+  .dot{width:11px;height:11px;border-radius:50%;background:#eee3d8}
+  .dot.ok{background:var(--ok)} .dot.half{background:#ffb454}
+
+  /* subject cards in week */
+  .subj{border-left:5px solid var(--accent);cursor:pointer}
+  .subj .body{display:none;margin-top:10px}
+  .subj.open .body{display:block}
+  .subj .vap{margin-top:8px;padding:10px 12px;border-radius:12px;background:#fff7ed;font-size:14px}
+  .subj .vap b{color:var(--accent2)}
+
+  /* day list */
+  .day{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:#fff;border:1px solid var(--ring);box-shadow:var(--shadow);margin-bottom:8px}
+  .day .score{font-family:"Baloo 2";font-weight:800;font-size:18px}
+  .day.done{border-color:rgba(31,157,87,.35)}
+
+  /* quiz */
+  .qnum{display:flex;gap:5px;margin-bottom:14px}
+  .qnum i{flex:1;height:6px;border-radius:999px;background:#eee3d8}
+  .qnum i.ok{background:var(--ok)} .qnum i.bad{background:var(--bad)} .qnum i.cur{background:#ffb454}
+  .question{font-size:18px;font-weight:500;margin-bottom:14px}
+  .opts{display:grid;gap:9px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;background:#fff;border:2px solid #eee3d8;border-radius:16px;padding:13px 14px;font:inherit;cursor:pointer;transition:transform .1s,border-color .15s}
+  .opt:hover{border-color:#ffb454}
+  .opt .k{width:28px;height:28px;border-radius:50%;background:#fff7ed;display:grid;place-items:center;font-weight:800;flex:none;font-size:13px}
+  .opt.ok{border-color:var(--ok);background:#effaf3}
+  .opt.bad{border-color:var(--bad);background:#fff0f0}
+  .opt:disabled{cursor:default}
+  .expl{margin-top:12px;padding:14px;border-radius:16px;background:#fff7ed;border:1px dashed #ffb454;animation:rise .3s ease both}
+  .expl b{display:block;margin-bottom:4px}
+  .expl.good{background:#effaf3;border-color:var(--ok)}
+  .big{font-family:"Baloo 2";font-size:44px;font-weight:800;line-height:1}
+
+  /* scratch card */
+  .scratch{position:relative;height:130px;border-radius:18px;overflow:hidden;background:linear-gradient(120deg,#ffe29a,#ffb454);display:grid;place-items:center;cursor:pointer;user-select:none}
+  .scratch .cover{position:absolute;inset:0;background:repeating-linear-gradient(45deg,#cfc6bb 0 10px,#bdb3a7 10px 20px);display:grid;place-items:center;font-weight:800;color:#5a4a3a;transition:opacity .5s}
+  .scratch.open .cover{opacity:0;pointer-events:none}
+
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{padding:8px 6px;border-bottom:1px solid #f0e6dc;text-align:left;vertical-align:top}
+  th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
+
+  .note{font-size:14px;padding:12px 14px;border-radius:14px;background:#fff;border:1px solid var(--ring)}
+  .pill{font-size:12px;background:#f3ede7;border-radius:999px;padding:3px 9px;font-weight:700;color:var(--muted)}
+  .wrong-item{padding:10px 0;border-bottom:1px solid #f0e6dc;font-size:14px}
+  .wrong-item:last-child{border-bottom:0}
+
+  /* bottom nav */
+  nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-top:1px solid var(--ring)}
+  nav.bottom .in{max-width:720px;margin:0 auto;display:flex}
+  nav.bottom a{flex:1;text-align:center;padding:10px 4px 12px;font-size:12px;font-weight:700;color:var(--muted)}
+  nav.bottom a .i{display:block;font-size:20px}
+  nav.bottom a.on{color:var(--accent2)}
+
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.1)}100%{transform:scale(1)}}
+  .pop{animation:pop .5s cubic-bezier(.2,1.4,.4,1) both}
+  @media (max-width:420px){ .week .n{width:64px;font-size:16px} h1{font-size:26px} }
+</style>
+</head>
+<body>
+  <div id="app"></div>
+  <nav class="bottom"><div class="in">
+    <a href="#/" data-nav="home"><span class="i">🏠</span>Hôm nay</a>
+    <a href="#/lo-trinh" data-nav="lotrinh"><span class="i">🗺️</span>Lộ trình</a>
+    <a href="#/phu-huynh" data-nav="ph"><span class="i">👩‍👧</span>Góc của mẹ</a>
+  </div></nav>
+
+  <script src="config.js"></script>
+  <!-- ====== NỘI DUNG TỪNG TUẦN: thêm tuần mới = thêm 1 dòng ở đây + 1 file trong thư mục data/ ====== -->
+  <script src="data/tuan-01.js"></script>
+  <script src="data/tuan-02.js"></script>
+  <script src="data/tuan-03.js"></script>
+  <script src="data/tuan-04.js"></script>
+  <!-- ================================================================================================ -->
+  <script src="app.js"></script>
+</body>
+</html>
