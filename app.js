@@ -11,6 +11,7 @@
   const SOAN = window.KIM_SOAN || {};
   const DV = window.KIM_DONG_VIEN || [];
   const TIN = window.KIM_TIN || [];
+  const GIANG = window.KIM_GIANG || {};
   const soanKey = (t, i) => "t" + t + "-s" + i;
   const defaultState = () => ({ xu: 0, heo: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {}, ngay: {}, demThuong: 0 });
   let S = load();
@@ -194,6 +195,35 @@
     app.querySelectorAll("[data-toggle]").forEach((el) => el.addEventListener("click", () => { el.classList.toggle("open"); const k = el.dataset.doc; if (k && !S.doc[k]) { S.doc[k] = true; save(); } }));
   }
 
+  /* ---------- trang: giảng lại cho dễ hiểu ---------- */
+  function viewGiang(ma) {
+    setNav("lotrinh");
+    const g = GIANG[ma]; if (!g) { location.hash = "#/"; return; }
+    const mi = monInfo(g.mon);
+    const phan = g.phan.map((p) => {
+      let b = `<div class="card"><h3>${esc(p.ten)}</h3>`;
+      (p.doan || []).forEach((d) => { b += `<p style="margin-top:8px">${esc(d)}</p>`; });
+      (p.buoc || []).forEach((x) => {
+        b += `<div class="buoc"><div class="so">${x.so}</div><div class="grow"><b>${esc(x.ten)}</b><div class="small" style="margin-top:3px">${esc(x.de)}</div><div class="vd">${esc(x.vd)}</div></div></div>`;
+      });
+      (p.kn || []).forEach((x) => {
+        b += `<div class="buoc"><div class="so" style="background:${mi.nen};color:${mi.mau}">•</div><div class="grow"><b>${esc(x.ten)}</b><div class="small" style="margin-top:3px">${esc(x.de)}</div><div class="vd">${esc(x.vd)}</div></div></div>`;
+      });
+      if (p.hop) b += `<div class="hop"><b>${esc(p.hop.nhan)}</b>${esc(p.hop.chu)}</div>`;
+      return b + `</div>`;
+    }).join("");
+    const bang = (g.doiChieu || []).map(([a, c]) => `<tr><td style="width:46%"><i>${esc(a)}</i></td><td><b>${esc(c)}</b></td></tr>`).join("");
+    const hoi = (g.tuKiemTra || []).map((x, i) => `<details class="tkt"><summary>${i + 1}. ${esc(x.q)}</summary><div class="dap">${esc(x.a)}</div></details>`).join("");
+    app.innerHTML = header("Giảng lại cho dễ hiểu") +
+      `<div class="card"><div class="row"><div class="icon-box" style="background:${mi.nen}">💡</div><div class="grow"><b>${esc(g.tieuDe)}</b><div class="muted">📕 ${esc(g.sgk)}</div></div></div>
+        <p style="margin-top:12px;padding:12px 14px;border-radius:14px;background:#fff7ed"><b>Bài này thật ra nói gì?</b><br>${esc(g.motCau)}</p></div>
+      ${phan}
+      ${bang ? `<div class="card"><h3>Sách viết thế này → hiểu là</h3><table style="margin-top:8px">${bang}</table></div>` : ""}
+      ${g.meo ? `<div class="card"><h3>🧠 Mẹo nhớ</h3><p style="margin-top:8px">${esc(g.meo)}</p></div>` : ""}
+      ${hoi ? `<div class="card"><h3>✅ Kim tự kiểm tra</h3><p class="muted small">Đọc câu hỏi, tự trả lời trong đầu rồi mới chạm để xem đáp án.</p><div style="margin-top:8px">${hoi}</div></div>` : ""}
+      <div style="text-align:center;margin-top:14px"><a class="btn ghost" href="#/">Về trang chủ</a></div>`;
+  }
+
   /* ---------- trang: phần thưởng cuối ngày ---------- */
   function viewThuong() {
     setNav("home");
@@ -238,6 +268,7 @@
       <div class="card"><h3>1. Mở sách và làm theo</h3><div style="margin-top:8px">${viec}</div></div>
       <div class="card"><h3>2. Kim tự trả lời</h3><p class="muted small">Không cần đúng hết. Viết theo cách hiểu của Kim, mẹ sẽ đọc ở Góc của mẹ.</p>${hoi}</div>
       <div class="card"><h3>3. Cần nhớ</h3><ul class="nho">${nho}</ul></div>
+      ${s.giang && GIANG[s.giang] ? `<a class="card" href="#/giang/${s.giang}" style="display:flex;align-items:center;gap:12px;border-left:5px solid var(--accent2)"><div class="icon-box" style="background:#ffe3ec">💡</div><div class="grow"><b>Sách khó hiểu quá?</b><div class="muted small">Đọc bản giảng lại bằng lời dễ hiểu, có ví dụ đời thường</div></div><span class="muted">›</span></a>` : ""}
       <div class="card" style="text-align:center">${r ? `<p class="small">Đã soạn ngày ${r.luc}. Sửa câu trả lời rồi bấm lưu lại cũng được.</p>` : `<p class="small">Xong ba phần trên thì bấm nút. +${C.XU_SOAN_BAI} xu.</p>`}<div style="margin-top:10px"><button class="btn block" id="btnSoanXong">${r ? "Lưu lại" : "Xong soạn bài ✓"}</button></div><div style="margin-top:10px"><a class="btn sm ghost" href="#/tuan/${t}">Về tuần ${t}</a></div></div>`;
     $("#btnSoanXong").addEventListener("click", () => {
       const tl = Array.from(app.querySelectorAll(".ans")).map((x) => x.value.trim());
@@ -419,6 +450,7 @@
     if (h[0] === "lam") return viewLam(Number(h[1]), Number(h[2]));
     if (h[0] === "soan") return viewSoan(Number(h[1]), Number(h[2]));
     if (h[0] === "thuong") return viewThuong();
+    if (h[0] === "giang") return viewGiang(h[1]);
     if (h[0] === "dong") return viewDong(Number(h[1]));
     if (h[0] === "phu-huynh") return viewPhuHuynh();
     viewHome();

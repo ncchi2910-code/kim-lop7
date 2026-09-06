@@ -21,6 +21,7 @@ app.js            logic (không cần sửa)
 config.js         ngày bắt đầu tuần 1, mức thưởng, tên môn
 soan-bai.js       phần Soạn bài (học trước) cho từng tuần: trang SGK, việc cần làm, câu hỏi tự trả lời, cần nhớ
 thuong.js         kho câu động viên và tin Anh trai vượt ngàn chông gai cho phần thưởng cuối ngày
+giang-bai.js      bản giảng lại dễ hiểu cho những bài sách viết khó
 dong-bo.js        đồng bộ tiến độ qua Supabase (tuỳ chọn)
 supabase.sql      script tạo bảng và hàm trên Supabase
 huong-dan-dong-bo.md  hướng dẫn bật đồng bộ, 10 phút
@@ -46,8 +47,9 @@ Mỗi lần thêm tuần mới chỉ cần đẩy file lên GitHub, Vercel tự 
 1. Sao chép `MAU-tuan-XX.js` thành `tuan-05.js`, đổi `KIM_WEEKS[99]` và `tuan: 99` thành 5.
 2. Điền nội dung: 5 thẻ môn, 5 lượt × 7 câu, 2–3 bài đọc trước. Có thể nhờ Claude soạn từ bản tổng quan chương trình trong Project, rồi mẹ duyệt lại đáp án.
 3. Thêm dòng `<script src="tuan-05.js"></script>` vào `index.html`, ngay dưới dòng tuần 4. Thêm khối `window.KIM_SOAN[5] = [...]` vào `soan-bai.js` theo mẫu các tuần trước.
-4. Vài tuần một lần, bổ sung tin mới vào `window.KIM_TIN` trong `thuong.js` (kho hiện có 32 tin, dùng hết khoảng 5 tuần rồi mới lặp lại).
-5. Mở `index.html` trong trình duyệt để xem thử, rồi đẩy lên GitHub.
+4. Bài nào sách viết khó thì thêm một mục vào `giang-bai.js` (theo mẫu `khtn-b1`), rồi thêm `giang: "ma-bai"` vào mục tương ứng trong `soan-bai.js` — trang soạn bài sẽ tự hiện nút "Sách khó hiểu quá?".
+5. Vài tuần một lần, bổ sung tin mới vào `window.KIM_TIN` trong `thuong.js` (kho hiện có 32 tin, dùng hết khoảng 5 tuần rồi mới lặp lại).
+6. Mở `index.html` trong trình duyệt để xem thử, rồi đẩy lên GitHub.
 
 ## Chỉnh lịch
 
