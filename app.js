@@ -8,8 +8,10 @@
 
   /* ---------- trạng thái ---------- */
   const SOAN = window.KIM_SOAN || {};
+  const DV = window.KIM_DONG_VIEN || [];
+  const TIN = window.KIM_TIN || [];
   const soanKey = (t, i) => "t" + t + "-s" + i;
-  const defaultState = () => ({ xu: 0, heo: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {} });
+  const defaultState = () => ({ xu: 0, heo: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {}, ngay: {}, demThuong: 0 });
   let S = load();
   function load() { try { const r = localStorage.getItem(KEY); return r ? Object.assign(defaultState(), JSON.parse(r)) : defaultState(); } catch (e) { return defaultState(); } }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
@@ -34,6 +36,17 @@
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   function monInfo(m) { return C.MON[m] || { ten: m, icon: "📘", mau: "#888", nen: "#eee" }; }
   function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  /* Việc Kim phải làm trong ngày: bài soạn có soanToi = thu, và lượt ôn của thu đó */
+  function viecCuaNgay(t, thu) {
+    const w = W[t]; if (!w) return { tong: 0, xong: 0 };
+    let tong = 0, xong = 0;
+    (SOAN[t] || []).forEach((s, i) => { if (s.soanToi === thu) { tong++; if (S.soan[soanKey(t, i)]) xong++; } });
+    const n = w.ngay.find((x) => x.thu === thu);
+    if (n) { tong++; if (S.luot[luotKey(t, thu)]) xong++; }
+    return { tong, xong };
+  }
+  const xongHetHomNay = (t, thu) => { const v = viecCuaNgay(t, thu); return v.tong > 0 && v.xong === v.tong; };
 
   function tienDoTuan(t) {
     const w = W[t]; if (!w) return { xong: 0, tong: 0, dong: !!S.dong[t] };
@@ -105,6 +118,14 @@
         viec.push(`<a class="day ${r ? "done" : ""}" href="#/lam/${t}/${thu}"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><div class="muted">Ôn lại bài vừa học hôm nay</div><b>${esc(ngay.ten)}</b></div>${r ? `<div class="score" style="color:${r.diem / r.tong >= 0.7 ? "var(--ok)" : "#b45309"}">${r.diem}/${r.tong}</div>` : '<span class="pill">15 phút</span>'}</a>`); }
 
       const ok = td.xong === td.tong;
+      const vn = viecCuaNgay(t, thu);
+      if (vn.tong > 0 && vn.xong === vn.tong) {
+        const g = S.ngay[todayStr()];
+        main += `<a class="card" href="#/thuong" style="text-align:center;border:2px dashed #ffb454;background:linear-gradient(160deg,#fffaf0,#fff3e0)">
+          <div class="big pop">🎁</div>
+          <p style="margin-top:8px"><b>${g ? "Phần thưởng hôm nay" : "Kim xong hết việc hôm nay rồi!"}</b></p>
+          <p class="muted small">${g ? `Đã nhận ${money(g.tien)} · chạm để xem lại` : "Chạm để mở phần thưởng: một lời nhắn, một tin Anh tài, và một thẻ cào 🐷"}</p></a>`;
+      }
       if (viec.length) {
         main += `<h2>🌙 Việc tối nay</h2><p class="muted small" style="margin:-6px 0 10px">Khoảng ${viec.length * 12} phút. Làm xong giữ được chuỗi ngày 🔥.</p>` + viec.join("");
       } else if (ok && !td.dong) {
@@ -165,6 +186,37 @@
     app.querySelectorAll("[data-toggle]").forEach((el) => el.addEventListener("click", () => { el.classList.toggle("open"); const k = el.dataset.doc; if (k && !S.doc[k]) { S.doc[k] = true; save(); } }));
   }
 
+  /* ---------- trang: phần thưởng cuối ngày ---------- */
+  function viewThuong() {
+    setNav("home");
+    const t = tuanHienTai(), thu = thuHomNay(), hn = todayStr();
+    if (!xongHetHomNay(t, thu) && !S.ngay[hn]) {
+      const v = viecCuaNgay(t, thu);
+      app.innerHTML = header("Phần thưởng cuối ngày") + `<div class="card" style="text-align:center"><div class="big">🔒</div><p style="margin-top:10px"><b>Chưa mở được</b></p><p class="small">${v.tong ? `Kim còn ${v.tong - v.xong} việc nữa của hôm nay.` : "Hôm nay không có việc nào, nên chưa có phần thưởng."}</p><div style="margin-top:14px"><a class="btn" href="#/">Về trang chủ</a></div></div>`;
+      return;
+    }
+    if (!S.ngay[hn]) {
+      const lo = C.THE_CAO_NGAY || { min: 5000, max: 20000, buoc: 1000 };
+      const b = Math.floor((lo.max - lo.min) / lo.buoc) + 1;
+      const tien = lo.min + Math.floor(Math.random() * b) * lo.buoc;
+      const d = S.demThuong || 0;
+      S.ngay[hn] = { tien, dv: DV.length ? d % DV.length : -1, tin: TIN.length ? d % TIN.length : -1, cao: false };
+      S.demThuong = d + 1; S.heo += tien; capNhatStreak(); save();
+    }
+    const g = S.ngay[hn];
+    const cau = g.dv >= 0 ? DV[g.dv] : "Hôm nay Kim làm tốt lắm.";
+    const tin = g.tin >= 0 ? TIN[g.tin] : null;
+    app.innerHTML = header(`${C.THU[thu]}, ${fmt(new Date())} · phần thưởng`) +
+      `<div class="card" style="text-align:center;background:linear-gradient(160deg,#fffaf0,#ffeede)"><div class="big pop">🎉</div><h3 style="margin-top:8px">Xong hết việc hôm nay!</h3><p class="muted small">🔥 chuỗi ${S.streak.count} ngày</p></div>
+      <div class="card"><h3>💌 Lời nhắn cho Kim</h3><p style="margin-top:8px;font-size:16px">${esc(cau)}</p></div>
+      <div class="card"><h3>🐷 Thẻ cào hôm nay</h3><p class="muted small">Chạm để cào</p>
+        <div class="scratch ${g.cao ? "open" : ""}" id="scratch" style="margin-top:8px"><div class="big">${money(g.tien)}</div><div class="cover">👆 Cào tại đây</div></div>
+        <p class="muted small" style="margin-top:10px">Đã cộng vào heo đất. Heo đang có ${money(S.heo)}.</p></div>
+      ${tin ? `<div class="card"><h3>🎤 Anh trai vượt ngàn chông gai</h3><p style="margin-top:8px"><b>${esc(tin.tieuDe)}</b></p><p class="small" style="margin-top:6px">${esc(tin.noiDung)}</p></div>` : ""}
+      <div style="text-align:center;margin-top:14px"><a class="btn" href="#/">Về trang chủ</a> <a class="btn ghost" href="#/tuan/${t}">Xem tuần ${t}</a></div>`;
+    const sc = $("#scratch"); if (sc) sc.addEventListener("click", () => { sc.classList.add("open"); if (!S.ngay[hn].cao) { S.ngay[hn].cao = true; save(); } });
+  }
+
   /* ---------- trang: soạn bài ---------- */
   function viewSoan(t, i) {
     setNav("lotrinh");
@@ -186,7 +238,8 @@
       if (first) { S.xu += C.XU_SOAN_BAI; capNhatStreak(); }
       save();
       $("#btnSoanXong").textContent = first ? `Đã lưu · +${C.XU_SOAN_BAI} xu 🎉` : "Đã lưu ✓";
-      setTimeout(() => { location.hash = "#/tuan/" + t; }, 900);
+      const xong = xongHetHomNay(tuanHienTai(), thuHomNay());
+      setTimeout(() => { location.hash = xong ? "#/thuong" : "#/tuan/" + t; }, 900);
     });
   }
 
@@ -257,7 +310,7 @@
       app.innerHTML = header(opt.sub) + `<div class="card" style="text-align:center"><div class="big pop">${diem}/${qs.length}</div><p style="margin:8px 0 4px"><b>${loi}</b></p><p class="muted">+${r.xu} xu${r.first ? " (gồm thưởng làm lượt đầu)" : ""} · 🔥 chuỗi ${S.streak.count} ngày</p>
         ${r.theCao ? `<h3 style="margin-top:18px">Thẻ cào tuần này</h3><p class="muted small">Chạm để cào</p><div class="scratch" id="scratch"><div class="big">${money(r.theCao)}</div><div class="cover">👆 Cào tại đây</div></div>` : ""}
         ${sai.length ? `<div style="text-align:left;margin-top:18px"><b>Chỗ cần xem lại:</b>${sai.map((s) => `<div class="wrong-item">${esc(s.cd)}<div class="muted">${esc(s.q)}</div></div>`).join("")}</div>` : ""}
-        <div style="margin-top:18px"><a class="btn" href="${r.back}">${r.backText}</a> <a class="btn ghost" href="#/">Hôm nay</a></div></div>`;
+        <div style="margin-top:18px">${xongHetHomNay(tuanHienTai(), thuHomNay()) && !S.ngay[todayStr()] ? `<a class="btn" href="#/thuong">🎁 Mở phần thưởng hôm nay</a> <a class="btn ghost" href="${r.back}">${r.backText}</a>` : `<a class="btn" href="${r.back}">${r.backText}</a> <a class="btn ghost" href="#/">Hôm nay</a>`}</div></div>`;
       const sc = $("#scratch"); if (sc) sc.addEventListener("click", () => sc.classList.add("open"));
     }
     draw();
@@ -276,7 +329,7 @@
         ${loi.length ? `<details style="margin-top:8px"><summary class="small" style="cursor:pointer;color:var(--accent2);font-weight:700">Xem ${loi.length} câu sai</summary>${loi.map((l) => `<div class="wrong-item"><div class="muted">${monInfo(l.mon).icon} ${C.THU[l.thu]} · ${esc(l.cd)}</div>${esc(l.q)}<div class="small">Kim chọn: <span style="color:var(--bad)">${esc(l.chon)}</span> · Đúng: <span style="color:var(--ok)">${esc(l.dungLa)}</span></div></div>`).join("")}</details>` : ""}
       </div>`; });
     app.innerHTML = header("Góc của mẹ") +
-      `<div class="card tight"><div class="row"><div class="grow"><b>Tổng quan</b><div class="small">🔥 ${S.streak.count} ngày liên tiếp · ⭐ ${S.xu} xu · 🐷 heo đất ${money(S.heo)}</div></div></div></div>
+      `<div class="card tight"><div class="row"><div class="grow"><b>Tổng quan</b><div class="small">🔥 ${S.streak.count} ngày liên tiếp · ⭐ ${S.xu} xu · 🐷 heo đất ${money(S.heo)}</div><div class="small muted" style="margin-top:4px">${Object.keys(S.ngay).length} ngày hoàn thành hết việc · thẻ cào ngày cộng ${money(Object.values(S.ngay).reduce((a, x) => a + x.tien, 0))}</div></div></div></div>
       ${rows}
       <div class="card"><b>Cách dùng</b><p class="small" style="margin-top:6px">Cuối tuần mở trang này, nhìn "Ba chỗ sai nhiều nhất", dạy lại đúng ba chỗ đó rồi cho Kim làm 5 câu chốt ở mục Đóng tuần. Heo đất là số tiền thưởng ảo, mẹ quy đổi thế nào tuỳ mẹ.</p>
         <p class="small" style="margin-top:10px">Tuần 1 bắt đầu từ <b>${fmt(ngayCuaTuan(1, 2))}/${parseDate(C.WEEK1_START).getFullYear()}</b> (sửa trong <code>config.js</code> nếu lịch trường khác).</p>
@@ -298,6 +351,7 @@
     if (h[0] === "tuan") return viewTuan(Number(h[1]));
     if (h[0] === "lam") return viewLam(Number(h[1]), Number(h[2]));
     if (h[0] === "soan") return viewSoan(Number(h[1]), Number(h[2]));
+    if (h[0] === "thuong") return viewThuong();
     if (h[0] === "dong") return viewDong(Number(h[1]));
     if (h[0] === "phu-huynh") return viewPhuHuynh();
     viewHome();

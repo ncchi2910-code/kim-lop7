@@ -2,6 +2,8 @@
 
 Trang web tĩnh (không cần máy chủ) đi kèm năm học lớp 7 của Kim, bộ sách Kết nối tri thức. Mỗi tuần theo lịch trường có: thẻ "tuần này học gì" cho 5 môn chính, 6 bài soạn (học trước, mở SGK làm theo, tự trả lời 2–3 câu, mẹ đọc được câu trả lời ở Góc của mẹ), 5 lượt kiểm tra ngắn (Thứ Hai → Thứ Sáu, 7 câu, có giải thích), bài đọc trước, và phần "đóng tuần" cuối tuần cùng mẹ (xem lại chỗ sai, 5 câu chốt, thẻ cào vào heo đất).
 
+Mỗi ngày Kim làm xong hết việc của ngày đó sẽ mở được **phần thưởng cuối ngày**: một lời nhắn động viên, một thẻ cào ngẫu nhiên 5.000–20.000đ cộng vào heo đất, và một mẩu tin về Anh trai vượt ngàn chông gai. Mỗi ngày chỉ mở một lần; mở lại trong ngày vẫn xem được nhưng không cào thêm tiền.
+
 Mọi thứ bám theo thời khoá biểu lớp 7A (áp dụng từ 07/09/2026, ghi trong `config.js` → `LICH_HOC`):
 
 | | Thứ Hai | Thứ Ba | Thứ Tư | Thứ Năm | Thứ Sáu |
@@ -18,6 +20,7 @@ index.html        giao diện + danh sách file tuần
 app.js            logic (không cần sửa)
 config.js         ngày bắt đầu tuần 1, mức thưởng, tên môn
 soan-bai.js       phần Soạn bài (học trước) cho từng tuần: trang SGK, việc cần làm, câu hỏi tự trả lời, cần nhớ
+thuong.js         kho câu động viên và tin Anh trai vượt ngàn chông gai cho phần thưởng cuối ngày
 tuan-01.js … tuan-04.js   nội dung từng tuần
 MAU-tuan-XX.js    mẫu để soạn tuần mới
 test/check.mjs    kiểm thử tự động (tuỳ chọn, cần Node + Playwright)
@@ -38,11 +41,12 @@ Mỗi lần thêm tuần mới chỉ cần đẩy file lên GitHub, Vercel tự 
 1. Sao chép `MAU-tuan-XX.js` thành `tuan-05.js`, đổi `KIM_WEEKS[99]` và `tuan: 99` thành 5.
 2. Điền nội dung: 5 thẻ môn, 5 lượt × 7 câu, 2–3 bài đọc trước. Có thể nhờ Claude soạn từ bản tổng quan chương trình trong Project, rồi mẹ duyệt lại đáp án.
 3. Thêm dòng `<script src="tuan-05.js"></script>` vào `index.html`, ngay dưới dòng tuần 4. Thêm khối `window.KIM_SOAN[5] = [...]` vào `soan-bai.js` theo mẫu các tuần trước.
-4. Mở `index.html` trong trình duyệt để xem thử, rồi đẩy lên GitHub.
+4. Vài tuần một lần, bổ sung tin mới vào `window.KIM_TIN` trong `thuong.js` (kho hiện có 32 tin, dùng hết khoảng 5 tuần rồi mới lặp lại).
+5. Mở `index.html` trong trình duyệt để xem thử, rồi đẩy lên GitHub.
 
 ## Chỉnh lịch
 
-`config.js` → `WEEK1_START` là ngày Thứ Hai của tuần học đầu tiên (đang là 07/09/2026, khớp ngày thời khoá biểu có hiệu lực). `LICH_HOC` là thời khoá biểu; nếu trường đổi TKB thì sửa ở đây, đồng thời đổi `thu` của các lượt ôn trong `tuan-XX.js` và `soanToi` trong `soan-bai.js` cho khớp. Nếu trường Kim bắt đầu tuần 1 ngày khác, sửa ở đây; toàn bộ lịch tự dịch theo. Cũng trong file này có mức xu, các mệnh giá thẻ cào, và tuần kiểm tra định kì.
+`config.js` → `WEEK1_START` là ngày Thứ Hai của tuần học đầu tiên (đang là 07/09/2026, khớp ngày thời khoá biểu có hiệu lực). `LICH_HOC` là thời khoá biểu; nếu trường đổi TKB thì sửa ở đây, đồng thời đổi `thu` của các lượt ôn trong `tuan-XX.js` và `soanToi` trong `soan-bai.js` cho khớp. Nếu trường Kim bắt đầu tuần 1 ngày khác, sửa ở đây; toàn bộ lịch tự dịch theo. Cũng trong file này có mức xu, mệnh giá thẻ cào cuối tuần (`THE_CAO`), khoảng thẻ cào mỗi ngày (`THE_CAO_NGAY`, đang là 5.000–20.000đ), và tuần kiểm tra định kì.
 
 ## Kiểm thử (tuỳ chọn)
 

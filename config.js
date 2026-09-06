@@ -9,6 +9,7 @@ window.KIM_CONFIG = {
   XU_MOI_CAU_DUNG: 10,
   XU_XONG_LUOT: 20,
   XU_SOAN_BAI: 15,
+  THE_CAO_NGAY: { min: 5000, max: 20000, buoc: 1000 }, /* thẻ cào mỗi ngày Kim xong hết việc */
   THE_CAO: [10000, 10000, 15000, 15000, 20000, 30000], /* rút ngẫu nhiên một giá trị khi đóng tuần */
   /* Tên và màu môn */
   MON: {
