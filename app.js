@@ -1,5 +1,16 @@
 /* Kim Lớp 7 — app chính. Không cần sửa file này khi thêm tuần mới. */
 (function () {
+  /* Lưới an toàn: nếu config.js hỏng (hay gặp khi sửa tay rồi lỡ xoá dấu ngoặc, dấu phẩy)
+     thì báo rõ ràng thay vì để trang trắng trơn không ai hiểu vì sao. */
+  if (!window.KIM_CONFIG || !window.KIM_CONFIG.WEEK1_START) {
+    document.getElementById("app").innerHTML =
+      '<div style="max-width:520px;margin:40px auto;background:#fff;border:2px solid #d64545;border-radius:20px;padding:22px;font-family:system-ui,sans-serif">' +
+      '<h2 style="margin:0 0 10px;color:#d64545">Trang chưa chạy được</h2>' +
+      '<p style="margin:0 0 10px">File <code>config.js</code> không nạp được, thường là do lúc sửa tay bị mất một dấu ngoặc kép, dấu phẩy hoặc dấu đóng chú thích.</p>' +
+      '<p style="margin:0 0 10px">Cách xem lỗi: bấm chuột phải vào trang → Kiểm tra (Inspect) → thẻ Console, dòng đỏ sẽ chỉ đúng chỗ sai.</p>' +
+      '<p style="margin:0;color:#8a6d57;font-size:13px">Kim cứ báo mẹ, tiến độ đã làm không mất đâu.</p></div>';
+    return;
+  }
   const C = window.KIM_CONFIG;
   const W = window.KIM_WEEKS || {};
   const $ = (s) => document.querySelector(s);
