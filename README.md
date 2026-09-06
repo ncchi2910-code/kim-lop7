@@ -21,12 +21,17 @@ app.js            logic (không cần sửa)
 config.js         ngày bắt đầu tuần 1, mức thưởng, tên môn
 soan-bai.js       phần Soạn bài (học trước) cho từng tuần: trang SGK, việc cần làm, câu hỏi tự trả lời, cần nhớ
 thuong.js         kho câu động viên và tin Anh trai vượt ngàn chông gai cho phần thưởng cuối ngày
+dong-bo.js        đồng bộ tiến độ qua Supabase (tuỳ chọn)
+supabase.sql      script tạo bảng và hàm trên Supabase
+huong-dan-dong-bo.md  hướng dẫn bật đồng bộ, 10 phút
 tuan-01.js … tuan-04.js   nội dung từng tuần
 MAU-tuan-XX.js    mẫu để soạn tuần mới
 test/check.mjs    kiểm thử tự động (tuỳ chọn, cần Node + Playwright)
 ```
 
-Tiến độ của Kim lưu trong trình duyệt (localStorage) của thiết bị Kim dùng. Trang phụ huynh đọc cùng dữ liệu đó, nên mở trên cùng thiết bị mới thấy.
+Tiến độ của Kim lưu trong trình duyệt (localStorage) của thiết bị Kim dùng. Mặc định trang phụ huynh đọc cùng dữ liệu đó, nên phải mở trên cùng thiết bị mới thấy.
+
+Bật **đồng bộ Supabase** thì mọi thiết bị thấy chung một tiến độ — mẹ xem được từ máy mình. Xem `huong-dan-dong-bo.md`; để trống khối `SUPABASE` trong `config.js` là tắt, app vẫn chạy bình thường.
 
 ## Đưa lên mạng (GitHub + Vercel)
 

@@ -7,6 +7,7 @@
   const KEY = "kim7.v1";
 
   /* ---------- trạng thái ---------- */
+  const DB = window.KimDongBo;
   const SOAN = window.KIM_SOAN || {};
   const DV = window.KIM_DONG_VIEN || [];
   const TIN = window.KIM_TIN || [];
@@ -14,7 +15,14 @@
   const defaultState = () => ({ xu: 0, heo: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {}, ngay: {}, demThuong: 0 });
   let S = load();
   function load() { try { const r = localStorage.getItem(KEY); return r ? Object.assign(defaultState(), JSON.parse(r)) : defaultState(); } catch (e) { return defaultState(); } }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  let luuLoi = false;
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(S)); luuLoi = localStorage.getItem(KEY) === null; }
+    catch (e) { luuLoi = true; }
+    if (DB && DB.co() && DB.layMa()) DB.henDay(() => S, () => { if (location.hash.indexOf("phu-huynh") > -1) route(); });
+    return !luuLoi;
+  }
+  const canhBaoLuu = () => luuLoi ? `<div class="card tight" style="border:2px solid var(--bad);background:#fff0f0"><b style="color:var(--bad)">⚠️ Máy này không lưu được tiến độ</b><div class="small" style="margin-top:4px">Trình duyệt đang chặn bộ nhớ (hay gặp khi mở ở chế độ riêng tư/ẩn danh). Kim hãy mở lại trang ở cửa sổ thường, nếu không thì làm xong sẽ mất hết.</div></div>` : "";
 
   /* ---------- ngày tháng ---------- */
   const todayStr = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
@@ -141,7 +149,7 @@
 
     const kt = C.KIEM_TRA.find((k) => k.tuan >= t);
     const ktHtml = kt ? `<div class="card tight"><div class="row"><div class="grow"><b>Đường đến ${kt.ten}</b><div class="muted">Còn ${kt.tuan - t} tuần (tuần ${kt.tuan})</div></div><span class="pill">Tuần ${t}/${C.TONG_TUAN}</span></div><div class="bar" style="margin-top:10px"><i style="width:${Math.round((t / kt.tuan) * 100)}%"></i></div></div>` : "";
-    app.innerHTML = header(`${C.THU[thu]}, ${fmt(new Date())} · Tuần ${t}`) + main + ktHtml + `<p class="muted" style="text-align:center;margin-top:18px">Học mỗi ngày một chút 🌱</p>`;
+    app.innerHTML = header(`${C.THU[thu]}, ${fmt(new Date())} · Tuần ${t}`) + canhBaoLuu() + main + ktHtml + `<p class="muted" style="text-align:center;margin-top:18px">Học mỗi ngày một chút 🌱</p>`;
   }
 
   /* ---------- trang: lộ trình ---------- */
@@ -237,6 +245,7 @@
       S.soan[k] = { tl, luc: todayStr() };
       if (first) { S.xu += C.XU_SOAN_BAI; capNhatStreak(); }
       save();
+      if (luuLoi) { $("#btnSoanXong").textContent = "⚠️ Máy này không lưu được"; return; }
       $("#btnSoanXong").textContent = first ? `Đã lưu · +${C.XU_SOAN_BAI} xu 🎉` : "Đã lưu ✓";
       const xong = xongHetHomNay(tuanHienTai(), thuHomNay());
       setTimeout(() => { location.hash = xong ? "#/thuong" : "#/tuan/" + t; }, 900);
@@ -316,6 +325,62 @@
     draw();
   }
 
+  /* ---------- khối đồng bộ (hiện trong Góc của mẹ) ---------- */
+  function kheDongBo() {
+    if (!DB || !DB.co()) {
+      return `<div class="note small" style="margin-bottom:12px">📱 Trang này đọc tiến độ lưu <b>ngay trên thiết bị đang mở</b>. Muốn thấy bài Kim làm, mẹ mở trang trên đúng máy Kim dùng. (Chưa bật đồng bộ Supabase — xem <code>config.js</code>.)</div>`;
+    }
+    if (!DB.layMa()) {
+      return `<div class="card" style="border:2px dashed #ffb454">
+        <b>🔗 Nối máy này với sổ của Kim</b>
+        <p class="small" style="margin-top:6px">Nhập mã đồng bộ (mẹ đặt khi tạo sổ trên Supabase). Chỉ cần nhập một lần trên mỗi máy; sau đó máy này và máy Kim luôn thấy cùng một tiến độ.</p>
+        <input class="ans" id="oMa" type="password" placeholder="Mã đồng bộ" autocomplete="off" style="margin-top:10px">
+        <div style="margin-top:10px"><button class="btn sm" id="btnNoi">Nối sổ</button></div>
+        <div id="ketQuaNoi"></div></div>`;
+    }
+    const ts = DB.trangThai;
+    const luc = ts.lanCuoi ? `${String(ts.lanCuoi.getHours()).padStart(2, "0")}:${String(ts.lanCuoi.getMinutes()).padStart(2, "0")}` : "chưa";
+    return `<div class="card tight">
+      <div class="row"><div class="grow"><b>🔄 Đồng bộ</b>
+        <div class="small ${ts.loi ? "" : "muted"}" style="${ts.loi ? "color:var(--bad)" : ""}">${ts.dangChay ? "đang đồng bộ…" : ts.loi ? "Lỗi: " + esc(ts.loi) : `Đã đồng bộ lúc ${luc} · sổ "${esc(DB.soId())}"`}</div>
+      </div><button class="btn sm ghost" id="btnDongBo">Đồng bộ ngay</button></div>
+      <div style="margin-top:8px"><button class="btn sm ghost" id="btnBoNoi" style="font-size:12px;padding:6px 12px">Bỏ nối máy này</button></div>
+    </div>`;
+  }
+
+  function ganDongBo() {
+    const oMa = $("#oMa");
+    if (oMa) {
+      const noi = async () => {
+        const m = oMa.value.trim(); if (!m) return;
+        $("#ketQuaNoi").innerHTML = `<p class="small muted" style="margin-top:8px">Đang kiểm tra…</p>`;
+        DB.luuMa(m);
+        try {
+          const { duLieu } = await DB.taiVe(S);
+          S = Object.assign(defaultState(), duLieu);
+          try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+          await DB.dayLen(S); DB.trangThai.loi = null; route();
+        } catch (e) {
+          DB.xoaMa();
+          $("#ketQuaNoi").innerHTML = `<p class="small" style="margin-top:8px;color:var(--bad)">Không nối được: ${esc(e.message)}</p>`;
+        }
+      };
+      $("#btnNoi").addEventListener("click", noi);
+      oMa.addEventListener("keydown", (e) => { if (e.key === "Enter") noi(); });
+    }
+    const b = $("#btnDongBo");
+    if (b) b.addEventListener("click", async () => {
+      b.textContent = "Đang…"; DB.trangThai.dangChay = true;
+      try { const { duLieu } = await DB.taiVe(S); S = Object.assign(defaultState(), duLieu);
+        try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+        await DB.dayLen(S); DB.trangThai.loi = null; }
+      catch (e) { DB.trangThai.loi = e.message; }
+      finally { DB.trangThai.dangChay = false; route(); }
+    });
+    const bb = $("#btnBoNoi");
+    if (bb) bb.addEventListener("click", () => { DB.xoaMa(); route(); });
+  }
+
   /* ---------- trang: phụ huynh ---------- */
   function viewPhuHuynh() {
     setNav("ph");
@@ -323,12 +388,13 @@
     let rows = "";
     co.forEach((t) => { const w = W[t]; const td = tienDoTuan(t); const loi = loiCuaTuan(t); const top = topChuDe(loi, 3);
       const cells = w.ngay.map((n) => { const r = S.luot[luotKey(t, n.thu)]; return r ? `<span style="color:${r.diem / r.tong >= 0.7 ? "var(--ok)" : "#b45309"};font-weight:700">${monInfo(n.mon).icon} ${r.diem}/${r.tong}</span>` : `<span class="muted">${monInfo(n.mon).icon} –</span>`; }).join(" · ");
-      rows += `<div class="card"><div class="row"><div class="grow"><b>Tuần ${t} · ${esc(w.ten)}</b> ${t === cur ? '<span class="pill">tuần này</span>' : ""}<div class="small" style="margin-top:4px">${cells}</div></div><span class="pill">${td.dong ? "đã đóng · " + money(S.dong[t].theCao) : td.xong + "/" + td.tong}</span></div>
+      rows += `<div class="card"><div class="row"><div class="grow"><b>Tuần ${t} · ${esc(w.ten)}</b> ${t === cur ? '<span class="pill">tuần này</span>' : ""}<div class="small" style="margin-top:4px">${cells}</div></div><span class="pill">${td.dong ? "đã đóng · " + money(S.dong[t].theCao) : "✏️ ôn " + td.xong + "/" + td.tong}</span></div>
         ${top.length ? `<div style="margin-top:10px"><b class="small">Ba chỗ sai nhiều nhất</b>${top.map(([cd, c]) => `<div class="wrong-item"><b>${esc(cd)}</b> <span class="pill">${c} lần</span></div>`).join("")}</div>` : (td.xong ? '<p class="muted small" style="margin-top:8px">Không sai câu nào.</p>' : "")}
-        ${(() => { const sl = SOAN[t] || []; const done = sl.map((s, i) => ({ s, i, r: S.soan[soanKey(t, i)] })).filter((x) => x.r); if (!sl.length) return ""; return `<details style="margin-top:8px"><summary class="small" style="cursor:pointer;color:var(--accent2);font-weight:700">Soạn bài: ${done.length}/${sl.length} bài${done.length ? " · xem câu trả lời" : ""}</summary>${done.map((x) => `<div class="wrong-item"><b>${monInfo(x.s.mon).icon} ${esc(x.s.bai)}</b> <span class="muted">${x.r.luc}</span>${x.s.cauHoi.map((q, j) => `<div class="small" style="margin-top:4px"><span class="muted">${esc(q)}</span><br>${x.r.tl[j] ? esc(x.r.tl[j]) : "<i class='muted'>(bỏ trống)</i>"}</div>`).join("")}</div>`).join("")}</details>`; })()}
+        ${(() => { const sl = SOAN[t] || []; const done = sl.map((s, i) => ({ s, i, r: S.soan[soanKey(t, i)] })).filter((x) => x.r); if (!sl.length) return ""; return `<details style="margin-top:8px" ${done.length ? "open" : ""}><summary class="small" style="cursor:pointer;color:${done.length ? "var(--ok)" : "var(--muted)"};font-weight:700">📖 Soạn bài: ${done.length}/${sl.length} bài${done.length ? " · xem câu trả lời Kim viết" : " — chưa soạn bài nào"}</summary>${done.map((x) => `<div class="wrong-item"><b>${monInfo(x.s.mon).icon} ${esc(x.s.bai)}</b> <span class="muted">${x.r.luc}</span>${x.s.cauHoi.map((q, j) => `<div class="small" style="margin-top:4px"><span class="muted">${esc(q)}</span><br>${x.r.tl[j] ? esc(x.r.tl[j]) : "<i class='muted'>(bỏ trống)</i>"}</div>`).join("")}</div>`).join("")}</details>`; })()}
         ${loi.length ? `<details style="margin-top:8px"><summary class="small" style="cursor:pointer;color:var(--accent2);font-weight:700">Xem ${loi.length} câu sai</summary>${loi.map((l) => `<div class="wrong-item"><div class="muted">${monInfo(l.mon).icon} ${C.THU[l.thu]} · ${esc(l.cd)}</div>${esc(l.q)}<div class="small">Kim chọn: <span style="color:var(--bad)">${esc(l.chon)}</span> · Đúng: <span style="color:var(--ok)">${esc(l.dungLa)}</span></div></div>`).join("")}</details>` : ""}
       </div>`; });
-    app.innerHTML = header("Góc của mẹ") +
+    app.innerHTML = header("Góc của mẹ") + canhBaoLuu() +
+      kheDongBo() +
       `<div class="card tight"><div class="row"><div class="grow"><b>Tổng quan</b><div class="small">🔥 ${S.streak.count} ngày liên tiếp · ⭐ ${S.xu} xu · 🐷 heo đất ${money(S.heo)}</div><div class="small muted" style="margin-top:4px">${Object.keys(S.ngay).length} ngày hoàn thành hết việc · thẻ cào ngày cộng ${money(Object.values(S.ngay).reduce((a, x) => a + x.tien, 0))}</div></div></div></div>
       ${rows}
       <div class="card"><b>Cách dùng</b><p class="small" style="margin-top:6px">Cuối tuần mở trang này, nhìn "Ba chỗ sai nhiều nhất", dạy lại đúng ba chỗ đó rồi cho Kim làm 5 câu chốt ở mục Đóng tuần. Heo đất là số tiền thưởng ảo, mẹ quy đổi thế nào tuỳ mẹ.</p>
@@ -339,7 +405,8 @@
       co.forEach((t) => { const w = W[t]; const td = tienDoTuan(t); if (!td.xong) return; txt += `\nTuần ${t} (${w.ten}): ${td.xong}/${td.tong} lượt${td.dong ? ", đã đóng" : ""}\n`; w.ngay.forEach((n) => { const r = S.luot[luotKey(t, n.thu)]; if (r) txt += `  ${n.ten}: ${r.diem}/${r.tong}\n`; }); const top = topChuDe(loiCuaTuan(t), 3); if (top.length) txt += "  Sai nhiều: " + top.map(([cd, c]) => `${cd} (${c})`).join("; ") + "\n"; });
       navigator.clipboard && navigator.clipboard.writeText(txt).then(() => { $("#btnCopy").textContent = "Đã sao chép ✓"; });
     });
-    $("#btnReset").addEventListener("click", () => { $("#resetBox").innerHTML = `<p class="small" style="margin-top:10px;color:var(--bad)">Xoá hết điểm, xu, heo đất? Không hoàn lại được.</p><button class="btn sm" id="btnReset2" style="background:var(--bad);box-shadow:none;margin-top:6px">Xoá thật</button>`; $("#btnReset2").addEventListener("click", () => { S = defaultState(); save(); viewPhuHuynh(); }); });
+    ganDongBo();
+    $("#btnReset").addEventListener("click", () => { $("#resetBox").innerHTML = `<p class="small" style="margin-top:10px;color:var(--bad)">Xoá hết điểm, xu, heo đất? Không hoàn lại được.</p><button class="btn sm" id="btnReset2" style="background:var(--bad);box-shadow:none;margin-top:6px">Xoá thật</button>`; $("#btnReset2").addEventListener("click", async () => { S = defaultState(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} if (DB && DB.co() && DB.layMa()) { try { await DB.xoaHet(); } catch (e) { DB.trangThai.loi = e.message; } } viewPhuHuynh(); }); });
   }
 
   /* ---------- router ---------- */
@@ -358,4 +425,17 @@
   }
   window.addEventListener("hashchange", route);
   route();
+
+  /* ---------- đồng bộ khi mở trang ---------- */
+  if (DB && DB.co() && DB.layMa()) {
+    DB.trangThai.dangChay = true;
+    DB.taiVe(S).then(({ duLieu }) => {
+      const truoc = JSON.stringify(S);
+      S = Object.assign(defaultState(), duLieu);
+      if (JSON.stringify(S) !== truoc) { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} route(); }
+      return DB.dayLen(S);
+    }).then(() => { DB.trangThai.loi = null; })
+      .catch((e) => { DB.trangThai.loi = e.message; })
+      .finally(() => { DB.trangThai.dangChay = false; if (location.hash.indexOf("phu-huynh") > -1) route(); });
+  }
 })();

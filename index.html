@@ -147,9 +147,18 @@
     <a href="#/phu-huynh" data-nav="ph"><span class="i">👩‍👧</span>Góc của mẹ</a>
   </div></nav>
 
+  <script>
+    /* Hai địa chỉ cùng trỏ về trang này, nhưng trình duyệt lưu tiến độ RIÊNG cho từng địa chỉ.
+       Gom hết về lop7.kimhoc.fun để Kim và mẹ luôn nhìn cùng một bộ dữ liệu. */
+    (function () {
+      var nha = "lop7.kimhoc.fun";
+      if (location.hostname.indexOf("vercel.app") > -1) location.replace("https://" + nha + "/" + location.hash);
+    })();
+  </script>
   <script src="config.js"></script>
   <script src="soan-bai.js"></script>
   <script src="thuong.js"></script>
+  <script src="dong-bo.js"></script>
   <!-- ====== NỘI DUNG TỪNG TUẦN: thêm tuần mới = thêm 1 dòng ở đây + 1 file tuan-XX.js ở cùng cấp ====== -->
   <script src="tuan-01.js"></script>
   <script src="tuan-02.js"></script>

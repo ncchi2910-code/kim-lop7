@@ -5,6 +5,15 @@ window.KIM_CONFIG = {
   WEEK1_START: "2026-09-07",
   TONG_TUAN: 35,
   TEN_HOC_SINH: "Kim",
+  /* ĐỒNG BỘ QUA SUPABASE — điền hai dòng dưới rồi mọi máy sẽ thấy cùng tiến độ.
+     Lấy ở Supabase → Project Settings → API. anon key là khoá công khai, để trong mã nguồn là bình thường.
+     Mã bí mật KHÔNG để ở đây: mẹ và Kim nhập tay một lần trong Góc của mẹ.
+     Để trống url/anonKey thì app vẫn chạy bình thường, chỉ là mỗi máy lưu riêng. */
+  SUPABASE: {
+    url: "",        https://sllomeithtjdecqxrryw.supabase.co
+    anonKey: "",    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsbG9tZWl0aHRqZGVjcXhycnl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2OTk3NDMsImV4cCI6MjEwNDI3NTc0M30.VBk9SmDAl43NF4v1VgjZ8IKdTvtkXGWzDGqyMlXxTOs 
+    so: "kim",      /* id hàng trong bảng kim_so */
+  },
   /* Thưởng */
   XU_MOI_CAU_DUNG: 10,
   XU_XONG_LUOT: 20,
