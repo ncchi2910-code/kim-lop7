@@ -376,7 +376,8 @@
       return `<div class="card" style="border:2px dashed #ffb454">
         <b>🔗 Nối máy này với sổ của Kim</b>
         <p class="small" style="margin-top:6px">Nhập mã đồng bộ (mẹ đặt khi tạo sổ trên Supabase). Chỉ cần nhập một lần trên mỗi máy; sau đó máy này và máy Kim luôn thấy cùng một tiến độ.</p>
-        <input class="ans" id="oMa" type="password" placeholder="Mã đồng bộ" autocomplete="off" style="margin-top:10px">
+        <input class="ans" id="oMa" type="text" placeholder="Mã đồng bộ" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" style="margin-top:10px;font-family:ui-monospace,Menlo,monospace">
+        <div class="muted small" style="margin-top:6px">Gõ đúng từng kí tự, không viết hoa chữ đầu. Mã hiện rõ để dễ kiểm tra.</div>
         <div style="margin-top:10px"><button class="btn sm" id="btnNoi">Nối sổ</button></div>
         <div id="ketQuaNoi"></div></div>`;
     }
@@ -404,7 +405,7 @@
           await DB.dayLen(S); DB.trangThai.loi = null; route();
         } catch (e) {
           DB.xoaMa();
-          $("#ketQuaNoi").innerHTML = `<p class="small" style="margin-top:8px;color:var(--bad)">Không nối được: ${esc(e.message)}</p>`;
+          $("#ketQuaNoi").innerHTML = `<p class="small" style="margin-top:8px;color:var(--bad)">Không nối được: ${esc(e.message)}</p><p class="small muted" style="margin-top:4px">Mã vừa gõ có <b>${m.length}</b> kí tự. Kiểm tra: máy có tự viết hoa chữ đầu không, có thừa dấu cách không, và mã có khớp với mã trong bảng <code>kim_so</code> không.</p>`;
         }
       };
       $("#btnNoi").addEventListener("click", noi);
