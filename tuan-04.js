@@ -9,11 +9,11 @@ window.KIM_WEEKS[4] = {
     { mon: "Ngữ văn", icon: "✍️", hoc: "Kết thúc Bài 1: Nói và nghe (trao đổi về một vấn đề em quan tâm), củng cố mở rộng. Bắt đầu Bài 2 Khúc nhạc tâm hồn: tri thức về thơ 4 chữ, 5 chữ; bài thơ Đồng dao mùa xuân (Nguyễn Khoa Điềm).", vap: "Đọc thơ mà không để ý vần, nhịp. Thơ 4 chữ nhịp thường 2/2; cần chỉ ra được vần chân (tiếng cuối dòng)." },
     { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Unit 2: A closer look 2 (câu đơn: S + V, S + V + O...), Communication (lời khuyên sức khoẻ), Skills 1 & 2.", vap: "Không nhận ra cấu trúc câu đơn. Cần tách được đâu là chủ ngữ, đâu là động từ, đâu là tân ngữ." },
     { mon: "KHTN", icon: "🔬", hoc: "Hết Bài 3. Bài 4 Sơ lược về bảng tuần hoàn các nguyên tố hoá học: nguyên tắc sắp xếp, ô, chu kì, nhóm; vị trí kim loại, phi kim, khí hiếm.", vap: "Lẫn chu kì (hàng ngang) với nhóm (cột dọc). Ghi nhớ: chu kì = số lớp electron; nhóm A = số electron lớp ngoài cùng." },
-    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: hết Bài 3 (Cải cách tôn giáo), bắt đầu Bài 4 Trung Quốc từ thế kỉ VII đến giữa thế kỉ XIX (thời Đường thịnh vượng, thành tựu văn hoá). Địa lí: Bài 3 Khai thác, sử dụng và bảo vệ thiên nhiên ở châu Âu.", vap: "Phục hưng và Cải cách tôn giáo là hai phong trào khác nhau: Phục hưng về văn hoá, nghệ thuật (Lê-ô-na đơ Vanh-xi, Sếch-xpia); Cải cách tôn giáo về tôn giáo (Lu-thơ, Can-vanh)." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: Bài 2 tiết 1 — nguyên nhân và các cuộc phát kiến địa lí (Đi-a-xơ, Va-xcô đơ Ga-ma, Cô-lôm-bô, Ma-gien-lăng). Địa lí: hết Bài 3 (bảo vệ đa dạng sinh học) và vào Bài 4 Liên minh châu Âu.", vap: "Lẫn tên nhà thám hiểm với hành trình: Cô-lôm-bô đến châu Mỹ (1492), Ma-gien-lăng đi vòng quanh thế giới (1519–1522). Địa: EU là liên minh kinh tế và chính trị, không phải một quốc gia." },
   ],
   monKhac: "GDCD Bài 2 (tiếp) · Tin học Bài 2 (tiếp) · Công nghệ Bài 3 Gieo trồng, chăm sóc cây · HĐTN Chủ đề 2 Khám phá bản thân.",
   ngay: [
-    { thu: 2, mon: "toan", ten: "Toán · Thứ tự phép tính, chuyển vế", cauHoi: [
+    { thu: 4, mon: "toan", ten: "Toán · Thứ tự phép tính, chuyển vế", cauHoi: [
       { q: "Tính 2 + 3 · (−4).", a: ["−20", "−10", "14", "−2"], dung: 1, gt: "Nhân trước: 3 · (−4) = −12. Rồi 2 + (−12) = −10. Không được cộng 2 + 3 trước.", cd: "Thứ tự phép tính" },
       { q: "Tính (1/2 + 1/3) · 6.", a: ["5", "3", "4", "6/5"], dung: 0, gt: "Trong ngoặc trước: 1/2 + 1/3 = 5/6. Rồi 5/6 · 6 = 5.", cd: "Thứ tự phép tính" },
       { q: "Tìm x biết x + 3/4 = 1/2.", a: ["x = 5/4", "x = 1/4", "x = −1/4", "x = −5/4"], dung: 2, gt: "Chuyển 3/4 sang vế phải và đổi dấu: x = 1/2 − 3/4 = 2/4 − 3/4 = −1/4.", cd: "Quy tắc chuyển vế" },
@@ -31,7 +31,7 @@ window.KIM_WEEKS[4] = {
       { q: "'Vần chân' là gì?", a: ["Vần ở tiếng đầu dòng", "Vần ở tiếng cuối các dòng thơ", "Vần ở giữa dòng", "Vần trong một tiếng"], dung: 1, gt: "Vần chân gieo ở tiếng cuối dòng (ví dụ xanh – lành). Vần lưng gieo ở giữa dòng.", cd: "Vần thơ" },
       { q: "Bài thơ thể hiện tình cảm gì của tác giả?", a: ["Vui mừng vì mùa xuân đến", "Thương nhớ, biết ơn và trân trọng người lính đã hi sinh cho đất nước", "Sợ hãi chiến tranh", "Nhớ tuổi thơ chơi đồng dao"], dung: 1, gt: "Giọng thơ dịu dàng nhưng chứa nỗi thương tiếc và lòng biết ơn với người lính trẻ.", cd: "Cảm xúc, chủ đề" },
     ]},
-    { thu: 4, mon: "anh", ten: "Anh · Unit 2 câu đơn, lời khuyên", cauHoi: [
+    { thu: 2, mon: "anh", ten: "Anh · Unit 2 câu đơn, lời khuyên", cauHoi: [
       { q: "The sentence 'Kim eats vegetables.' has the structure:", a: ["S + V", "S + V + O", "S + V + A", "V + O"], dung: 1, gt: "Kim (S) eats (V) vegetables (O = tân ngữ).", cd: "Câu đơn" },
       { q: "Which is a simple sentence?", a: ["I drink water and I eat bread.", "I drink water.", "Because I am thirsty.", "When I get up, I drink water."], dung: 1, gt: "Câu đơn có một chủ ngữ và một động từ chính. Câu A có hai mệnh đề nối bằng 'and'.", cd: "Câu đơn" },
       { q: "You ______ drink more water when it's hot.", a: ["should", "shouldn't", "don't", "isn't"], dung: 0, gt: "should = nên, dùng để khuyên. Trời nóng thì nên uống nhiều nước.", cd: "Lời khuyên should" },

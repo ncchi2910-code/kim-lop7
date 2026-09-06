@@ -12,11 +12,11 @@ window.KIM_WEEKS[1] = {
     { mon: "Ngữ văn", icon: "✍️", hoc: "Bài 1 Bầu trời tuổi thơ: tri thức về truyện (đề tài, chi tiết, tính cách nhân vật) và văn bản Bầy chim chìa vôi (Nguyễn Quang Thiều).", vap: "Đọc lướt, không nhớ được sự việc chính xảy ra theo thứ tự nào. Khi hỏi tính cách nhân vật, chỉ nói 'tốt bụng' mà không dẫn chi tiết." },
     { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Unit 1 Hobbies: từ vựng về sở thích, động từ chỉ thích/ghét + V-ing (love doing, enjoy doing), phát âm /ə/ và /ɜː/.", vap: "Viết 'enjoy to do' thay vì 'enjoy doing'. Quên thêm -s cho ngôi thứ ba số ít." },
     { mon: "KHTN", icon: "🔬", hoc: "Bài 1 Phương pháp và kĩ năng học tập môn KHTN: các bước tìm hiểu tự nhiên, kĩ năng quan sát, phân loại, dự báo, đo; dụng cụ đo thời gian hiện số, dao động kí.", vap: "Bài nhẹ nhưng đề hay hỏi thứ tự các bước của phương pháp tìm hiểu tự nhiên." },
-    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: Bài 1 Quá trình hình thành và phát triển chế độ phong kiến ở Tây Âu (lãnh địa, lãnh chúa, nông nô). Địa lí: Bài 1 Vị trí địa lí, đặc điểm tự nhiên châu Âu.", vap: "Nhớ được từ 'lãnh địa' nhưng không nói được nó vận hành thế nào (tự cung tự cấp, khép kín)." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử (1 tiết/tuần, sáng Thứ Hai): Bài 1 tiết 1 — sự hình thành các vương quốc phong kiến Tây Âu sau khi Rô-ma sụp đổ. Địa lí (2 tiết/tuần, Thứ Tư và Thứ Năm): Bài 1 tiết 1–2 — vị trí, hình dạng, địa hình và khí hậu châu Âu.", vap: "Sử chỉ 1 tiết mỗi tuần nên đi rất chậm, đừng học dồn. Địa 2 tiết nên bám lược đồ: mở lược đồ tự nhiên châu Âu mỗi lần học." },
   ],
   monKhac: "GDCD Bài 1 Tự hào truyền thống quê hương · Tin học Bài 1 Thiết bị vào – ra · Công nghệ Bài 1 Giới thiệu về trồng trọt · HĐTN Chủ đề 1 Em với nhà trường.",
   ngay: [
-    { thu: 2, mon: "toan", ten: "Toán · Số hữu tỉ", cauHoi: [
+    { thu: 4, mon: "toan", ten: "Toán · Số hữu tỉ", cauHoi: [
       { q: "Trong các số −3; 0,5; 2/7; 0, những số nào là số hữu tỉ?", a: ["Chỉ 2/7", "Chỉ −3 và 2/7", "Cả bốn số", "Chỉ 0,5 và 2/7"], dung: 2, gt: "Số hữu tỉ là số viết được dạng a/b với a, b nguyên, b ≠ 0. −3 = −3/1; 0,5 = 1/2; 0 = 0/1. Nên cả bốn đều là số hữu tỉ.", cd: "Nhận biết số hữu tỉ" },
       { q: "Số đối của −5/8 là số nào?", a: ["−8/5", "5/8", "8/5", "−5/8"], dung: 1, gt: "Số đối của a là −a. Số đối của −5/8 là 5/8 (hai số cộng lại bằng 0).", cd: "Số đối" },
       { q: "So sánh −2/3 và −3/4.", a: ["−2/3 < −3/4", "−2/3 = −3/4", "−2/3 > −3/4", "Không so sánh được"], dung: 2, gt: "Quy đồng: −2/3 = −8/12, −3/4 = −9/12. Vì −8 > −9 nên −2/3 > −3/4. Mẹo: số âm nào gần 0 hơn thì lớn hơn.", cd: "So sánh số hữu tỉ" },
@@ -34,7 +34,7 @@ window.KIM_WEEKS[1] = {
       { q: "Chi tiết bầy chim chìa vôi cất cánh bay lên khỏi dòng nước lúc bình minh gợi điều gì?", a: ["Sự sợ hãi của hai anh em", "Sức sống và niềm vui trước sự sống được cứu", "Cơn mưa vẫn còn lớn", "Hai anh em muốn về nhà"], dung: 1, gt: "Đây là chi tiết tiêu biểu: bầy chim non bay lên được, hai anh em xúc động đến rơi nước mắt. Chi tiết này thể hiện tình yêu thương và niềm vui trước sự sống.", cd: "Chi tiết tiêu biểu" },
       { q: "Tính cách nhân vật trong truyện được thể hiện qua điều gì?", a: ["Chỉ qua lời nói", "Chỉ qua ngoại hình", "Chỉ qua hành động", "Qua lời nói, hành động, suy nghĩ và cách ứng xử"], dung: 3, gt: "Phải nhìn cả lời nói, hành động, suy nghĩ, cách ứng xử với người khác. Ví dụ Mên tỏ ra người lớn nhưng cũng lo lắng cho bầy chim như Mon.", cd: "Tri thức ngữ văn: tính cách nhân vật" },
     ]},
-    { thu: 4, mon: "anh", ten: "Anh · Unit 1 Hobbies", cauHoi: [
+    { thu: 2, mon: "anh", ten: "Anh · Unit 1 Hobbies", cauHoi: [
       { q: "My sister ______ collecting stamps.", a: ["enjoy", "enjoys", "enjoying", "is enjoy"], dung: 1, gt: "Chủ ngữ 'my sister' là ngôi thứ ba số ít nên động từ thêm -s: enjoys. Sau enjoy dùng V-ing.", cd: "Present simple: ngôi thứ ba" },
       { q: "I love ______ to music in my free time.", a: ["listen", "to listening", "listening", "listens"], dung: 2, gt: "Sau love / like / enjoy / hate dùng V-ing: love listening.", cd: "Verb + V-ing" },
       { q: "Which word is a hobby?", a: ["gardening", "kitchen", "teacher", "hungry"], dung: 0, gt: "gardening = làm vườn, là một sở thích. kitchen = bếp, teacher = giáo viên, hungry = đói.", cd: "Từ vựng sở thích" },

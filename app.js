@@ -75,33 +75,49 @@
     setNav("home");
     const t = tuanHienTai(), thu = thuHomNay(), w = W[t];
     let main = "";
+
+    /* Hôm nay ở trường (theo thời khoá biểu trong config.js) */
+    const lh = (C.LICH_HOC || {})[thu];
+    if (lh && (lh.sang.length || lh.chieu.length)) {
+      main += `<div class="card tight"><b>🏫 Hôm nay ở trường</b>` +
+        (lh.sang.length ? `<div class="small" style="margin-top:7px"><span class="pill">Sáng</span> ${esc(lh.sang.join(" · "))}</div>` : "") +
+        (lh.chieu.length ? `<div class="small" style="margin-top:5px"><span class="pill">Chiều</span> ${esc(lh.chieu.join(" · "))}</div>` : "") + `</div>`;
+    } else {
+      main += `<div class="card tight"><b>🏫 Hôm nay Kim được nghỉ</b><div class="muted small" style="margin-top:4px">Cuối tuần rồi — nghỉ ngơi và đóng tuần cùng mẹ.</div></div>`;
+    }
+
     if (!w) {
       const co = tuanCoNoiDung();
-      main = `<div class="card"><h3>Tuần ${t} chưa có nội dung</h3><p class="muted" style="margin-top:6px">Mẹ cần thêm file <code>tuan-${String(t).padStart(2, "0")}.js</code>. Trong lúc chờ, Kim có thể làm lại các tuần đã có.</p>
+      main += `<div class="card"><h3>Tuần ${t} chưa có nội dung</h3><p class="muted" style="margin-top:6px">Mẹ cần thêm file <code>tuan-${String(t).padStart(2, "0")}.js</code>. Trong lúc chờ, Kim có thể làm lại các tuần đã có.</p>
         <div style="margin-top:12px"><a class="btn sm" href="#/tuan/${co[co.length - 1]}">Mở tuần ${co[co.length - 1]}</a></div></div>`;
     } else {
       const td = tienDoTuan(t);
+      const sl = SOAN[t] || [];
+      const chuaSoan = sl.map((s, i) => ({ s, i })).filter((x) => !S.soan[soanKey(t, x.i)]);
+      const soanToiNay = chuaSoan.filter((x) => x.s.soanToi === thu);
       const ngay = w.ngay.find((n) => n.thu === thu);
-      if (ngay) {
-        const r = S.luot[luotKey(t, thu)]; const mi = monInfo(ngay.mon);
-        main = `<div class="card">
-          <div class="row"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><div class="muted">${C.THU[thu]} · Tuần ${t}</div><h3>${esc(ngay.ten)}</h3></div></div>
-          <p class="small" style="margin:12px 0">${ngay.cauHoi.length} câu, khoảng 10–15 phút. ${r ? `Kim đã làm rồi: <b>${r.diem}/${r.tong}</b>. Làm lại để chắc hơn cũng được.` : "Làm xong sẽ được xu và giữ chuỗi ngày 🔥."}</p>
-          <a class="btn block" href="#/lam/${t}/${thu}">${r ? "Làm lại" : "Bắt đầu"} →</a>
-        </div>`;
+      const viec = [];
+
+      soanToiNay.forEach((x) => { const mi = monInfo(x.s.mon);
+        viec.push(`<a class="day" href="#/soan/${t}/${x.i}"><div class="icon-box" style="background:${mi.nen}">📖</div><div class="grow"><div class="muted">Soạn trước · mai học ${esc(x.s.hocVao || "")}</div><b>${esc(x.s.bai)}</b></div><span class="pill">10 phút</span></a>`); });
+
+      if (ngay) { const r = S.luot[luotKey(t, thu)]; const mi = monInfo(ngay.mon);
+        viec.push(`<a class="day ${r ? "done" : ""}" href="#/lam/${t}/${thu}"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><div class="muted">Ôn lại bài vừa học hôm nay</div><b>${esc(ngay.ten)}</b></div>${r ? `<div class="score" style="color:${r.diem / r.tong >= 0.7 ? "var(--ok)" : "#b45309"}">${r.diem}/${r.tong}</div>` : '<span class="pill">15 phút</span>'}</a>`); }
+
+      const ok = td.xong === td.tong;
+      if (viec.length) {
+        main += `<h2>🌙 Việc tối nay</h2><p class="muted small" style="margin:-6px 0 10px">Khoảng ${viec.length * 12} phút. Làm xong giữ được chuỗi ngày 🔥.</p>` + viec.join("");
+      } else if (ok && !td.dong) {
+        main += `<div class="card"><div class="row"><div class="icon-box" style="background:#fff7ed">🎁</div><div class="grow"><div class="muted">Cuối tuần · Tuần ${t}</div><h3>Đóng tuần cùng mẹ</h3></div></div><p class="small" style="margin:12px 0">Đủ 5 lượt rồi. Xem lại chỗ sai với mẹ, làm 5 câu chốt và cào thẻ.</p><a class="btn block" href="#/dong/${t}">Đóng tuần →</a></div>`;
+      } else if (td.dong) {
+        main += `<div class="card" style="text-align:center"><div class="big">🏆</div><p style="margin-top:8px"><b>Tuần ${t} đã đóng!</b></p><p class="muted small">Nghỉ ngơi, hoặc làm lại lượt nào Kim thấy chưa chắc.</p><div style="margin-top:12px"><a class="btn sm ghost" href="#/tuan/${t}">Xem tuần ${t}</a></div></div>`;
       } else {
-        const ok = td.xong === td.tong;
-        main = `<div class="card">
-          <div class="row"><div class="icon-box" style="background:#fff7ed">🎁</div><div class="grow"><div class="muted">Cuối tuần · Tuần ${t}</div><h3>Đóng tuần cùng mẹ</h3></div></div>
-          <p class="small" style="margin:12px 0">${td.dong ? "Tuần này đã đóng. Nghỉ ngơi hoặc làm lại lượt nào Kim thấy chưa chắc." : ok ? "Đủ 5 lượt rồi. Xem lại chỗ sai với mẹ, làm 5 câu chốt và cào thẻ." : `Còn ${td.tong - td.xong} lượt chưa làm. Làm nốt rồi mới đóng tuần được.`}</p>
-          <a class="btn block ${ok && !td.dong ? "" : "ghost"}" href="#/${ok && !td.dong ? "dong/" + t : "tuan/" + t}">${td.dong ? "Xem tuần " + t : ok ? "Đóng tuần →" : "Xem còn thiếu gì"}</a>
-        </div>`;
+        main += `<div class="card"><h3>Tối nay Kim được nghỉ 🌿</h3><p class="small" style="margin-top:6px">Không có bài soạn hay lượt ôn nào cho hôm nay. Nếu muốn, Kim làm lại một lượt cũ để nhớ lâu hơn.</p><div style="margin-top:12px"><a class="btn sm ghost" href="#/tuan/${t}">Xem tuần ${t}</a></div></div>`;
       }
-      const sl = SOAN[t] || []; const chuaSoan = sl.map((s, i) => ({ s, i })).filter((x) => !S.soan[soanKey(t, x.i)]);
-      if (chuaSoan.length) { const x = chuaSoan[0]; const mi = monInfo(x.s.mon);
-        main += `<a class="card tight row" href="#/soan/${t}/${x.i}"><div class="icon-box" style="background:${mi.nen}">📖</div><div class="grow"><b>Soạn bài trước khi lên lớp</b><div class="muted">${esc(x.s.bai)}${chuaSoan.length > 1 ? ` · còn ${chuaSoan.length} bài` : ""}</div></div><span class="pill">10 phút</span></a>`; }
-      main += `<div class="card tight row"><div class="grow"><b>Tuần ${t} · ${esc(w.ten)}</b><div class="muted">${td.xong}/${td.tong} lượt kiểm tra · ${sl.length - chuaSoan.length}/${sl.length} bài soạn</div></div><a class="btn sm ghost" href="#/tuan/${t}">Xem tuần</a></div>`;
+
+      main += `<div class="card tight row"><div class="grow"><b>Tuần ${t} · ${esc(w.ten)}</b><div class="muted">${td.xong}/${td.tong} lượt ôn · ${sl.length - chuaSoan.length}/${sl.length} bài soạn</div></div><a class="btn sm ghost" href="#/tuan/${t}">Xem tuần</a></div>`;
     }
+
     const kt = C.KIEM_TRA.find((k) => k.tuan >= t);
     const ktHtml = kt ? `<div class="card tight"><div class="row"><div class="grow"><b>Đường đến ${kt.ten}</b><div class="muted">Còn ${kt.tuan - t} tuần (tuần ${kt.tuan})</div></div><span class="pill">Tuần ${t}/${C.TONG_TUAN}</span></div><div class="bar" style="margin-top:10px"><i style="width:${Math.round((t / kt.tuan) * 100)}%"></i></div></div>` : "";
     app.innerHTML = header(`${C.THU[thu]}, ${fmt(new Date())} · Tuần ${t}`) + main + ktHtml + `<p class="muted" style="text-align:center;margin-top:18px">Học mỗi ngày một chút 🌱</p>`;
@@ -129,13 +145,14 @@
     const w = W[t]; if (!w) { location.hash = "#/lo-trinh"; return; }
     const td = tienDoTuan(t);
     const subj = w.monHoc.map((m, i) => `<div class="card subj" data-toggle="1"><div class="row"><span style="font-size:22px">${m.icon}</span><div class="grow"><b>${esc(m.mon)}</b><div class="muted">${esc(m.hoc.slice(0, 70))}…</div></div><span class="muted">▾</span></div><div class="body"><p class="small">${esc(m.hoc)}</p><div class="vap"><b>Chỗ dễ vấp:</b> ${esc(m.vap)}</div></div></div>`).join("");
-    const days = w.ngay.map((n) => { const r = S.luot[luotKey(t, n.thu)]; const mi = monInfo(n.mon);
+    const days = w.ngay.slice().sort((a, b) => a.thu - b.thu).map((n) => { const r = S.luot[luotKey(t, n.thu)]; const mi = monInfo(n.mon);
       return `<a class="day ${r ? "done" : ""}" href="#/lam/${t}/${n.thu}"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><div class="muted">${C.THU[n.thu]} · ${fmt(ngayCuaTuan(t, n.thu))}</div><b>${esc(n.ten)}</b></div>${r ? `<div class="score" style="color:${r.diem / r.tong >= 0.7 ? "var(--ok)" : "#b45309"}">${r.diem}/${r.tong}</div>` : '<span class="pill">chưa làm</span>'}</a>`; }).join("");
     const doc = (w.docTruoc || []).map((d, i) => { const k = "t" + t + "-" + i; const seen = S.doc[k];
       return `<div class="card subj ${seen ? "" : ""}" data-toggle="1" data-doc="${k}"><div class="row"><span style="font-size:22px">${seen ? "✅" : "📖"}</span><div class="grow"><b>${esc(d.tieuDe)}</b><div class="muted">${esc(d.mon)} · ${seen ? "đã đọc" : "chưa đọc"}</div></div><span class="muted">▾</span></div><div class="body"><p class="small">${esc(d.noiDung)}</p></div></div>`; }).join("");
     const soanList = SOAN[t] || [];
-    const soan = soanList.map((s, i) => { const r = S.soan[soanKey(t, i)]; const mi = monInfo(s.mon);
-      return `<a class="day ${r ? "done" : ""}" href="#/soan/${t}/${i}"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><div class="muted">${esc(s.sgk)}</div><b>${esc(s.bai)}</b></div>${r ? '<span class="pill" style="color:var(--ok)">✓ xong</span>' : '<span class="pill">10 phút</span>'}</a>`; }).join("");
+    const soan = soanList.map((s, i) => ({ s, i })).sort((a, b) => (a.s.soanToi === 8 ? 1 : a.s.soanToi + 1) - (b.s.soanToi === 8 ? 1 : b.s.soanToi + 1))
+      .map(({ s, i }) => { const r = S.soan[soanKey(t, i)]; const mi = monInfo(s.mon);
+      return `<a class="day ${r ? "done" : ""}" href="#/soan/${t}/${i}"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><div class="muted">Soạn tối ${esc(C.THU[s.soanToi] || "")} · học ${esc(s.hocVao || "")}</div><b>${esc(s.bai)}</b></div>${r ? '<span class="pill" style="color:var(--ok)">✓ xong</span>' : '<span class="pill">10 phút</span>'}</a>`; }).join("");
     const ok = td.xong === td.tong;
     app.innerHTML = header(`Tuần ${t} · ${w.icon} ${esc(w.ten)}`) +
       `<div class="card tight row"><div class="grow"><b>Tiến độ tuần</b><div class="bar" style="margin-top:8px"><i style="width:${Math.round((td.xong / td.tong) * 100)}%"></i></div></div><span class="pill">${td.xong}/${td.tong}</span></div>
@@ -157,7 +174,7 @@
     const hoi = s.cauHoi.map((q, j) => `<div style="margin-top:10px"><b class="small">${j + 1}. ${esc(q)}</b><textarea class="ans" data-q="${j}" rows="2" placeholder="Kim trả lời ngắn (1–2 dòng)…">${r ? esc(r.tl[j] || "") : ""}</textarea></div>`).join("");
     const nho = s.nho.map((n) => `<li>${esc(n)}</li>`).join("");
     app.innerHTML = header(`Tuần ${t} · Soạn bài`) +
-      `<div class="card"><div class="row"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><b>${esc(s.bai)}</b><div class="muted">📕 ${esc(s.sgk)}</div></div></div></div>
+      `<div class="card"><div class="row"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><b>${esc(s.bai)}</b><div class="muted">📕 ${esc(s.sgk)}</div></div></div><p class="small" style="margin-top:10px;padding:9px 12px;border-radius:12px;background:#fff7ed">🗓️ Trên lớp Kim học bài này vào <b>${esc(s.hocVao || "")}</b> — nên soạn vào <b>tối ${esc(C.THU[s.soanToi] || "")}</b>.</p></div>
       <div class="card"><h3>1. Mở sách và làm theo</h3><div style="margin-top:8px">${viec}</div></div>
       <div class="card"><h3>2. Kim tự trả lời</h3><p class="muted small">Không cần đúng hết. Viết theo cách hiểu của Kim, mẹ sẽ đọc ở Góc của mẹ.</p>${hoi}</div>
       <div class="card"><h3>3. Cần nhớ</h3><ul class="nho">${nho}</ul></div>

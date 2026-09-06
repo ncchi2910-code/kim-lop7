@@ -18,6 +18,16 @@ window.KIM_CONFIG = {
     khtn: { ten: "KHTN", icon: "🔬", mau: "#8b5cf6", nen: "#efe9ff" },
     sudia:{ ten: "Sử–Địa", icon: "🗺️", mau: "#b45309", nen: "#fff1dc" },
   },
+  /* THỜI KHOÁ BIỂU lớp 7A, áp dụng từ 07/09/2026. Sửa ở đây nếu trường đổi TKB. */
+  LICH_HOC: {
+    2: { sang: ["Chào cờ + HĐTN", "Lịch sử", "KHTN", "KHTN"], chieu: ["Tiếng Anh", "Tiếng Anh", "GDTC"] },
+    3: { sang: ["Ngữ văn", "Ngữ văn", "HĐTN hướng nghiệp", "Tiếng Anh"], chieu: ["Âm nhạc", "Mĩ thuật", "CLB", "CLB"] },
+    4: { sang: ["Tin học", "Địa lí", "Toán", "Toán"], chieu: ["Anh tăng cường", "Anh tăng cường", "GDTC"] },
+    5: { sang: ["Toán", "Toán", "GDCD", "Địa lí", "Công nghệ"], chieu: [] },
+    6: { sang: ["Ngữ văn", "Ngữ văn", "GD địa phương", "Sinh hoạt + HĐTN"], chieu: ["KHTN", "KHTN", "CLB", "CLB"] },
+    7: { sang: [], chieu: [] },
+    8: { sang: [], chieu: [] },
+  },
   THU: { 2: "Thứ Hai", 3: "Thứ Ba", 4: "Thứ Tư", 5: "Thứ Năm", 6: "Thứ Sáu", 7: "Thứ Bảy", 8: "Chủ nhật" },
   /* Tuần kiểm tra định kì (để hiện thước "đường đến kì kiểm tra") */
   KIEM_TRA: [

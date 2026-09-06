@@ -9,11 +9,11 @@ window.KIM_WEEKS[2] = {
     { mon: "Ngữ văn", icon: "✍️", hoc: "Văn bản Đi lấy mật (trích Đất rừng phương Nam, Đoàn Giỏi) và Thực hành tiếng Việt: mở rộng trạng ngữ của câu bằng cụm từ.", vap: "Nhận ra trạng ngữ nhưng không giải thích được mở rộng bằng cụm từ thì câu rõ hơn ở chỗ nào." },
     { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Unit 1: A closer look 2 (thì hiện tại đơn, trạng từ tần suất), Communication, Skills 1 & 2 (đọc, nói, nghe, viết về sở thích).", vap: "Câu phủ định và câu hỏi với does: 'She doesn't likes' là sai, phải 'doesn't like'." },
     { mon: "KHTN", icon: "🔬", hoc: "Bài 2 Nguyên tử: mô hình nguyên tử (hạt nhân gồm proton, neutron; vỏ gồm electron xếp theo lớp), số p = số e, khối lượng nguyên tử tính theo amu.", vap: "Nhầm điện tích: proton dương, electron âm, neutron không mang điện. Quên lớp 1 tối đa 2 e, lớp 2 tối đa 8 e." },
-    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: hết Bài 1 (thành thị trung đại), sang Bài 2 Các cuộc phát kiến địa lí (Đi-a-xơ, Va-xcô đơ Ga-ma, Cô-lôm-bô, Ma-gien-lăng). Địa lí: tiếp Bài 1 châu Âu (khí hậu, sông ngòi, thực vật).", vap: "Lẫn tên nhà thám hiểm với hành trình: Cô-lôm-bô tìm ra châu Mỹ (1492), Ma-gien-lăng đi vòng quanh thế giới (1519–1522)." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: Bài 1 tiết 2 — lãnh địa phong kiến, quan hệ lãnh chúa và nông nô. Địa lí: hết Bài 1 (sông ngòi, đới thiên nhiên) và vào Bài 2 Đặc điểm dân cư, xã hội châu Âu.", vap: "Nhớ được từ ‘lãnh địa’ nhưng không nói được nó vận hành thế nào (khép kín, tự cung tự cấp). Địa: đọc bảng số liệu dân số phải nêu được xu hướng, không chỉ đọc số." },
   ],
   monKhac: "GDCD Bài 1 (tiếp) · Tin học Bài 1 (tiếp) · Công nghệ Bài 1 (tiếp) · HĐTN Chủ đề 1.",
   ngay: [
-    { thu: 2, mon: "toan", ten: "Toán · Cộng trừ nhân chia số hữu tỉ", cauHoi: [
+    { thu: 4, mon: "toan", ten: "Toán · Cộng trừ nhân chia số hữu tỉ", cauHoi: [
       { q: "Tính −1/2 + 1/3.", a: ["−1/6", "1/6", "−1/5", "−5/6"], dung: 0, gt: "Quy đồng mẫu 6: −3/6 + 2/6 = −1/6.", cd: "Cộng trừ số hữu tỉ" },
       { q: "Tính 3/4 − (−1/4).", a: ["1/2", "1", "−1", "2/4"], dung: 1, gt: "Trừ một số âm là cộng số đối: 3/4 + 1/4 = 4/4 = 1.", cd: "Cộng trừ số hữu tỉ" },
       { q: "Tính (−2/5) · (5/6).", a: ["−10/30 = −1/3", "1/3", "−7/11", "−2/6"], dung: 0, gt: "Nhân tử với tử, mẫu với mẫu: −10/30, rút gọn được −1/3. Âm nhân dương ra âm.", cd: "Nhân số hữu tỉ" },
@@ -31,7 +31,7 @@ window.KIM_WEEKS[2] = {
       { q: "Câu nào có trạng ngữ được mở rộng thành cụm từ?", a: ["Sáng, An đi rừng.", "Vào một buổi sáng mùa hè nắng đẹp, An đi rừng cùng tía nuôi.", "An đi rừng sáng nay.", "An và Cò đi rừng."], dung: 1, gt: "'Vào một buổi sáng mùa hè nắng đẹp' là trạng ngữ được mở rộng từ 'Sáng' thành cụm từ, cho biết rõ thời điểm và không khí.", cd: "Mở rộng trạng ngữ" },
       { q: "Mở rộng trạng ngữ bằng cụm từ có tác dụng gì?", a: ["Làm câu ngắn hơn", "Làm thông tin về thời gian, nơi chốn, cách thức… cụ thể, rõ ràng hơn", "Đổi nghĩa của câu", "Bỏ được chủ ngữ"], dung: 1, gt: "Trạng ngữ càng cụ thể thì người đọc hình dung hoàn cảnh càng rõ.", cd: "Mở rộng trạng ngữ" },
     ]},
-    { thu: 4, mon: "anh", ten: "Anh · Present simple", cauHoi: [
+    { thu: 2, mon: "anh", ten: "Anh · Present simple", cauHoi: [
       { q: "She ______ to school by bus every day.", a: ["go", "goes", "going", "is go"], dung: 1, gt: "Ngôi thứ ba số ít (she) ở thì hiện tại đơn: goes.", cd: "Present simple: ngôi thứ ba" },
       { q: "My father ______ fishing.", a: ["don't like", "doesn't likes", "doesn't like", "not like"], dung: 2, gt: "Phủ định với he/she/it: doesn't + động từ nguyên mẫu (không thêm s).", cd: "Present simple: phủ định" },
       { q: "______ your brother play football?", a: ["Do", "Does", "Is", "Are"], dung: 1, gt: "Câu hỏi với he/she/it: Does + S + V nguyên mẫu?", cd: "Present simple: câu hỏi" },

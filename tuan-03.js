@@ -9,11 +9,11 @@ window.KIM_WEEKS[3] = {
     { mon: "Ngữ văn", icon: "✍️", hoc: "Bài thơ Ngàn sao làm việc (Võ Quảng); Thực hành tiếng Việt: mở rộng thành phần chính của câu bằng cụm từ; Viết: tóm tắt văn bản theo yêu cầu khác nhau về độ dài.", vap: "Tóm tắt mà chép lại lời văn gốc hoặc thêm ý kiến riêng. Tóm tắt phải ngắn hơn, giữ sự việc chính và đúng thứ tự." },
     { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Unit 1: Looking back & Project. Unit 2 Healthy living: Getting started, A closer look 1 (từ vựng sức khoẻ, phát âm /f/ và /v/).", vap: "Từ vựng sức khoẻ khá nhiều và lạ (sore throat, sunburn, spots, put on weight). Nên học theo cặp vấn đề – lời khuyên." },
     { mon: "KHTN", icon: "🔬", hoc: "Hết Bài 2 (mô hình nguyên tử, khối lượng amu). Bài 3 Nguyên tố hoá học: khái niệm, tên và kí hiệu hoá học của 20 nguyên tố đầu.", vap: "Viết kí hiệu sai kiểu chữ: 'CA' hoặc 'ca' thay vì 'Ca'. Chữ đầu in hoa, chữ sau viết thường." },
-    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: Bài 2 (hệ quả phát kiến địa lí, quan hệ sản xuất tư bản chủ nghĩa) và Bài 3 Phong trào Văn hoá Phục hưng, Cải cách tôn giáo. Địa lí: Bài 2 Đặc điểm dân cư, xã hội châu Âu (dân số già, đô thị hoá).", vap: "Hệ quả phát kiến địa lí có hai mặt: tích cực (mở rộng hiểu biết, giao lưu) và tiêu cực (buôn bán nô lệ, xâm chiếm thuộc địa). Đề hay hỏi cả hai." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: Bài 1 tiết 3 — sự ra đời của thành thị trung đại và vai trò của nó. Địa lí: hết Bài 2 (đô thị hoá, di cư) và vào Bài 3 Khai thác, sử dụng và bảo vệ thiên nhiên ở châu Âu.", vap: "Thành thị trung đại làm kinh tế hàng hoá phát triển, phá vỡ nền kinh tế khép kín của lãnh địa. Địa: phân biệt cơ cấu dân số già với tỉ lệ đô thị hoá cao, hai chuyện khác nhau." },
   ],
   monKhac: "GDCD Bài 2 Quan tâm, cảm thông và chia sẻ · Tin học Bài 2 Phần mềm máy tính · Công nghệ Bài 2 Làm đất trồng cây · HĐTN Chủ đề 1 (kết thúc).",
   ngay: [
-    { thu: 2, mon: "toan", ten: "Toán · Luỹ thừa của số hữu tỉ", cauHoi: [
+    { thu: 4, mon: "toan", ten: "Toán · Luỹ thừa của số hữu tỉ", cauHoi: [
       { q: "Tính (−1/2)^3.", a: ["−1/8", "1/8", "−3/2", "−1/6"], dung: 0, gt: "(−1/2)·(−1/2)·(−1/2) = −1/8. Số mũ lẻ nên kết quả âm.", cd: "Luỹ thừa số âm" },
       { q: "Tính (2/3)^2.", a: ["4/3", "2/9", "4/9", "4/6"], dung: 2, gt: "(a/b)^n = a^n / b^n: 2^2 / 3^2 = 4/9.", cd: "Luỹ thừa của phân số" },
       { q: "Rút gọn x^3 · x^2.", a: ["x^6", "x^5", "2x^5", "x"], dung: 1, gt: "Nhân hai luỹ thừa cùng cơ số: giữ cơ số, cộng số mũ: x^(3+2) = x^5.", cd: "Nhân luỹ thừa cùng cơ số" },
@@ -31,7 +31,7 @@ window.KIM_WEEKS[3] = {
       { q: "Khi tóm tắt truyện Bầy chim chìa vôi trong 3–4 câu, điều nào KHÔNG nên làm?", a: ["Nêu nhân vật chính", "Nêu sự việc mở đầu và kết thúc", "Chép nguyên lời thoại và đoạn miêu tả", "Kể theo đúng thứ tự sự việc"], dung: 2, gt: "Lời thoại và miêu tả là chi tiết phụ, phải lược bỏ khi tóm tắt ngắn.", cd: "Tóm tắt văn bản" },
       { q: "Tóm tắt cùng một văn bản với độ dài khác nhau thì khác nhau ở chỗ nào?", a: ["Bản dài kể sự việc khác bản ngắn", "Bản dài giữ thêm một số chi tiết phụ quan trọng, bản ngắn chỉ giữ sự việc cốt lõi", "Bản ngắn được thêm ý kiến riêng", "Không khác gì nhau"], dung: 1, gt: "Cùng bộ khung sự việc, chỉ khác mức độ chi tiết.", cd: "Tóm tắt văn bản" },
     ]},
-    { thu: 4, mon: "anh", ten: "Anh · Unit 2 Healthy living (từ vựng)", cauHoi: [
+    { thu: 2, mon: "anh", ten: "Anh · Unit 2 Healthy living (từ vựng)", cauHoi: [
       { q: "I have a ______. My throat hurts when I speak.", a: ["headache", "sore throat", "sunburn", "stomachache"], dung: 1, gt: "sore throat = đau họng. headache = đau đầu, stomachache = đau bụng, sunburn = cháy nắng.", cd: "Từ vựng sức khoẻ" },
       { q: "'Sunburn' is:", a: ["a kind of food", "red, painful skin from too much sun", "a sport", "a healthy habit"], dung: 1, gt: "sunburn = cháy nắng, da đỏ rát vì ở ngoài nắng quá lâu.", cd: "Từ vựng sức khoẻ" },
       { q: "Which word has the sound /v/?", a: ["fan", "van", "laugh", "phone"], dung: 1, gt: "van /væn/ có /v/ (rung dây thanh). fan, laugh, phone đều có /f/.", cd: "Phát âm /f/ – /v/" },
