@@ -2,6 +2,8 @@
 
 Trang web tĩnh (không cần máy chủ) đi kèm năm học lớp 7 của Kim, bộ sách Kết nối tri thức. Mỗi tuần theo lịch trường có: thẻ "tuần này học gì" cho 5 môn chính, 6 bài soạn (học trước, mở SGK làm theo, tự trả lời 2–3 câu, mẹ đọc được câu trả lời ở Góc của mẹ), 5 lượt kiểm tra ngắn (Thứ Hai → Thứ Sáu, 7 câu, có giải thích), bài đọc trước, và phần "đóng tuần" cuối tuần cùng mẹ (xem lại chỗ sai, 5 câu chốt, thẻ cào vào heo đất).
 
+Trang **Hôm nay** hiện thời khoá biểu hôm nay, ngày mai và ngày kia, rồi liệt kê việc tối nay: bài soạn cho ngày mai, lượt ôn bài vừa học, **5 câu luyện tính** (đề sinh tự động theo chương Toán đang học, cố định trong ngày), và **chuẩn bị bài tập cùng sách vở cho ngày mai** — Kim trả lời từng môn "có bài và làm xong rồi" hay "không có bài", xong thì được nhắc xếp cặp luôn.
+
 Mỗi ngày Kim làm xong hết việc của ngày đó sẽ mở được **phần thưởng cuối ngày**: một lời nhắn động viên, một thẻ cào ngẫu nhiên 5.000–20.000đ cộng vào heo đất, và một mẩu tin về Anh trai vượt ngàn chông gai. Mỗi ngày chỉ mở một lần; mở lại trong ngày vẫn xem được nhưng không cào thêm tiền.
 
 Mọi thứ bám theo thời khoá biểu lớp 7A (áp dụng từ 07/09/2026, ghi trong `config.js` → `LICH_HOC`):
@@ -22,6 +24,7 @@ config.js         ngày bắt đầu tuần 1, mức thưởng, tên môn
 soan-bai.js       phần Soạn bài (học trước) cho từng tuần: trang SGK, việc cần làm, câu hỏi tự trả lời, cần nhớ
 thuong.js         kho câu động viên và tin Anh trai vượt ngàn chông gai cho phần thưởng cuối ngày
 giang-bai.js      bản giảng lại dễ hiểu cho những bài sách viết khó
+luyen-tinh.js     bộ sinh đề luyện tính mỗi ngày, bám chương Toán đang học
 dong-bo.js        đồng bộ tiến độ qua Supabase (tuỳ chọn)
 supabase.sql      script tạo bảng và hàm trên Supabase
 huong-dan-dong-bo.md  hướng dẫn bật đồng bộ, 10 phút

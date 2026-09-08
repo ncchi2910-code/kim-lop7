@@ -23,8 +23,19 @@
   const DV = window.KIM_DONG_VIEN || [];
   const TIN = window.KIM_TIN || [];
   const GIANG = window.KIM_GIANG || {};
+  const LUYEN = window.KIM_LUYEN;
+  const btvnKey = (d) => "btvn-" + d;
+  /* Môn có bài tập về nhà — bỏ chào cờ, sinh hoạt, CLB, thể chất, nhạc, hoạ */
+  const KHONG_BTVN = ["Chào cờ", "HĐTN", "Sinh hoạt", "CLB", "GDTC", "Âm nhạc", "Mĩ thuật"];
+  function monNgay(thu) {
+    const lh = (C.LICH_HOC || {})[thu]; if (!lh) return [];
+    const tat = lh.sang.concat(lh.chieu);
+    const ra = [];
+    tat.forEach((m) => { if (KHONG_BTVN.some((k) => m.indexOf(k) > -1)) return; if (ra.indexOf(m) < 0) ra.push(m); });
+    return ra;
+  }
   const soanKey = (t, i) => "t" + t + "-s" + i;
-  const defaultState = () => ({ xu: 0, heo: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {}, ngay: {}, demThuong: 0 });
+  const defaultState = () => ({ xu: 0, heo: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {}, ngay: {}, demThuong: 0, btvn: {}, luyen: {} });
   let S = load();
   function load() { try { const r = localStorage.getItem(KEY); return r ? Object.assign(defaultState(), JSON.parse(r)) : defaultState(); } catch (e) { return defaultState(); } }
   let luuLoi = false;
@@ -46,6 +57,9 @@
     return Math.min(C.TONG_TUAN, Math.floor(diff / 7) + 1);
   }
   function thuHomNay() { const d = new Date().getDay(); return d === 0 ? 8 : d + 1; } /* 2..8 */
+  const thuSau = (thu, n) => ((thu - 2 + n) % 7) + 2;                 /* thứ của n ngày sau */
+  function ngaySau(n) { const d = new Date(); d.setDate(d.getDate() + n); return d; }
+  const ngayStr = (d) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
   function ngayCuaTuan(t, thu) { const d = parseDate(C.WEEK1_START); d.setDate(d.getDate() + (t - 1) * 7 + (thu - 2)); return d; }
   const fmt = (d) => String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0");
   const money = (n) => n.toLocaleString("vi-VN") + "đ";
@@ -64,6 +78,11 @@
     (SOAN[t] || []).forEach((s, i) => { if (s.soanToi === thu) { tong++; if (S.soan[soanKey(t, i)]) xong++; } });
     const n = w.ngay.find((x) => x.thu === thu);
     if (n) { tong++; if (S.luot[luotKey(t, thu)]) xong++; }
+    /* chuẩn bị bài tập cho ngày mai — chỉ tính khi mai có đi học */
+    const mai = ngayStr(ngaySau(1)), monMai = monNgay(thuSau(thu, 1));
+    if (monMai.length) { tong++; const b = S.btvn[btvnKey(mai)] || {}; if (monMai.every((m) => b[m])) xong++; }
+    /* luyện tính mỗi ngày */
+    if (LUYEN) { tong++; if (S.luyen[todayStr()]) xong++; }
     return { tong, xong };
   }
   const xongHetHomNay = (t, thu) => { const v = viecCuaNgay(t, thu); return v.tong > 0 && v.xong === v.tong; };
@@ -109,15 +128,18 @@
     const t = tuanHienTai(), thu = thuHomNay(), w = W[t];
     let main = "";
 
-    /* Hôm nay ở trường (theo thời khoá biểu trong config.js) */
-    const lh = (C.LICH_HOC || {})[thu];
-    if (lh && (lh.sang.length || lh.chieu.length)) {
-      main += `<div class="card tight"><b>🏫 Hôm nay ở trường</b>` +
-        (lh.sang.length ? `<div class="small" style="margin-top:7px"><span class="pill">Sáng</span> ${esc(lh.sang.join(" · "))}</div>` : "") +
-        (lh.chieu.length ? `<div class="small" style="margin-top:5px"><span class="pill">Chiều</span> ${esc(lh.chieu.join(" · "))}</div>` : "") + `</div>`;
-    } else {
-      main += `<div class="card tight"><b>🏫 Hôm nay Kim được nghỉ</b><div class="muted small" style="margin-top:4px">Cuối tuần rồi — nghỉ ngơi và đóng tuần cùng mẹ.</div></div>`;
-    }
+    /* Thời khoá biểu hôm nay, ngày mai, ngày kia (theo config.js → LICH_HOC) */
+    const tkb = (n) => {
+      const th = thuSau(thu, n), l = (C.LICH_HOC || {})[th], d = ngaySau(n);
+      const nhan = n === 0 ? "Hôm nay" : n === 1 ? "Ngày mai" : "Ngày kia";
+      const co = l && (l.sang.length || l.chieu.length);
+      return `<div class="tkb ${n === 1 ? "mai" : ""}">
+        <div class="row"><div class="grow"><b>${nhan}</b> <span class="muted">${C.THU[th]} · ${fmt(d)}</span></div>${n === 1 && co ? '<span class="pill" style="background:#ffe3ec;color:var(--accent2)">cần chuẩn bị tối nay</span>' : ""}</div>
+        ${co ? (l.sang.length ? `<div class="small" style="margin-top:5px"><span class="pill">Sáng</span> ${esc(l.sang.join(" · "))}</div>` : "") +
+               (l.chieu.length ? `<div class="small" style="margin-top:4px"><span class="pill">Chiều</span> ${esc(l.chieu.join(" · "))}</div>` : "")
+             : `<div class="muted small" style="margin-top:4px">Được nghỉ</div>`}</div>`;
+    };
+    main += `<div class="card tight" style="padding:14px 16px">${tkb(0)}${tkb(1)}${tkb(2)}</div>`;
 
     if (!w) {
       const co = tuanCoNoiDung();
@@ -131,11 +153,21 @@
       const ngay = w.ngay.find((n) => n.thu === thu);
       const viec = [];
 
-      soanToiNay.forEach((x) => { const mi = monInfo(x.s.mon);
+      let phut = 0;
+      soanToiNay.forEach((x) => { const mi = monInfo(x.s.mon); phut += 10;
         viec.push(`<a class="day" href="#/soan/${t}/${x.i}"><div class="icon-box" style="background:${mi.nen}">📖</div><div class="grow"><div class="muted">Soạn trước · mai học ${esc(x.s.hocVao || "")}</div><b>${esc(x.s.bai)}</b></div><span class="pill">10 phút</span></a>`); });
 
-      if (ngay) { const r = S.luot[luotKey(t, thu)]; const mi = monInfo(ngay.mon);
+      if (ngay) { const r = S.luot[luotKey(t, thu)]; const mi = monInfo(ngay.mon); phut += 15;
         viec.push(`<a class="day ${r ? "done" : ""}" href="#/lam/${t}/${thu}"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><div class="muted">Ôn lại bài vừa học hôm nay</div><b>${esc(ngay.ten)}</b></div>${r ? `<div class="score" style="color:${r.diem / r.tong >= 0.7 ? "var(--ok)" : "#b45309"}">${r.diem}/${r.tong}</div>` : '<span class="pill">15 phút</span>'}</a>`); }
+
+      /* Luyện tính vài câu, bám chương Toán đang học */
+      if (LUYEN) { const rl = S.luyen[todayStr()]; phut += 5;
+        viec.push(`<a class="day ${rl ? "done" : ""}" href="#/luyen"><div class="icon-box" style="background:#e3f0ff">🔢</div><div class="grow"><div class="muted">Luyện tính · ${esc(LUYEN.chuDeTuan(t))}</div><b>${C.SO_CAU_LUYEN || 5} câu tính nhanh</b></div>${rl ? `<div class="score" style="color:${rl.diem / rl.tong >= 0.7 ? "var(--ok)" : "#b45309"}">${rl.diem}/${rl.tong}</div>` : '<span class="pill">5 phút</span>'}</a>`); }
+
+      /* Chuẩn bị bài tập và sách vở cho ngày mai */
+      const mai = ngayStr(ngaySau(1)), monMai = monNgay(thuSau(thu, 1));
+      if (monMai.length) { const b = S.btvn[btvnKey(mai)] || {}; const con = monMai.filter((m) => !b[m]); phut += 3;
+        viec.push(`<a class="day ${con.length ? "" : "done"}" href="#/btvn"><div class="icon-box" style="background:#fff1dc">🎒</div><div class="grow"><div class="muted">Xong trước khi đi ngủ · mai học ${monMai.length} môn</div><b>${con.length ? "Bài tập và sách vở cho ngày mai" : "Đã chuẩn bị xong cho ngày mai"}</b></div>${con.length ? `<span class="pill">còn ${con.length}</span>` : '<span class="pill" style="color:var(--ok)">✓</span>'}</a>`); }
 
       const ok = td.xong === td.tong;
       const vn = viecCuaNgay(t, thu);
@@ -147,7 +179,7 @@
           <p class="muted small">${g ? `Đã nhận ${money(g.tien)} · chạm để xem lại` : "Chạm để mở phần thưởng: một lời nhắn, một tin Anh tài, và một thẻ cào 🐷"}</p></a>`;
       }
       if (viec.length) {
-        main += `<h2>🌙 Việc tối nay</h2><p class="muted small" style="margin:-6px 0 10px">Khoảng ${viec.length * 12} phút. Làm xong giữ được chuỗi ngày 🔥.</p>` + viec.join("");
+        main += `<h2>🌙 Việc tối nay</h2><p class="muted small" style="margin:-6px 0 10px">Khoảng ${phut} phút. Làm xong giữ được chuỗi ngày 🔥 và mở được phần thưởng.</p>` + viec.join("");
       } else if (ok && !td.dong) {
         main += `<div class="card"><div class="row"><div class="icon-box" style="background:#fff7ed">🎁</div><div class="grow"><div class="muted">Cuối tuần · Tuần ${t}</div><h3>Đóng tuần cùng mẹ</h3></div></div><p class="small" style="margin:12px 0">Đủ 5 lượt rồi. Xem lại chỗ sai với mẹ, làm 5 câu chốt và cào thẻ.</p><a class="btn block" href="#/dong/${t}">Đóng tuần →</a></div>`;
       } else if (td.dong) {
@@ -204,6 +236,58 @@
       <h2>🎁 Đóng tuần</h2>
       <div class="card">${td.dong ? `<p>Tuần ${t} đã đóng ngày ${S.dong[t].luc}. Thẻ cào: <b>${money(S.dong[t].theCao)}</b> 🐷</p>` : `<p class="small">Đủ 5 lượt kiểm tra, xem lại chỗ sai cùng mẹ, rồi làm 5 câu chốt để nhận thẻ cào.</p><div style="margin-top:12px"><a class="btn ${ok ? "" : "ghost"}" href="${ok ? "#/dong/" + t : "#"}" ${ok ? "" : 'onclick="return false"'}>${ok ? "Đóng tuần →" : `Còn ${td.tong - td.xong} lượt`}</a></div>`}</div>`;
     app.querySelectorAll("[data-toggle]").forEach((el) => el.addEventListener("click", () => { el.classList.toggle("open"); const k = el.dataset.doc; if (k && !S.doc[k]) { S.doc[k] = true; save(); } }));
+  }
+
+  /* ---------- trang: chuẩn bị bài tập cho ngày mai ---------- */
+  function viewBtvn() {
+    setNav("home");
+    const thu = thuHomNay(), thuMai = thuSau(thu, 1), mai = ngayStr(ngaySau(1));
+    const mon = monNgay(thuMai);
+    if (!mon.length) { app.innerHTML = header("Chuẩn bị cho ngày mai") + `<div class="card" style="text-align:center"><div class="big">🎉</div><p style="margin-top:10px"><b>Mai Kim được nghỉ</b></p><p class="small">Không phải chuẩn bị gì cả.</p><div style="margin-top:14px"><a class="btn" href="#/">Về trang chủ</a></div></div>`; return; }
+    const b = S.btvn[btvnKey(mai)] || {};
+    const dong = mon.map((m) => {
+      const tt = b[m];
+      return `<div class="btvn ${tt ? "xong" : ""}" data-mon="${esc(m)}">
+        <div class="row"><div class="grow"><b>${esc(m)}</b><div class="muted small">${tt === "roi" ? "✓ Kim đã làm xong" : tt === "khong" ? "✓ Hôm nay cô không giao bài" : "Cô có giao bài tập môn này không?"}</div></div></div>
+        ${tt ? `<button class="btn sm ghost" data-huy="1" style="margin-top:8px;font-size:12px;padding:6px 12px">Sửa lại</button>`
+             : `<div style="margin-top:9px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-tt="roi">Có, và Kim làm xong rồi</button><button class="btn sm ghost" data-tt="khong">Không có bài</button></div>`}
+      </div>`;
+    }).join("");
+    const con = mon.filter((m) => !b[m]).length;
+    app.innerHTML = header("Chuẩn bị cho ngày mai") +
+      `<div class="card" style="background:linear-gradient(160deg,#fffaf0,#fff1dc)">
+        <div class="row"><div class="icon-box" style="background:#fff">🎒</div><div class="grow"><b>Mai là ${C.THU[thuMai]}, ${fmt(ngaySau(1))}</b><div class="muted small">Kim học: ${esc(mon.join(" · "))}</div></div></div>
+        <p class="small" style="margin-top:12px">Làm bài tập và soạn sách vở <b>tối nay</b> nhé. Sáng mai vội lắm, không kịp làm đâu — mà quên vở thì cô hỏi bài là không có gì để nộp.</p></div>
+      ${dong}
+      <div class="card ${con ? "" : ""}" style="text-align:center">${con
+        ? `<p class="small">Còn <b>${con}</b> môn Kim chưa trả lời.</p>`
+        : `<div class="big">✅</div><p style="margin-top:8px"><b>Chuẩn bị xong rồi!</b></p><p class="small muted">Việc cuối: xếp sách vở của ${mon.length} môn trên vào cặp ngay bây giờ, để sáng mai chỉ việc xách đi.</p>`}
+        <div style="margin-top:12px"><a class="btn ${con ? "ghost" : ""}" href="#/">Về trang chủ</a></div></div>`;
+    app.querySelectorAll(".btvn").forEach((el) => {
+      const m = el.dataset.mon;
+      el.querySelectorAll("[data-tt]").forEach((bt) => bt.addEventListener("click", () => {
+        S.btvn[btvnKey(mai)] = Object.assign({}, S.btvn[btvnKey(mai)], { [m]: bt.dataset.tt });
+        capNhatStreak(); save(); viewBtvn();
+      }));
+      const h = el.querySelector("[data-huy]");
+      if (h) h.addEventListener("click", () => { const o = Object.assign({}, S.btvn[btvnKey(mai)]); delete o[m]; S.btvn[btvnKey(mai)] = o; save(); viewBtvn(); });
+    });
+  }
+
+  /* ---------- trang: luyện tính ---------- */
+  function viewLuyen() {
+    setNav("home");
+    if (!LUYEN) { location.hash = "#/"; return; }
+    const t = tuanHienTai(), hn = todayStr();
+    const de = LUYEN.taoDe(t, hn, C.SO_CAU_LUYEN || 5);
+    runQuiz({ tieuDe: "Luyện tính · " + LUYEN.chuDeTuan(t), mon: "toan", cauHoi: de, sub: `Tính nhanh ngày ${fmt(new Date())}`,
+      onDone: (kq) => {
+        const first = !S.luyen[hn];
+        S.luyen[hn] = { diem: kq.diem, tong: kq.tong, sai: kq.sai, luc: hn };
+        const xu = kq.diem * C.XU_MOI_CAU_DUNG + (first ? (C.XU_LUYEN_TINH || 15) : 0);
+        S.xu += xu; capNhatStreak(); save();
+        return { xu, first, back: "#/", backText: "Về trang chủ" };
+      } });
   }
 
   /* ---------- trang: giảng lại cho dễ hiểu ---------- */
@@ -438,7 +522,7 @@
       </div>`; });
     app.innerHTML = header("Góc của mẹ") + canhBaoLuu() +
       kheDongBo() +
-      `<div class="card tight"><div class="row"><div class="grow"><b>Tổng quan</b><div class="small">🔥 ${S.streak.count} ngày liên tiếp · ⭐ ${S.xu} xu · 🐷 heo đất ${money(S.heo)}</div><div class="small muted" style="margin-top:4px">${Object.keys(S.ngay).length} ngày hoàn thành hết việc · thẻ cào ngày cộng ${money(Object.values(S.ngay).reduce((a, x) => a + x.tien, 0))}</div></div></div></div>
+      `<div class="card tight"><div class="row"><div class="grow"><b>Tổng quan</b><div class="small">🔥 ${S.streak.count} ngày liên tiếp · ⭐ ${S.xu} xu · 🐷 heo đất ${money(S.heo)}</div><div class="small muted" style="margin-top:4px">${Object.keys(S.luyen).length} buổi luyện tính · ${Object.keys(S.btvn).length} ngày đã chuẩn bị bài · ${Object.keys(S.ngay).length} ngày hoàn thành hết việc · thẻ cào ngày cộng ${money(Object.values(S.ngay).reduce((a, x) => a + x.tien, 0))}</div></div></div></div>
       ${rows}
       <div class="card"><b>Cách dùng</b><p class="small" style="margin-top:6px">Cuối tuần mở trang này, nhìn "Ba chỗ sai nhiều nhất", dạy lại đúng ba chỗ đó rồi cho Kim làm 5 câu chốt ở mục Đóng tuần. Heo đất là số tiền thưởng ảo, mẹ quy đổi thế nào tuỳ mẹ.</p>
         <p class="small" style="margin-top:10px">Tuần 1 bắt đầu từ <b>${fmt(ngayCuaTuan(1, 2))}/${parseDate(C.WEEK1_START).getFullYear()}</b> (sửa trong <code>config.js</code> nếu lịch trường khác).</p>
@@ -463,6 +547,8 @@
     if (h[0] === "soan") return viewSoan(Number(h[1]), Number(h[2]));
     if (h[0] === "thuong") return viewThuong();
     if (h[0] === "giang") return viewGiang(h[1]);
+    if (h[0] === "btvn") return viewBtvn();
+    if (h[0] === "luyen") return viewLuyen();
     if (h[0] === "dong") return viewDong(Number(h[1]));
     if (h[0] === "phu-huynh") return viewPhuHuynh();
     viewHome();
