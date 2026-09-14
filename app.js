@@ -35,7 +35,7 @@
     return ra;
   }
   const soanKey = (t, i) => "t" + t + "-s" + i;
-  const defaultState = () => ({ xu: 0, heo: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {}, ngay: {}, demThuong: 0, btvn: {}, luyen: {} });
+  const defaultState = () => ({ xu: 0, heo: 0, xuDaDoi: 0, heoDaRut: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {}, ngay: {}, demThuong: 0, btvn: {}, luyen: {}, qua: {}, rut: {} });
   let S = load();
   function load() { try { const r = localStorage.getItem(KEY); return r ? Object.assign(defaultState(), JSON.parse(r)) : defaultState(); } catch (e) { return defaultState(); } }
   let luuLoi = false;
@@ -63,6 +63,20 @@
   function ngayCuaTuan(t, thu) { const d = parseDate(C.WEEK1_START); d.setDate(d.getDate() + (t - 1) * 7 + (thu - 2)); return d; }
   const fmt = (d) => String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0");
   const money = (n) => n.toLocaleString("vi-VN") + "đ";
+
+  /* ---------- xu, quà và heo đất ----------
+     S.xu và S.heo là TỔNG đã nhận, chỉ tăng. S.xuDaDoi và S.heoDaRut là tổng đã tiêu.
+     Số còn lại = tổng nhận trừ tổng đã tiêu. Cách này để đồng bộ nhiều máy không kéo
+     số cũ về (xem dong-bo.js: cả bốn con số đều hợp nhất bằng cách lấy số lớn hơn). */
+  const QUA = C.QUA || [
+    { gia: 2000, icon: "🍜", ten: "Mẹ đưa Kim đi ăn món Kim thích", mo: "Kim chọn quán, mẹ đưa đi." },
+    { gia: 5000, icon: "🎬", ten: "Một lần đi xem phim", mo: "Kim chọn phim, mẹ mua vé." },
+  ];
+  const quaSapXep = () => QUA.slice().sort((a, b) => a.gia - b.gia);
+  const xuConLai = () => Math.max(0, (S.xu || 0) - (S.xuDaDoi || 0));
+  const heoConLai = () => Math.max(0, (S.heo || 0) - (S.heoDaRut || 0));
+  const quaKeTiep = () => quaSapXep().find((q) => q.gia > xuConLai()) || null;
+  const lichSu = (o) => Object.entries(o || {}).sort((a, b) => Number(b[0]) - Number(a[0])).map((x) => x[1]);
 
   /* ---------- tiện ích ---------- */
   const tuanCoNoiDung = () => Object.keys(W).map(Number).sort((a, b) => a - b);
@@ -117,7 +131,7 @@
     return `<div class="top">
       <div class="logo">📚</div>
       <div class="grow"><h1>Kim Lớp 7</h1><div class="muted">${sub || "Học cùng trường, mỗi tuần một chút"}</div></div>
-      <div class="badges"><span class="badge">🔥 ${S.streak.count} ngày</span><span class="badge">⭐ ${S.xu} xu</span><span class="badge">🐷 ${money(S.heo)}</span></div>
+      <div class="badges"><span class="badge">🔥 ${S.streak.count} ngày</span><a class="badge" href="#/qua">⭐ ${xuConLai()} xu</a><a class="badge" href="#/qua">🐷 ${money(heoConLai())}</a></div>
     </div>`;
   }
   function setNav(k) { document.querySelectorAll("nav.bottom a").forEach((a) => a.classList.toggle("on", a.dataset.nav === k)); }
@@ -191,9 +205,65 @@
       main += `<div class="card tight row"><div class="grow"><b>Tuần ${t} · ${esc(w.ten)}</b><div class="muted">${td.xong}/${td.tong} lượt ôn · ${sl.length - chuaSoan.length}/${sl.length} bài soạn</div></div><a class="btn sm ghost" href="#/tuan/${t}">Xem tuần</a></div>`;
     }
 
+    /* Đổi quà bằng xu */
+    const qn = quaKeTiep(), con = xuConLai();
+    const duQua = quaSapXep().filter((q) => q.gia <= con);
+    const quaHtml = `<a class="card tight" href="#/qua"><div class="grow">
+      <div class="row"><div class="grow"><b>⭐ Đổi quà bằng xu</b><div class="muted">${duQua.length
+        ? "Đủ xu đổi: " + esc(duQua[duQua.length - 1].ten)
+        : qn ? "Còn " + (qn.gia - con) + " xu nữa là đổi được " + esc(qn.ten) : "Kim đã đổi hết các mốc"}</div></div><span class="pill">${con} xu</span></div>
+      ${qn ? `<div class="bar" style="margin-top:10px"><i style="width:${Math.min(100, Math.round((con / qn.gia) * 100))}%"></i></div>` : ""}
+    </div></a>`;
+    main += quaHtml;
+
     const kt = C.KIEM_TRA.find((k) => k.tuan >= t);
     const ktHtml = kt ? `<div class="card tight"><div class="row"><div class="grow"><b>Đường đến ${kt.ten}</b><div class="muted">Còn ${kt.tuan - t} tuần (tuần ${kt.tuan})</div></div><span class="pill">Tuần ${t}/${C.TONG_TUAN}</span></div><div class="bar" style="margin-top:10px"><i style="width:${Math.round((t / kt.tuan) * 100)}%"></i></div></div>` : "";
     app.innerHTML = header(`${C.THU[thu]}, ${fmt(new Date())} · Tuần ${t}`) + canhBaoLuu() + main + ktHtml + `<p class="muted" style="text-align:center;margin-top:18px">Học mỗi ngày một chút 🌱</p>`;
+  }
+
+  /* ---------- trang: đổi quà ---------- */
+  function viewQua() {
+    setNav("home");
+    const con = xuConLai();
+    const ds = quaSapXep().map((q, i) => {
+      const du = con >= q.gia;
+      return `<div class="card">
+        <div class="row"><div class="icon-box" style="background:#fff7ed;font-size:24px">${q.icon}</div>
+          <div class="grow"><b>${esc(q.ten)}</b><div class="muted small">${esc(q.mo || "")}</div></div>
+          <span class="pill">${q.gia} xu</span></div>
+        <div class="bar" style="margin-top:12px"><i style="width:${Math.min(100, Math.round((con / q.gia) * 100))}%"></i></div>
+        <div class="row" style="margin-top:10px"><div class="grow small" style="${du ? "color:var(--ok);font-weight:700" : "color:var(--muted)"}">${du ? "Đủ xu rồi" : "Còn thiếu " + (q.gia - con) + " xu"}</div>
+          <button class="btn sm ${du ? "" : "ghost"}" data-doi="${i}" ${du ? "" : "disabled"}>Đổi quà</button></div>
+        <div id="xn-${i}"></div></div>`;
+    }).join("");
+    const ls = lichSu(S.qua);
+    app.innerHTML = header("Đổi quà") +
+      `<div class="card tight" style="text-align:center"><div class="big">${con}</div><p class="muted small" style="margin-top:6px">xu đang có · đã nhận tất cả ${S.xu} xu, đã đổi ${S.xuDaDoi || 0} xu</p></div>
+      <p class="muted small" style="margin:10px 0 12px">Đổi quà thì trừ xu, xu lại tích từ đầu cho lần sau. Đổi xong Kim nhớ báo mẹ để mẹ thực hiện nhé.</p>
+      ${ds}
+      <div class="card"><div class="row"><div class="icon-box" style="background:#ffe3ec;font-size:24px">🐷</div>
+        <div class="grow"><b>Heo đất</b><div class="muted small">Tiền thưởng từ thẻ cào, khác với xu</div></div>
+        <span class="pill">${money(heoConLai())}</span></div>
+        <p class="small" style="margin-top:10px">Heo đất Kim không tự đổi được. Khi nào Kim muốn dùng vào việc gì thì nói với mẹ, mẹ sẽ đưa tiền thật và bấm rút cho Kim.</p></div>
+      ${ls.length ? `<div class="card"><h3>Kim đã đổi</h3>${ls.map((x) => `<div class="wrong-item"><b>${esc(x.ten)}</b> <span class="pill">${x.gia} xu</span><div class="muted small">${esc(x.luc)}</div></div>`).join("")}</div>` : ""}
+      <div style="text-align:center;margin-top:14px"><a class="btn ghost" href="#/">Về trang chủ</a></div>`;
+    app.querySelectorAll("[data-doi]").forEach((b) => b.addEventListener("click", () => {
+      const i = Number(b.dataset.doi), q = quaSapXep()[i];
+      document.getElementById("xn-" + i).innerHTML =
+        `<div class="expl"><b>Đổi ${esc(q.ten)}?</b>Trừ ${q.gia} xu, Kim còn lại ${xuConLai() - q.gia} xu.
+         <div style="margin-top:12px"><button class="btn sm" id="xnOk">Đổi thật</button> <button class="btn sm ghost" id="xnHuy">Thôi</button></div></div>`;
+      document.getElementById("xnHuy").addEventListener("click", () => { document.getElementById("xn-" + i).innerHTML = ""; });
+      document.getElementById("xnOk").addEventListener("click", () => {
+        if (xuConLai() < q.gia) return;
+        S.xuDaDoi = (S.xuDaDoi || 0) + q.gia;
+        S.qua[String(Date.now())] = { ten: q.ten, gia: q.gia, luc: todayStr() };
+        save();
+        app.innerHTML = header("Đổi quà") + `<div class="card" style="text-align:center"><div class="big pop">${q.icon}</div>
+          <p style="margin-top:10px"><b>Kim đã đổi ${esc(q.ten)}</b></p>
+          <p class="small muted">Trừ ${q.gia} xu, còn lại ${xuConLai()} xu. Mẹ đã thấy ở Góc của mẹ, Kim nhắc mẹ một câu nữa cho chắc.</p>
+          <div style="margin-top:16px"><a class="btn" href="#/">Về trang chủ</a></div></div>`;
+      });
+    }));
   }
 
   /* ---------- trang: lộ trình ---------- */
@@ -344,7 +414,7 @@
       <div class="card"><h3>💌 Lời nhắn cho Kim</h3><p style="margin-top:8px;font-size:16px">${esc(cau)}</p></div>
       <div class="card"><h3>🐷 Thẻ cào hôm nay</h3><p class="muted small">Chạm để cào</p>
         <div class="scratch ${g.cao ? "open" : ""}" id="scratch" style="margin-top:8px"><div class="big">${money(g.tien)}</div><div class="cover">👆 Cào tại đây</div></div>
-        <p class="muted small" style="margin-top:10px">Đã cộng vào heo đất. Heo đang có ${money(S.heo)}.</p></div>
+        <p class="muted small" style="margin-top:10px">Đã cộng vào heo đất. Heo đang có ${money(heoConLai())}.</p></div>
       ${tin ? `<div class="card"><h3>🎤 Anh trai vượt ngàn chông gai</h3><p style="margin-top:8px"><b>${esc(tin.tieuDe)}</b></p><p class="small" style="margin-top:6px">${esc(tin.noiDung)}</p></div>` : ""}
       <div style="text-align:center;margin-top:14px"><a class="btn" href="#/">Về trang chủ</a> <a class="btn ghost" href="#/tuan/${t}">Xem tuần ${t}</a></div>`;
     const sc = $("#scratch"); if (sc) sc.addEventListener("click", () => { sc.classList.add("open"); if (!S.ngay[hn].cao) { S.ngay[hn].cao = true; save(); } });
@@ -508,6 +578,46 @@
     if (bb) bb.addEventListener("click", () => { DB.xoaMa(); route(); });
   }
 
+  /* ---------- khối quà và heo đất (hiện trong Góc của mẹ) ---------- */
+  function kheQuaHeo() {
+    const lsQua = lichSu(S.qua), lsRut = lichSu(S.rut);
+    const moc = quaSapXep().map((q) => {
+      const con = xuConLai();
+      return `<div class="wrong-item"><div class="row"><div class="grow">${q.icon} <b>${esc(q.ten)}</b> <span class="pill">${q.gia} xu</span></div><span class="small" style="${con >= q.gia ? "color:var(--ok);font-weight:700" : "color:var(--muted)"}">${con >= q.gia ? "đủ xu" : "còn thiếu " + (q.gia - con)}</span></div></div>`;
+    }).join("");
+    return `<div class="card"><b>⭐ Quà đổi bằng xu</b>
+      <div class="small muted" style="margin:6px 0 8px">Kim đang có ${xuConLai()} xu. Tổng đã nhận ${S.xu} xu, đã đổi ${S.xuDaDoi || 0} xu. Đổi quà là trừ xu, xu tích lại từ đầu cho lần sau.</div>
+      ${moc}
+      ${lsQua.length ? `<div style="margin-top:10px"><b class="small">Kim đã đổi</b>${lsQua.map((x) => `<div class="wrong-item"><b>${esc(x.ten)}</b> <span class="pill">${x.gia} xu</span> <span class="muted small">${esc(x.luc)}</span></div>`).join("")}</div>` : '<p class="muted small" style="margin-top:10px">Kim chưa đổi quà lần nào.</p>'}
+
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid #f0e6dc"><b>🐷 Heo đất</b>
+        <div class="small muted" style="margin:6px 0 10px">Heo đang có <b>${money(heoConLai())}</b>. Tổng đã bỏ vào ${money(S.heo)}, đã rút ${money(S.heoDaRut || 0)}. Khi Kim xin đổi ra tiền thật, mẹ bấm nút dưới để ghi lại và đưa heo về 0.</div>
+        <button class="btn sm ghost" id="btnRut" ${heoConLai() > 0 ? "" : "disabled"}>Rút heo đất</button>
+        <div id="rutBox"></div>
+        ${lsRut.length ? `<div style="margin-top:12px"><b class="small">Đã rút</b>${lsRut.map((x) => `<div class="wrong-item"><b>${money(x.tien)}</b> <span class="muted small">${esc(x.luc)}</span><div class="small">${esc(x.viec || "")}</div></div>`).join("")}</div>` : ""}
+      </div></div>`;
+  }
+
+  function ganQuaHeo() {
+    const b = $("#btnRut"); if (!b) return;
+    b.addEventListener("click", () => {
+      $("#rutBox").innerHTML = `<div class="expl" style="text-align:left">
+        <b>Rút heo đất</b>
+        <div class="small" style="margin-bottom:8px">Nhập số tiền đưa cho Kim và việc Kim dùng vào. Số tiền sẽ trừ khỏi heo, phần còn lại giữ nguyên.</div>
+        <input class="ans" id="rutTien" type="number" inputmode="numeric" value="${heoConLai()}" style="margin-bottom:8px">
+        <input class="ans" id="rutViec" type="text" placeholder="Kim dùng vào việc gì (ví dụ: mua truyện)">
+        <div style="margin-top:12px"><button class="btn sm" id="rutOk">Ghi và trừ heo</button> <button class="btn sm ghost" id="rutHuy">Thôi</button></div></div>`;
+      $("#rutHuy").addEventListener("click", () => { $("#rutBox").innerHTML = ""; });
+      $("#rutOk").addEventListener("click", () => {
+        const tien = Math.min(heoConLai(), Math.max(0, Math.round(Number($("#rutTien").value) || 0)));
+        if (!tien) { $("#rutBox").innerHTML = `<p class="small" style="color:var(--bad);margin-top:8px">Số tiền phải lớn hơn 0 và không quá số heo đang có.</p>`; return; }
+        S.heoDaRut = (S.heoDaRut || 0) + tien;
+        S.rut[String(Date.now())] = { tien, viec: ($("#rutViec").value || "").trim(), luc: todayStr() };
+        save(); viewPhuHuynh();
+      });
+    });
+  }
+
   /* ---------- trang: phụ huynh ---------- */
   function viewPhuHuynh() {
     setNav("ph");
@@ -522,17 +632,19 @@
       </div>`; });
     app.innerHTML = header("Góc của mẹ") + canhBaoLuu() +
       kheDongBo() +
-      `<div class="card tight"><div class="row"><div class="grow"><b>Tổng quan</b><div class="small">🔥 ${S.streak.count} ngày liên tiếp · ⭐ ${S.xu} xu · 🐷 heo đất ${money(S.heo)}</div><div class="small muted" style="margin-top:4px">${Object.keys(S.luyen).length} buổi luyện tính · ${Object.keys(S.btvn).length} ngày đã chuẩn bị bài · ${Object.keys(S.ngay).length} ngày hoàn thành hết việc · thẻ cào ngày cộng ${money(Object.values(S.ngay).reduce((a, x) => a + x.tien, 0))}</div></div></div></div>
+      `<div class="card tight"><div class="row"><div class="grow"><b>Tổng quan</b><div class="small">🔥 ${S.streak.count} ngày liên tiếp · ⭐ ${xuConLai()} xu · 🐷 heo đất ${money(heoConLai())}</div><div class="small muted" style="margin-top:4px">${Object.keys(S.luyen).length} buổi luyện tính · ${Object.keys(S.btvn).length} ngày đã chuẩn bị bài · ${Object.keys(S.ngay).length} ngày hoàn thành hết việc · thẻ cào ngày cộng ${money(Object.values(S.ngay).reduce((a, x) => a + x.tien, 0))}</div></div></div></div>
       ${rows}
+      ${kheQuaHeo()}
       <div class="card"><b>Cách dùng</b><p class="small" style="margin-top:6px">Cuối tuần mở trang này, nhìn "Ba chỗ sai nhiều nhất", dạy lại đúng ba chỗ đó rồi cho Kim làm 5 câu chốt ở mục Đóng tuần. Heo đất là số tiền thưởng ảo, mẹ quy đổi thế nào tuỳ mẹ.</p>
         <p class="small" style="margin-top:10px">Tuần 1 bắt đầu từ <b>${fmt(ngayCuaTuan(1, 2))}/${parseDate(C.WEEK1_START).getFullYear()}</b> (sửa trong <code>config.js</code> nếu lịch trường khác).</p>
         <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm ghost" id="btnCopy">Sao chép tóm tắt</button><button class="btn sm ghost" id="btnReset">Xoá toàn bộ tiến độ</button></div><div id="resetBox"></div></div>`;
     $("#btnCopy").addEventListener("click", () => {
-      let txt = `Kim Lớp 7 – tóm tắt ${todayStr()}\nChuỗi ${S.streak.count} ngày · ${S.xu} xu · heo đất ${money(S.heo)}\n`;
+      let txt = `Kim Lớp 7 – tóm tắt ${todayStr()}\nChuỗi ${S.streak.count} ngày · ${xuConLai()} xu · heo đất ${money(heoConLai())}\n`;
       co.forEach((t) => { const w = W[t]; const td = tienDoTuan(t); if (!td.xong) return; txt += `\nTuần ${t} (${w.ten}): ${td.xong}/${td.tong} lượt${td.dong ? ", đã đóng" : ""}\n`; w.ngay.forEach((n) => { const r = S.luot[luotKey(t, n.thu)]; if (r) txt += `  ${n.ten}: ${r.diem}/${r.tong}\n`; }); const top = topChuDe(loiCuaTuan(t), 3); if (top.length) txt += "  Sai nhiều: " + top.map(([cd, c]) => `${cd} (${c})`).join("; ") + "\n"; });
       navigator.clipboard && navigator.clipboard.writeText(txt).then(() => { $("#btnCopy").textContent = "Đã sao chép ✓"; });
     });
     ganDongBo();
+    ganQuaHeo();
     $("#btnReset").addEventListener("click", () => { $("#resetBox").innerHTML = `<p class="small" style="margin-top:10px;color:var(--bad)">Xoá hết điểm, xu, heo đất? Không hoàn lại được.</p><button class="btn sm" id="btnReset2" style="background:var(--bad);box-shadow:none;margin-top:6px">Xoá thật</button>`; $("#btnReset2").addEventListener("click", async () => { S = defaultState(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} if (DB && DB.co() && DB.layMa()) { try { await DB.xoaHet(); } catch (e) { DB.trangThai.loi = e.message; } } viewPhuHuynh(); }); });
   }
 
@@ -550,6 +662,7 @@
     if (h[0] === "btvn") return viewBtvn();
     if (h[0] === "luyen") return viewLuyen();
     if (h[0] === "dong") return viewDong(Number(h[1]));
+    if (h[0] === "qua") return viewQua();
     if (h[0] === "phu-huynh") return viewPhuHuynh();
     viewHome();
   }
