@@ -21,8 +21,6 @@ window.KIM_CONFIG = {
   XU_MOI_CAU_DUNG: 10,
   XU_XONG_LUOT: 20,
   XU_SOAN_BAI: 15,
-  XU_LUYEN_TINH: 15,
-  SO_CAU_LUYEN: 5,
   THE_CAO_NGAY: { min: 5000, max: 20000, buoc: 1000 }, /* thẻ cào mỗi ngày Kim xong hết việc */
   THE_CAO: [10000, 10000, 15000, 15000, 20000, 30000], /* rút ngẫu nhiên một giá trị khi đóng tuần */
   /* Tên và màu môn */
@@ -33,13 +31,14 @@ window.KIM_CONFIG = {
     khtn: { ten: "KHTN", icon: "🔬", mau: "#8b5cf6", nen: "#efe9ff" },
     sudia:{ ten: "Sử–Địa", icon: "🗺️", mau: "#b45309", nen: "#fff1dc" },
   },
-  /* THỜI KHOÁ BIỂU lớp 7A, áp dụng từ 07/09/2026. Sửa ở đây nếu trường đổi TKB. */
+  /* THỜI KHOÁ BIỂU lớp 7A, áp dụng từ 21/09/2026 (bản trước: 07/09). Sửa ở đây nếu trường đổi TKB.
+     LS.ĐL trong TKB không ghi rõ tiết nào Lịch sử, tiết nào Địa lí → ghi chung "Lịch sử – Địa lí". */
   LICH_HOC: {
-    2: { sang: ["Chào cờ + HĐTN", "Lịch sử", "KHTN", "KHTN"], chieu: ["Tiếng Anh", "Tiếng Anh", "GDTC"] },
-    3: { sang: ["Ngữ văn", "Ngữ văn", "HĐTN hướng nghiệp", "Tiếng Anh"], chieu: ["Âm nhạc", "Mĩ thuật", "CLB", "CLB"] },
-    4: { sang: ["Tin học", "Địa lí", "Toán", "Toán"], chieu: ["Anh tăng cường", "Anh tăng cường", "GDTC"] },
-    5: { sang: ["Toán", "Toán", "GDCD", "Địa lí", "Công nghệ"], chieu: [] },
-    6: { sang: ["Ngữ văn", "Ngữ văn", "GD địa phương", "Sinh hoạt + HĐTN"], chieu: ["KHTN", "KHTN", "CLB", "CLB"] },
+    2: { sang: ["Chào cờ + HĐTN", "Lịch sử – Địa lí", "KHTN", "KHTN"], chieu: ["Tiếng Anh", "Tiếng Anh", "GDTC"] },
+    3: { sang: ["Ngữ văn", "Ngữ văn", "HĐTN hướng nghiệp", "Tiếng Anh"], chieu: ["Nghệ thuật", "Nghệ thuật", "CLB 1", "CLB 1"] },
+    4: { sang: ["Lịch sử – Địa lí", "Công nghệ", "Toán", "Toán"], chieu: ["Anh tăng cường", "Anh tăng cường", "GDTC"] },
+    5: { sang: ["Toán", "Toán", "GDCD", "GD địa phương", "Lịch sử – Địa lí"], chieu: [] },
+    6: { sang: ["Ngữ văn", "Ngữ văn", "Tin học", "Sinh hoạt + HĐTN"], chieu: ["KHTN", "KHTN", "CLB 2", "CLB 2"] },
     7: { sang: [], chieu: [] },
     8: { sang: [], chieu: [] },
   },
