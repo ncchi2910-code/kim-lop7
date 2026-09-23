@@ -23,8 +23,19 @@
   const DV = window.KIM_DONG_VIEN || [];
   const TIN = window.KIM_TIN || [];
   const GIANG = window.KIM_GIANG || {};
+  const LUYEN = window.KIM_LUYEN;
+  const btvnKey = (d) => "btvn-" + d;
+  /* Môn có bài tập về nhà — bỏ chào cờ, sinh hoạt, CLB, thể chất, nhạc, hoạ */
+  const KHONG_BTVN = ["Chào cờ", "HĐTN", "Sinh hoạt", "CLB", "GDTC", "Âm nhạc", "Mĩ thuật"];
+  function monNgay(thu) {
+    const lh = (C.LICH_HOC || {})[thu]; if (!lh) return [];
+    const tat = lh.sang.concat(lh.chieu);
+    const ra = [];
+    tat.forEach((m) => { if (KHONG_BTVN.some((k) => m.indexOf(k) > -1)) return; if (ra.indexOf(m) < 0) ra.push(m); });
+    return ra;
+  }
   const soanKey = (t, i) => "t" + t + "-s" + i;
-  const defaultState = () => ({ xu: 0, heo: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {}, ngay: {}, demThuong: 0 });
+  const defaultState = () => ({ xu: 0, heo: 0, xuDaDoi: 0, heoDaRut: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {}, ngay: {}, demThuong: 0, btvn: {}, luyen: {}, qua: {}, rut: {} });
   let S = load();
   function load() { try { const r = localStorage.getItem(KEY); return r ? Object.assign(defaultState(), JSON.parse(r)) : defaultState(); } catch (e) { return defaultState(); } }
   let luuLoi = false;
@@ -46,15 +57,36 @@
     return Math.min(C.TONG_TUAN, Math.floor(diff / 7) + 1);
   }
   function thuHomNay() { const d = new Date().getDay(); return d === 0 ? 8 : d + 1; } /* 2..8 */
+  const thuSau = (thu, n) => ((thu - 2 + n) % 7) + 2;                 /* thứ của n ngày sau */
+  function ngaySau(n) { const d = new Date(); d.setDate(d.getDate() + n); return d; }
+  const ngayStr = (d) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
   function ngayCuaTuan(t, thu) { const d = parseDate(C.WEEK1_START); d.setDate(d.getDate() + (t - 1) * 7 + (thu - 2)); return d; }
   const fmt = (d) => String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0");
   const money = (n) => n.toLocaleString("vi-VN") + "đ";
+
+  /* ---------- xu, quà và heo đất ----------
+     S.xu và S.heo là TỔNG đã nhận, chỉ tăng. S.xuDaDoi và S.heoDaRut là tổng đã tiêu.
+     Số còn lại = tổng nhận trừ tổng đã tiêu. Cách này để đồng bộ nhiều máy không kéo
+     số cũ về (xem dong-bo.js: cả bốn con số đều hợp nhất bằng cách lấy số lớn hơn). */
+  const QUA = C.QUA || [
+    { gia: 2000, icon: "🍜", ten: "Mẹ đưa Kim đi ăn món Kim thích", mo: "Kim chọn quán, mẹ đưa đi." },
+    { gia: 5000, icon: "🎬", ten: "Một lần đi xem phim", mo: "Kim chọn phim, mẹ mua vé." },
+  ];
+  const quaSapXep = () => QUA.slice().sort((a, b) => a.gia - b.gia);
+  const xuConLai = () => Math.max(0, (S.xu || 0) - (S.xuDaDoi || 0));
+  const heoConLai = () => Math.max(0, (S.heo || 0) - (S.heoDaRut || 0));
+  const quaKeTiep = () => quaSapXep().find((q) => q.gia > xuConLai()) || null;
+  const lichSu = (o) => Object.entries(o || {}).sort((a, b) => Number(b[0]) - Number(a[0])).map((x) => x[1]);
 
   /* ---------- tiện ích ---------- */
   const tuanCoNoiDung = () => Object.keys(W).map(Number).sort((a, b) => a - b);
   const luotKey = (t, thu) => "t" + t + "-d" + thu;
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   function monInfo(m) { return C.MON[m] || { ten: m, icon: "📘", mau: "#888", nen: "#eee" }; }
+  /* Bài mẹ giảng thêm có gắn ngày (trường ngay trong giang-bai.js / giang-van-on.js) */
+  function giangTheoNgay(loc) { return Object.keys(GIANG).filter((k) => GIANG[k].ngay && loc(GIANG[k].ngay)).sort((x, y) => GIANG[x].ngay < GIANG[y].ngay ? -1 : 1); }
+  function theGiang(k) { const g = GIANG[k]; const mi = monInfo(g.mon); const d = parseDate(g.ngay);
+    return `<a class="day" href="#/giang/${k}" style="border-left:5px solid var(--accent2)"><div class="icon-box" style="background:${mi.nen}">💡</div><div class="grow"><div class="muted">Mẹ giảng · ${fmt(d)}</div><b>${esc(g.tieuDe)}</b></div><span class="pill">20 phút</span></a>`; }
   function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
   /* Việc Kim phải làm trong ngày: bài soạn có soanToi = thu, và lượt ôn của thu đó */
@@ -64,13 +96,14 @@
     (SOAN[t] || []).forEach((s, i) => { if (s.soanToi === thu) { tong++; if (S.soan[soanKey(t, i)]) xong++; } });
     const n = w.ngay.find((x) => x.thu === thu);
     if (n) { tong++; if (S.luot[luotKey(t, thu)]) xong++; }
+    /* chuẩn bị bài tập cho ngày mai — chỉ tính khi mai có đi học */
+    const mai = ngayStr(ngaySau(1)), monMai = monNgay(thuSau(thu, 1));
+    if (monMai.length) { tong++; const b = S.btvn[btvnKey(mai)] || {}; if (monMai.every((m) => b[m])) xong++; }
+    /* luyện tính mỗi ngày */
+    if (LUYEN) { tong++; if (S.luyen[todayStr()]) xong++; }
     return { tong, xong };
   }
   const xongHetHomNay = (t, thu) => { const v = viecCuaNgay(t, thu); return v.tong > 0 && v.xong === v.tong; };
-  /* Bài mẹ giảng thêm có gắn ngày (trường ngay trong giang-bai.js) */
-  function giangTheoNgay(loc) { return Object.keys(GIANG).filter((k) => GIANG[k].ngay && loc(GIANG[k].ngay)).sort((x, y) => GIANG[x].ngay < GIANG[y].ngay ? -1 : 1); }
-  function theGiang(k) { const g = GIANG[k]; const mi = monInfo(g.mon); const d = parseDate(g.ngay);
-    return `<a class="day" href="#/giang/${k}" style="border-left:5px solid var(--accent2)"><div class="icon-box" style="background:${mi.nen}">💡</div><div class="grow"><div class="muted">Mẹ giảng · ${fmt(d)}</div><b>${esc(g.tieuDe)}</b></div><span class="pill">20 phút</span></a>`; }
 
   function tienDoTuan(t) {
     const w = W[t]; if (!w) return { xong: 0, tong: 0, dong: !!S.dong[t] };
@@ -102,7 +135,7 @@
     return `<div class="top">
       <div class="logo">📚</div>
       <div class="grow"><h1>Kim Lớp 7</h1><div class="muted">${sub || "Học cùng trường, mỗi tuần một chút"}</div></div>
-      <div class="badges"><span class="badge">🔥 ${S.streak.count} ngày</span><span class="badge">⭐ ${S.xu} xu</span><span class="badge">🐷 ${money(S.heo)}</span></div>
+      <div class="badges"><span class="badge">🔥 ${S.streak.count} ngày</span><a class="badge" href="#/qua">⭐ ${xuConLai()} xu</a><a class="badge" href="#/qua">🐷 ${money(heoConLai())}</a></div>
     </div>`;
   }
   function setNav(k) { document.querySelectorAll("nav.bottom a").forEach((a) => a.classList.toggle("on", a.dataset.nav === k)); }
@@ -113,15 +146,18 @@
     const t = tuanHienTai(), thu = thuHomNay(), w = W[t];
     let main = "";
 
-    /* Hôm nay ở trường (theo thời khoá biểu trong config.js) */
-    const lh = (C.LICH_HOC || {})[thu];
-    if (lh && (lh.sang.length || lh.chieu.length)) {
-      main += `<div class="card tight"><b>🏫 Hôm nay ở trường</b>` +
-        (lh.sang.length ? `<div class="small" style="margin-top:7px"><span class="pill">Sáng</span> ${esc(lh.sang.join(" · "))}</div>` : "") +
-        (lh.chieu.length ? `<div class="small" style="margin-top:5px"><span class="pill">Chiều</span> ${esc(lh.chieu.join(" · "))}</div>` : "") + `</div>`;
-    } else {
-      main += `<div class="card tight"><b>🏫 Hôm nay Kim được nghỉ</b><div class="muted small" style="margin-top:4px">Cuối tuần rồi — nghỉ ngơi và đóng tuần cùng mẹ.</div></div>`;
-    }
+    /* Thời khoá biểu hôm nay, ngày mai, ngày kia (theo config.js → LICH_HOC) */
+    const tkb = (n) => {
+      const th = thuSau(thu, n), l = (C.LICH_HOC || {})[th], d = ngaySau(n);
+      const nhan = n === 0 ? "Hôm nay" : n === 1 ? "Ngày mai" : "Ngày kia";
+      const co = l && (l.sang.length || l.chieu.length);
+      return `<div class="tkb ${n === 1 ? "mai" : ""}">
+        <div class="row"><div class="grow"><b>${nhan}</b> <span class="muted">${C.THU[th]} · ${fmt(d)}</span></div>${n === 1 && co ? '<span class="pill" style="background:#ffe3ec;color:var(--accent2)">cần chuẩn bị tối nay</span>' : ""}</div>
+        ${co ? (l.sang.length ? `<div class="small" style="margin-top:5px"><span class="pill">Sáng</span> ${esc(l.sang.join(" · "))}</div>` : "") +
+               (l.chieu.length ? `<div class="small" style="margin-top:4px"><span class="pill">Chiều</span> ${esc(l.chieu.join(" · "))}</div>` : "")
+             : `<div class="muted small" style="margin-top:4px">Được nghỉ</div>`}</div>`;
+    };
+    main += `<div class="card tight" style="padding:14px 16px">${tkb(0)}${tkb(1)}${tkb(2)}</div>`;
     const gh = giangTheoNgay((n) => n === todayStr());
     if (gh.length) main += `<h2>💡 Hôm nay mẹ giảng</h2><p class="muted small" style="margin:-6px 0 10px">Đọc cùng mẹ, làm phần tự kiểm tra ở cuối mỗi bài.</p>` + gh.map(theGiang).join("");
 
@@ -137,11 +173,21 @@
       const ngay = w.ngay.find((n) => n.thu === thu);
       const viec = [];
 
-      soanToiNay.forEach((x) => { const mi = monInfo(x.s.mon);
+      let phut = 0;
+      soanToiNay.forEach((x) => { const mi = monInfo(x.s.mon); phut += 10;
         viec.push(`<a class="day" href="#/soan/${t}/${x.i}"><div class="icon-box" style="background:${mi.nen}">📖</div><div class="grow"><div class="muted">Soạn trước · mai học ${esc(x.s.hocVao || "")}</div><b>${esc(x.s.bai)}</b></div><span class="pill">10 phút</span></a>`); });
 
-      if (ngay) { const r = S.luot[luotKey(t, thu)]; const mi = monInfo(ngay.mon);
+      if (ngay) { const r = S.luot[luotKey(t, thu)]; const mi = monInfo(ngay.mon); phut += 15;
         viec.push(`<a class="day ${r ? "done" : ""}" href="#/lam/${t}/${thu}"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><div class="muted">Ôn lại bài vừa học hôm nay</div><b>${esc(ngay.ten)}</b></div>${r ? `<div class="score" style="color:${r.diem / r.tong >= 0.7 ? "var(--ok)" : "#b45309"}">${r.diem}/${r.tong}</div>` : '<span class="pill">15 phút</span>'}</a>`); }
+
+      /* Luyện tính vài câu, bám chương Toán đang học */
+      if (LUYEN) { const rl = S.luyen[todayStr()]; phut += 5;
+        viec.push(`<a class="day ${rl ? "done" : ""}" href="#/luyen"><div class="icon-box" style="background:#e3f0ff">🔢</div><div class="grow"><div class="muted">Luyện tính · ${esc(LUYEN.chuDeTuan(t))}</div><b>${C.SO_CAU_LUYEN || 5} câu tính nhanh</b></div>${rl ? `<div class="score" style="color:${rl.diem / rl.tong >= 0.7 ? "var(--ok)" : "#b45309"}">${rl.diem}/${rl.tong}</div>` : '<span class="pill">5 phút</span>'}</a>`); }
+
+      /* Chuẩn bị bài tập và sách vở cho ngày mai */
+      const mai = ngayStr(ngaySau(1)), monMai = monNgay(thuSau(thu, 1));
+      if (monMai.length) { const b = S.btvn[btvnKey(mai)] || {}; const con = monMai.filter((m) => !b[m]); phut += 3;
+        viec.push(`<a class="day ${con.length ? "" : "done"}" href="#/btvn"><div class="icon-box" style="background:#fff1dc">🎒</div><div class="grow"><div class="muted">Xong trước khi đi ngủ · mai học ${monMai.length} môn</div><b>${con.length ? "Bài tập và sách vở cho ngày mai" : "Đã chuẩn bị xong cho ngày mai"}</b></div>${con.length ? `<span class="pill">còn ${con.length}</span>` : '<span class="pill" style="color:var(--ok)">✓</span>'}</a>`); }
 
       const ok = td.xong === td.tong;
       const vn = viecCuaNgay(t, thu);
@@ -153,7 +199,7 @@
           <p class="muted small">${g ? `Đã nhận ${money(g.tien)} · chạm để xem lại` : "Chạm để mở phần thưởng: một lời nhắn, một tin Anh tài, và một thẻ cào 🐷"}</p></a>`;
       }
       if (viec.length) {
-        main += `<h2>🌙 Việc tối nay</h2><p class="muted small" style="margin:-6px 0 10px">Khoảng ${viec.length * 12} phút. Làm xong giữ được chuỗi ngày 🔥.</p>` + viec.join("");
+        main += `<h2>🌙 Việc tối nay</h2><p class="muted small" style="margin:-6px 0 10px">Khoảng ${phut} phút. Làm xong giữ được chuỗi ngày 🔥 và mở được phần thưởng.</p>` + viec.join("");
       } else if (ok && !td.dong) {
         main += `<div class="card"><div class="row"><div class="icon-box" style="background:#fff7ed">🎁</div><div class="grow"><div class="muted">Cuối tuần · Tuần ${t}</div><h3>Đóng tuần cùng mẹ</h3></div></div><p class="small" style="margin:12px 0">Đủ 5 lượt rồi. Xem lại chỗ sai với mẹ, làm 5 câu chốt và cào thẻ.</p><a class="btn block" href="#/dong/${t}">Đóng tuần →</a></div>`;
       } else if (td.dong) {
@@ -165,9 +211,65 @@
       main += `<div class="card tight row"><div class="grow"><b>Tuần ${t} · ${esc(w.ten)}</b><div class="muted">${td.xong}/${td.tong} lượt ôn · ${sl.length - chuaSoan.length}/${sl.length} bài soạn</div></div><a class="btn sm ghost" href="#/tuan/${t}">Xem tuần</a></div>`;
     }
 
+    /* Đổi quà bằng xu */
+    const qn = quaKeTiep(), con = xuConLai();
+    const duQua = quaSapXep().filter((q) => q.gia <= con);
+    const quaHtml = `<a class="card tight" href="#/qua"><div class="grow">
+      <div class="row"><div class="grow"><b>⭐ Đổi quà bằng xu</b><div class="muted">${duQua.length
+        ? "Đủ xu đổi: " + esc(duQua[duQua.length - 1].ten)
+        : qn ? "Còn " + (qn.gia - con) + " xu nữa là đổi được " + esc(qn.ten) : "Kim đã đổi hết các mốc"}</div></div><span class="pill">${con} xu</span></div>
+      ${qn ? `<div class="bar" style="margin-top:10px"><i style="width:${Math.min(100, Math.round((con / qn.gia) * 100))}%"></i></div>` : ""}
+    </div></a>`;
+    main += quaHtml;
+
     const kt = C.KIEM_TRA.find((k) => k.tuan >= t);
     const ktHtml = kt ? `<div class="card tight"><div class="row"><div class="grow"><b>Đường đến ${kt.ten}</b><div class="muted">Còn ${kt.tuan - t} tuần (tuần ${kt.tuan})</div></div><span class="pill">Tuần ${t}/${C.TONG_TUAN}</span></div><div class="bar" style="margin-top:10px"><i style="width:${Math.round((t / kt.tuan) * 100)}%"></i></div></div>` : "";
     app.innerHTML = header(`${C.THU[thu]}, ${fmt(new Date())} · Tuần ${t}`) + canhBaoLuu() + main + ktHtml + `<p class="muted" style="text-align:center;margin-top:18px">Học mỗi ngày một chút 🌱</p>`;
+  }
+
+  /* ---------- trang: đổi quà ---------- */
+  function viewQua() {
+    setNav("home");
+    const con = xuConLai();
+    const ds = quaSapXep().map((q, i) => {
+      const du = con >= q.gia;
+      return `<div class="card">
+        <div class="row"><div class="icon-box" style="background:#fff7ed;font-size:24px">${q.icon}</div>
+          <div class="grow"><b>${esc(q.ten)}</b><div class="muted small">${esc(q.mo || "")}</div></div>
+          <span class="pill">${q.gia} xu</span></div>
+        <div class="bar" style="margin-top:12px"><i style="width:${Math.min(100, Math.round((con / q.gia) * 100))}%"></i></div>
+        <div class="row" style="margin-top:10px"><div class="grow small" style="${du ? "color:var(--ok);font-weight:700" : "color:var(--muted)"}">${du ? "Đủ xu rồi" : "Còn thiếu " + (q.gia - con) + " xu"}</div>
+          <button class="btn sm ${du ? "" : "ghost"}" data-doi="${i}" ${du ? "" : "disabled"}>Đổi quà</button></div>
+        <div id="xn-${i}"></div></div>`;
+    }).join("");
+    const ls = lichSu(S.qua);
+    app.innerHTML = header("Đổi quà") +
+      `<div class="card tight" style="text-align:center"><div class="big">${con}</div><p class="muted small" style="margin-top:6px">xu đang có · đã nhận tất cả ${S.xu} xu, đã đổi ${S.xuDaDoi || 0} xu</p></div>
+      <p class="muted small" style="margin:10px 0 12px">Đổi quà thì trừ xu, xu lại tích từ đầu cho lần sau. Đổi xong Kim nhớ báo mẹ để mẹ thực hiện nhé.</p>
+      ${ds}
+      <div class="card"><div class="row"><div class="icon-box" style="background:#ffe3ec;font-size:24px">🐷</div>
+        <div class="grow"><b>Heo đất</b><div class="muted small">Tiền thưởng từ thẻ cào, khác với xu</div></div>
+        <span class="pill">${money(heoConLai())}</span></div>
+        <p class="small" style="margin-top:10px">Heo đất Kim không tự đổi được. Khi nào Kim muốn dùng vào việc gì thì nói với mẹ, mẹ sẽ đưa tiền thật và bấm rút cho Kim.</p></div>
+      ${ls.length ? `<div class="card"><h3>Kim đã đổi</h3>${ls.map((x) => `<div class="wrong-item"><b>${esc(x.ten)}</b> <span class="pill">${x.gia} xu</span><div class="muted small">${esc(x.luc)}</div></div>`).join("")}</div>` : ""}
+      <div style="text-align:center;margin-top:14px"><a class="btn ghost" href="#/">Về trang chủ</a></div>`;
+    app.querySelectorAll("[data-doi]").forEach((b) => b.addEventListener("click", () => {
+      const i = Number(b.dataset.doi), q = quaSapXep()[i];
+      document.getElementById("xn-" + i).innerHTML =
+        `<div class="expl"><b>Đổi ${esc(q.ten)}?</b>Trừ ${q.gia} xu, Kim còn lại ${xuConLai() - q.gia} xu.
+         <div style="margin-top:12px"><button class="btn sm" id="xnOk">Đổi thật</button> <button class="btn sm ghost" id="xnHuy">Thôi</button></div></div>`;
+      document.getElementById("xnHuy").addEventListener("click", () => { document.getElementById("xn-" + i).innerHTML = ""; });
+      document.getElementById("xnOk").addEventListener("click", () => {
+        if (xuConLai() < q.gia) return;
+        S.xuDaDoi = (S.xuDaDoi || 0) + q.gia;
+        S.qua[String(Date.now())] = { ten: q.ten, gia: q.gia, luc: todayStr() };
+        save();
+        app.innerHTML = header("Đổi quà") + `<div class="card" style="text-align:center"><div class="big pop">${q.icon}</div>
+          <p style="margin-top:10px"><b>Kim đã đổi ${esc(q.ten)}</b></p>
+          <p class="small muted">Trừ ${q.gia} xu, còn lại ${xuConLai()} xu. Mẹ đã thấy ở Góc của mẹ, Kim nhắc mẹ một câu nữa cho chắc.</p>
+          <div style="margin-top:16px"><a class="btn" href="#/">Về trang chủ</a></div></div>`;
+      });
+    }));
   }
 
   /* ---------- trang: lộ trình ---------- */
@@ -200,19 +302,71 @@
     const soan = soanList.map((s, i) => ({ s, i })).sort((a, b) => (a.s.soanToi === 8 ? 1 : a.s.soanToi + 1) - (b.s.soanToi === 8 ? 1 : b.s.soanToi + 1))
       .map(({ s, i }) => { const r = S.soan[soanKey(t, i)]; const mi = monInfo(s.mon);
       return `<a class="day ${r ? "done" : ""}" href="#/soan/${t}/${i}"><div class="icon-box" style="background:${mi.nen}">${mi.icon}</div><div class="grow"><div class="muted">Soạn tối ${esc(C.THU[s.soanToi] || "")} · học ${esc(s.hocVao || "")}</div><b>${esc(s.bai)}</b></div>${r ? '<span class="pill" style="color:var(--ok)">✓ xong</span>' : '<span class="pill">10 phút</span>'}</a>`; }).join("");
+    const ok = td.xong === td.tong;
     const d0 = ngayCuaTuan(t, 2), d1 = ngayCuaTuan(t, 8);
     const giangTuan = giangTheoNgay((n) => { const d = parseDate(n); return d >= d0 && d <= d1; }).map(theGiang).join("");
-    const ok = td.xong === td.tong;
     app.innerHTML = header(`Tuần ${t} · ${w.icon} ${esc(w.ten)}`) +
       `<div class="card tight row"><div class="grow"><b>Tiến độ tuần</b><div class="bar" style="margin-top:8px"><i style="width:${Math.round((td.xong / td.tong) * 100)}%"></i></div></div><span class="pill">${td.xong}/${td.tong}</span></div>
       <h2>📌 Tuần này học gì</h2>${subj}<p class="note muted">Môn khác: ${esc(w.monKhac || "")}</p>
-      <h2>📖 Soạn bài</h2><p class="muted small" style="margin:-4px 0 10px">Làm trước tiết học trên lớp, mỗi bài khoảng 10 phút, mở sách giáo khoa bên cạnh.</p>${soan || '<p class="muted">Tuần này chưa có bài soạn.</p>'}
       ${giangTuan ? `<h2>💡 Mẹ giảng thêm</h2>${giangTuan}` : ""}
+      <h2>📖 Soạn bài</h2><p class="muted small" style="margin:-4px 0 10px">Làm trước tiết học trên lớp, mỗi bài khoảng 10 phút, mở sách giáo khoa bên cạnh.</p>${soan || '<p class="muted">Tuần này chưa có bài soạn.</p>'}
       <h2>✏️ Kiểm tra ngày</h2>${days}
       ${doc ? `<h2>🔭 Đọc trước tuần sau</h2>${doc}` : ""}
       <h2>🎁 Đóng tuần</h2>
       <div class="card">${td.dong ? `<p>Tuần ${t} đã đóng ngày ${S.dong[t].luc}. Thẻ cào: <b>${money(S.dong[t].theCao)}</b> 🐷</p>` : `<p class="small">Đủ 5 lượt kiểm tra, xem lại chỗ sai cùng mẹ, rồi làm 5 câu chốt để nhận thẻ cào.</p><div style="margin-top:12px"><a class="btn ${ok ? "" : "ghost"}" href="${ok ? "#/dong/" + t : "#"}" ${ok ? "" : 'onclick="return false"'}>${ok ? "Đóng tuần →" : `Còn ${td.tong - td.xong} lượt`}</a></div>`}</div>`;
     app.querySelectorAll("[data-toggle]").forEach((el) => el.addEventListener("click", () => { el.classList.toggle("open"); const k = el.dataset.doc; if (k && !S.doc[k]) { S.doc[k] = true; save(); } }));
+  }
+
+  /* ---------- trang: chuẩn bị bài tập cho ngày mai ---------- */
+  function viewBtvn() {
+    setNav("home");
+    const thu = thuHomNay(), thuMai = thuSau(thu, 1), mai = ngayStr(ngaySau(1));
+    const mon = monNgay(thuMai);
+    if (!mon.length) { app.innerHTML = header("Chuẩn bị cho ngày mai") + `<div class="card" style="text-align:center"><div class="big">🎉</div><p style="margin-top:10px"><b>Mai Kim được nghỉ</b></p><p class="small">Không phải chuẩn bị gì cả.</p><div style="margin-top:14px"><a class="btn" href="#/">Về trang chủ</a></div></div>`; return; }
+    const b = S.btvn[btvnKey(mai)] || {};
+    const dong = mon.map((m) => {
+      const tt = b[m];
+      return `<div class="btvn ${tt ? "xong" : ""}" data-mon="${esc(m)}">
+        <div class="row"><div class="grow"><b>${esc(m)}</b><div class="muted small">${tt === "roi" ? "✓ Kim đã làm xong" : tt === "khong" ? "✓ Hôm nay cô không giao bài" : "Cô có giao bài tập môn này không?"}</div></div></div>
+        ${tt ? `<button class="btn sm ghost" data-huy="1" style="margin-top:8px;font-size:12px;padding:6px 12px">Sửa lại</button>`
+             : `<div style="margin-top:9px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-tt="roi">Có, và Kim làm xong rồi</button><button class="btn sm ghost" data-tt="khong">Không có bài</button></div>`}
+      </div>`;
+    }).join("");
+    const con = mon.filter((m) => !b[m]).length;
+    app.innerHTML = header("Chuẩn bị cho ngày mai") +
+      `<div class="card" style="background:linear-gradient(160deg,#fffaf0,#fff1dc)">
+        <div class="row"><div class="icon-box" style="background:#fff">🎒</div><div class="grow"><b>Mai là ${C.THU[thuMai]}, ${fmt(ngaySau(1))}</b><div class="muted small">Kim học: ${esc(mon.join(" · "))}</div></div></div>
+        <p class="small" style="margin-top:12px">Làm bài tập và soạn sách vở <b>tối nay</b> nhé. Sáng mai vội lắm, không kịp làm đâu — mà quên vở thì cô hỏi bài là không có gì để nộp.</p></div>
+      ${dong}
+      <div class="card ${con ? "" : ""}" style="text-align:center">${con
+        ? `<p class="small">Còn <b>${con}</b> môn Kim chưa trả lời.</p>`
+        : `<div class="big">✅</div><p style="margin-top:8px"><b>Chuẩn bị xong rồi!</b></p><p class="small muted">Việc cuối: xếp sách vở của ${mon.length} môn trên vào cặp ngay bây giờ, để sáng mai chỉ việc xách đi.</p>`}
+        <div style="margin-top:12px"><a class="btn ${con ? "ghost" : ""}" href="#/">Về trang chủ</a></div></div>`;
+    app.querySelectorAll(".btvn").forEach((el) => {
+      const m = el.dataset.mon;
+      el.querySelectorAll("[data-tt]").forEach((bt) => bt.addEventListener("click", () => {
+        S.btvn[btvnKey(mai)] = Object.assign({}, S.btvn[btvnKey(mai)], { [m]: bt.dataset.tt });
+        capNhatStreak(); save(); viewBtvn();
+      }));
+      const h = el.querySelector("[data-huy]");
+      if (h) h.addEventListener("click", () => { const o = Object.assign({}, S.btvn[btvnKey(mai)]); delete o[m]; S.btvn[btvnKey(mai)] = o; save(); viewBtvn(); });
+    });
+  }
+
+  /* ---------- trang: luyện tính ---------- */
+  function viewLuyen() {
+    setNav("home");
+    if (!LUYEN) { location.hash = "#/"; return; }
+    const t = tuanHienTai(), hn = todayStr();
+    const de = LUYEN.taoDe(t, hn, C.SO_CAU_LUYEN || 5);
+    runQuiz({ tieuDe: "Luyện tính · " + LUYEN.chuDeTuan(t), mon: "toan", cauHoi: de, sub: `Tính nhanh ngày ${fmt(new Date())}`,
+      onDone: (kq) => {
+        const first = !S.luyen[hn];
+        S.luyen[hn] = { diem: kq.diem, tong: kq.tong, sai: kq.sai, luc: hn };
+        const xu = kq.diem * C.XU_MOI_CAU_DUNG + (first ? (C.XU_LUYEN_TINH || 15) : 0);
+        S.xu += xu; capNhatStreak(); save();
+        return { xu, first, back: "#/", backText: "Về trang chủ" };
+      } });
   }
 
   /* ---------- trang: giảng lại cho dễ hiểu ---------- */
@@ -269,7 +423,7 @@
       <div class="card"><h3>💌 Lời nhắn cho Kim</h3><p style="margin-top:8px;font-size:16px">${esc(cau)}</p></div>
       <div class="card"><h3>🐷 Thẻ cào hôm nay</h3><p class="muted small">Chạm để cào</p>
         <div class="scratch ${g.cao ? "open" : ""}" id="scratch" style="margin-top:8px"><div class="big">${money(g.tien)}</div><div class="cover">👆 Cào tại đây</div></div>
-        <p class="muted small" style="margin-top:10px">Đã cộng vào heo đất. Heo đang có ${money(S.heo)}.</p></div>
+        <p class="muted small" style="margin-top:10px">Đã cộng vào heo đất. Heo đang có ${money(heoConLai())}.</p></div>
       ${tin ? `<div class="card"><h3>🎤 Anh trai vượt ngàn chông gai</h3><p style="margin-top:8px"><b>${esc(tin.tieuDe)}</b></p><p class="small" style="margin-top:6px">${esc(tin.noiDung)}</p></div>` : ""}
       <div style="text-align:center;margin-top:14px"><a class="btn" href="#/">Về trang chủ</a> <a class="btn ghost" href="#/tuan/${t}">Xem tuần ${t}</a></div>`;
     const sc = $("#scratch"); if (sc) sc.addEventListener("click", () => { sc.classList.add("open"); if (!S.ngay[hn].cao) { S.ngay[hn].cao = true; save(); } });
@@ -433,6 +587,46 @@
     if (bb) bb.addEventListener("click", () => { DB.xoaMa(); route(); });
   }
 
+  /* ---------- khối quà và heo đất (hiện trong Góc của mẹ) ---------- */
+  function kheQuaHeo() {
+    const lsQua = lichSu(S.qua), lsRut = lichSu(S.rut);
+    const moc = quaSapXep().map((q) => {
+      const con = xuConLai();
+      return `<div class="wrong-item"><div class="row"><div class="grow">${q.icon} <b>${esc(q.ten)}</b> <span class="pill">${q.gia} xu</span></div><span class="small" style="${con >= q.gia ? "color:var(--ok);font-weight:700" : "color:var(--muted)"}">${con >= q.gia ? "đủ xu" : "còn thiếu " + (q.gia - con)}</span></div></div>`;
+    }).join("");
+    return `<div class="card"><b>⭐ Quà đổi bằng xu</b>
+      <div class="small muted" style="margin:6px 0 8px">Kim đang có ${xuConLai()} xu. Tổng đã nhận ${S.xu} xu, đã đổi ${S.xuDaDoi || 0} xu. Đổi quà là trừ xu, xu tích lại từ đầu cho lần sau.</div>
+      ${moc}
+      ${lsQua.length ? `<div style="margin-top:10px"><b class="small">Kim đã đổi</b>${lsQua.map((x) => `<div class="wrong-item"><b>${esc(x.ten)}</b> <span class="pill">${x.gia} xu</span> <span class="muted small">${esc(x.luc)}</span></div>`).join("")}</div>` : '<p class="muted small" style="margin-top:10px">Kim chưa đổi quà lần nào.</p>'}
+
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid #f0e6dc"><b>🐷 Heo đất</b>
+        <div class="small muted" style="margin:6px 0 10px">Heo đang có <b>${money(heoConLai())}</b>. Tổng đã bỏ vào ${money(S.heo)}, đã rút ${money(S.heoDaRut || 0)}. Khi Kim xin đổi ra tiền thật, mẹ bấm nút dưới để ghi lại và đưa heo về 0.</div>
+        <button class="btn sm ghost" id="btnRut" ${heoConLai() > 0 ? "" : "disabled"}>Rút heo đất</button>
+        <div id="rutBox"></div>
+        ${lsRut.length ? `<div style="margin-top:12px"><b class="small">Đã rút</b>${lsRut.map((x) => `<div class="wrong-item"><b>${money(x.tien)}</b> <span class="muted small">${esc(x.luc)}</span><div class="small">${esc(x.viec || "")}</div></div>`).join("")}</div>` : ""}
+      </div></div>`;
+  }
+
+  function ganQuaHeo() {
+    const b = $("#btnRut"); if (!b) return;
+    b.addEventListener("click", () => {
+      $("#rutBox").innerHTML = `<div class="expl" style="text-align:left">
+        <b>Rút heo đất</b>
+        <div class="small" style="margin-bottom:8px">Nhập số tiền đưa cho Kim và việc Kim dùng vào. Số tiền sẽ trừ khỏi heo, phần còn lại giữ nguyên.</div>
+        <input class="ans" id="rutTien" type="number" inputmode="numeric" value="${heoConLai()}" style="margin-bottom:8px">
+        <input class="ans" id="rutViec" type="text" placeholder="Kim dùng vào việc gì (ví dụ: mua truyện)">
+        <div style="margin-top:12px"><button class="btn sm" id="rutOk">Ghi và trừ heo</button> <button class="btn sm ghost" id="rutHuy">Thôi</button></div></div>`;
+      $("#rutHuy").addEventListener("click", () => { $("#rutBox").innerHTML = ""; });
+      $("#rutOk").addEventListener("click", () => {
+        const tien = Math.min(heoConLai(), Math.max(0, Math.round(Number($("#rutTien").value) || 0)));
+        if (!tien) { $("#rutBox").innerHTML = `<p class="small" style="color:var(--bad);margin-top:8px">Số tiền phải lớn hơn 0 và không quá số heo đang có.</p>`; return; }
+        S.heoDaRut = (S.heoDaRut || 0) + tien;
+        S.rut[String(Date.now())] = { tien, viec: ($("#rutViec").value || "").trim(), luc: todayStr() };
+        save(); viewPhuHuynh();
+      });
+    });
+  }
+
   /* ---------- trang: phụ huynh ---------- */
   function viewPhuHuynh() {
     setNav("ph");
@@ -447,17 +641,19 @@
       </div>`; });
     app.innerHTML = header("Góc của mẹ") + canhBaoLuu() +
       kheDongBo() +
-      `<div class="card tight"><div class="row"><div class="grow"><b>Tổng quan</b><div class="small">🔥 ${S.streak.count} ngày liên tiếp · ⭐ ${S.xu} xu · 🐷 heo đất ${money(S.heo)}</div><div class="small muted" style="margin-top:4px">${Object.keys(S.ngay).length} ngày hoàn thành hết việc · thẻ cào ngày cộng ${money(Object.values(S.ngay).reduce((a, x) => a + x.tien, 0))}</div></div></div></div>
+      `<div class="card tight"><div class="row"><div class="grow"><b>Tổng quan</b><div class="small">🔥 ${S.streak.count} ngày liên tiếp · ⭐ ${xuConLai()} xu · 🐷 heo đất ${money(heoConLai())}</div><div class="small muted" style="margin-top:4px">${Object.keys(S.luyen).length} buổi luyện tính · ${Object.keys(S.btvn).length} ngày đã chuẩn bị bài · ${Object.keys(S.ngay).length} ngày hoàn thành hết việc · thẻ cào ngày cộng ${money(Object.values(S.ngay).reduce((a, x) => a + x.tien, 0))}</div></div></div></div>
       ${rows}
+      ${kheQuaHeo()}
       <div class="card"><b>Cách dùng</b><p class="small" style="margin-top:6px">Cuối tuần mở trang này, nhìn "Ba chỗ sai nhiều nhất", dạy lại đúng ba chỗ đó rồi cho Kim làm 5 câu chốt ở mục Đóng tuần. Heo đất là số tiền thưởng ảo, mẹ quy đổi thế nào tuỳ mẹ.</p>
         <p class="small" style="margin-top:10px">Tuần 1 bắt đầu từ <b>${fmt(ngayCuaTuan(1, 2))}/${parseDate(C.WEEK1_START).getFullYear()}</b> (sửa trong <code>config.js</code> nếu lịch trường khác).</p>
         <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm ghost" id="btnCopy">Sao chép tóm tắt</button><button class="btn sm ghost" id="btnReset">Xoá toàn bộ tiến độ</button></div><div id="resetBox"></div></div>`;
     $("#btnCopy").addEventListener("click", () => {
-      let txt = `Kim Lớp 7 – tóm tắt ${todayStr()}\nChuỗi ${S.streak.count} ngày · ${S.xu} xu · heo đất ${money(S.heo)}\n`;
+      let txt = `Kim Lớp 7 – tóm tắt ${todayStr()}\nChuỗi ${S.streak.count} ngày · ${xuConLai()} xu · heo đất ${money(heoConLai())}\n`;
       co.forEach((t) => { const w = W[t]; const td = tienDoTuan(t); if (!td.xong) return; txt += `\nTuần ${t} (${w.ten}): ${td.xong}/${td.tong} lượt${td.dong ? ", đã đóng" : ""}\n`; w.ngay.forEach((n) => { const r = S.luot[luotKey(t, n.thu)]; if (r) txt += `  ${n.ten}: ${r.diem}/${r.tong}\n`; }); const top = topChuDe(loiCuaTuan(t), 3); if (top.length) txt += "  Sai nhiều: " + top.map(([cd, c]) => `${cd} (${c})`).join("; ") + "\n"; });
       navigator.clipboard && navigator.clipboard.writeText(txt).then(() => { $("#btnCopy").textContent = "Đã sao chép ✓"; });
     });
     ganDongBo();
+    ganQuaHeo();
     $("#btnReset").addEventListener("click", () => { $("#resetBox").innerHTML = `<p class="small" style="margin-top:10px;color:var(--bad)">Xoá hết điểm, xu, heo đất? Không hoàn lại được.</p><button class="btn sm" id="btnReset2" style="background:var(--bad);box-shadow:none;margin-top:6px">Xoá thật</button>`; $("#btnReset2").addEventListener("click", async () => { S = defaultState(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} if (DB && DB.co() && DB.layMa()) { try { await DB.xoaHet(); } catch (e) { DB.trangThai.loi = e.message; } } viewPhuHuynh(); }); });
   }
 
@@ -472,7 +668,10 @@
     if (h[0] === "soan") return viewSoan(Number(h[1]), Number(h[2]));
     if (h[0] === "thuong") return viewThuong();
     if (h[0] === "giang") return viewGiang(h[1]);
+    if (h[0] === "btvn") return viewBtvn();
+    if (h[0] === "luyen") return viewLuyen();
     if (h[0] === "dong") return viewDong(Number(h[1]));
+    if (h[0] === "qua") return viewQua();
     if (h[0] === "phu-huynh") return viewPhuHuynh();
     viewHome();
   }
