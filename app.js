@@ -35,7 +35,7 @@
     return ra;
   }
   const soanKey = (t, i) => "t" + t + "-s" + i;
-  const defaultState = () => ({ xu: 0, heo: 0, xuDaDoi: 0, heoDaRut: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {}, ngay: {}, demThuong: 0, btvn: {}, luyen: {}, qua: {}, rut: {} });
+  const defaultState = () => ({ xu: 0, heo: 0, xuDaDoi: 0, heoDaRut: 0, streak: { count: 0, last: null }, luot: {}, doc: {}, dong: {}, soan: {}, ngay: {}, demThuong: 0, btvn: {}, luyen: {}, qua: {}, rut: {}, giangLuyen: {} });
   let S = load();
   function load() { try { const r = localStorage.getItem(KEY); return r ? Object.assign(defaultState(), JSON.parse(r)) : defaultState(); } catch (e) { return defaultState(); } }
   let luuLoi = false;
@@ -86,7 +86,10 @@
   /* Bài mẹ giảng thêm có gắn ngày (trường ngay trong giang-bai.js / giang-van-on.js) */
   function giangTheoNgay(loc) { return Object.keys(GIANG).filter((k) => GIANG[k].ngay && loc(GIANG[k].ngay)).sort((x, y) => GIANG[x].ngay < GIANG[y].ngay ? -1 : 1); }
   function theGiang(k) { const g = GIANG[k]; const mi = monInfo(g.mon); const d = parseDate(g.ngay);
-    return `<a class="day" href="#/giang/${k}" style="border-left:5px solid var(--accent2)"><div class="icon-box" style="background:${mi.nen}">💡</div><div class="grow"><div class="muted">Mẹ giảng · ${fmt(d)}</div><b>${esc(g.tieuDe)}</b></div><span class="pill">20 phút</span></a>`; }
+    return `<a class="day" href="#/giang/${k}" style="border-left:5px solid var(--accent2)"><div class="icon-box" style="background:${mi.nen}">💡</div><div class="grow"><div class="muted">Mẹ giảng · ${fmt(d)}</div><b>${esc(g.tieuDe)}</b></div>${pillLuyen(k)}</a>`; }
+  /* nhãn trạng thái bài luyện đi kèm bài giảng */
+  function pillLuyen(k) { const g = GIANG[k]; if (!g.luyen) return `<span class="pill">20 phút</span>`; const r = (S.giangLuyen || {})[k];
+    return r ? `<span class="pill" style="color:${r.diem / r.tong >= 0.7 ? "var(--ok)" : "#b45309"}">✏️ ${r.diem}/${r.tong}</span>` : `<span class="pill" style="color:var(--accent2)">✏️ chưa luyện</span>`; }
   function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
   /* Việc Kim phải làm trong ngày: bài soạn có soanToi = thu, và lượt ôn của thu đó */
@@ -388,14 +391,108 @@
     }).join("");
     const bang = (g.doiChieu || []).map(([a, c]) => `<tr><td style="width:46%"><i>${esc(a)}</i></td><td><b>${esc(c)}</b></td></tr>`).join("");
     const hoi = (g.tuKiemTra || []).map((x, i) => `<details class="tkt"><summary>${i + 1}. ${esc(x.q)}</summary><div class="dap">${esc(x.a)}</div></details>`).join("");
+    const rl = g.luyen ? (S.giangLuyen || {})[ma] : null;
+    const khoiLuyen = g.luyen ? `<div class="card" style="border-left:5px solid var(--accent)"><b>Hôm nay có hai phần</b>
+        <div class="buoc"><div class="so">1</div><div class="grow"><b>Đọc phần giảng</b><div class="small">Khoảng 10 phút. Mỗi mục là một câu hỏi “vì sao”, Kim đọc chậm và tự trả lời trước khi đọc tiếp.</div></div></div>
+        <div class="buoc"><div class="so">2</div><div class="grow"><b>Làm bài luyện ${g.luyen.phut || 20} phút</b><div class="small">${g.luyen.cau.length} câu, có chấm và giải thích từng câu. Kết quả tự gửi sang Góc của mẹ.</div>
+          ${rl ? `<div class="small" style="margin-top:4px;color:${rl.diem / rl.tong >= 0.7 ? "var(--ok)" : "#b45309"};font-weight:700">Lần gần nhất: ${rl.diem}/${rl.tong} · đã làm ${rl.lan} lần</div>` : ""}
+          <a class="btn sm" style="margin-top:8px" href="#/giang-luyen/${ma}">${rl ? "Luyện lại" : "Bắt đầu bài luyện"} ✏️</a></div></div></div>` : "";
     app.innerHTML = header("Giảng lại cho dễ hiểu") +
       `<div class="card"><div class="row"><div class="icon-box" style="background:${mi.nen}">💡</div><div class="grow"><b>${esc(g.tieuDe)}</b><div class="muted">📕 ${esc(g.sgk)}</div></div></div>
         <p style="margin-top:12px;padding:12px 14px;border-radius:14px;background:#fff7ed"><b>Bài này thật ra nói gì?</b><br>${esc(g.motCau)}</p></div>
+      ${khoiLuyen}
       ${phan}
       ${bang ? `<div class="card"><h3>Sách viết thế này → hiểu là</h3><table style="margin-top:8px">${bang}</table></div>` : ""}
       ${g.meo ? `<div class="card"><h3>🧠 Mẹo nhớ</h3><p style="margin-top:8px">${esc(g.meo)}</p></div>` : ""}
       ${hoi ? `<div class="card"><h3>✅ Kim tự kiểm tra</h3><p class="muted small">Đọc câu hỏi, tự trả lời trong đầu rồi mới chạm để xem đáp án.</p><div style="margin-top:8px">${hoi}</div></div>` : ""}
-      <div style="text-align:center;margin-top:14px"><a class="btn ghost" href="#/">Về trang chủ</a></div>`;
+      <div style="text-align:center;margin-top:14px">${g.luyen ? `<a class="btn" href="#/giang-luyen/${ma}">✏️ Làm bài luyện ${g.luyen.phut || 20} phút</a> ` : ""}<a class="btn ghost" href="#/">Về trang chủ</a></div>`;
+  }
+
+  /* ---------- trang: bài luyện đi kèm bài mẹ giảng (trường luyen trong KIM_GIANG) ----------
+     Ba dạng câu: tn (trắc nghiệm: q, a[], dung, gt) · dien (gõ câu trả lời: q, dap[], gt, chua=true thì chỉ cần chứa đáp án)
+     · sx (sắp xếp câu thành đoạn: q, cau[{c: câu, v: vai trò}] theo đúng thứ tự, gt). Kết quả lưu S.giangLuyen[ma], mẹ xem ở Góc của mẹ. */
+  const chuanHoa = (s) => String(s || "").toLowerCase().replace(/[“”"'‘’.,;:!?()\[\]…–—-]/g, " ").replace(/\s+/g, " ").trim();
+  function viewGiangLuyen(ma) {
+    setNav("lotrinh");
+    const g = GIANG[ma]; if (!g || !g.luyen) { location.hash = g ? "#/giang/" + ma : "#/"; return; }
+    const L = g.luyen, qs = L.cau, mi = monInfo(g.mon), phut = L.phut || 20;
+    let i = 0, diem = 0; const sai = []; const trang = qs.map(() => null); const batDau = Date.now();
+    const dongHo = () => { const el = $("#dh"); if (!el) return; const s = Math.floor((Date.now() - batDau) / 1000); const con = phut * 60 - s;
+      el.textContent = con >= 0 ? `⏱ còn ${Math.floor(con / 60)}:${String(con % 60).padStart(2, "0")}` : `⏱ quá ${Math.ceil(-con / 60)} phút, cứ làm cho xong`; el.style.color = con < 60 ? "var(--bad)" : ""; };
+    const tm = setInterval(() => { if (!$("#dh")) { clearInterval(tm); return; } dongHo(); }, 1000);
+    function khung(body) {
+      const bar = trang.map((s, k) => `<i class="${s === true ? "ok" : s === false ? "bad" : k === i ? "cur" : ""}"></i>`).join("");
+      const q = qs[i];
+      const vb = L.vanBan ? `<details class="tkt" ${i === 0 ? "open" : ""} style="margin-bottom:12px"><summary>📄 Văn bản đọc hiểu (chạm để mở hoặc thu gọn)</summary><div class="dap" style="background:#fffdfa;border:1px solid #f0e6dc">${L.vanBan.map((d, k) => `<p style="margin-top:${k ? 8 : 0}px;${k === 0 ? "font-weight:800;text-align:center" : ""}">${esc(d)}</p>`).join("")}</div></details>` : "";
+      app.innerHTML = header(`Bài luyện · ${fmt(parseDate(g.ngay))}`) + `<div class="card"><div class="row" style="margin-bottom:12px"><div class="icon-box" style="background:${mi.nen}">✏️</div><div class="grow"><b>${esc(L.tieuDe || g.tieuDe)}</b><div class="muted">Câu ${i + 1}/${qs.length} · ${esc(q.cd || "")} · <span id="dh"></span></div></div></div><div class="qnum">${bar}</div>${vb}${body}<div id="expl"></div></div>`;
+      dongHo();
+    }
+    function ketQua(dung, q, chonText, dungText, gtHtml) {
+      trang[i] = dung; if (dung) diem++; else sai.push({ cd: q.cd || "", q: q.q, chon: chonText, dungLa: dungText });
+      $("#expl").innerHTML = `<div class="expl ${dung ? "good" : ""}"><b>${dung ? "Đúng rồi! 🎉" : "Chưa đúng."}</b>${gtHtml}<div style="margin-top:12px"><button class="btn sm" id="next">${i + 1 < qs.length ? "Câu tiếp →" : "Xem kết quả"}</button></div></div>`;
+      $("#next").addEventListener("click", () => { i++; if (i < qs.length) draw(); else ketThuc(); });
+      $("#next").scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+    function draw() {
+      const q = qs[i];
+      if (q.loai === "sx") return drawSx(q);
+      if (q.loai === "dien") return drawDien(q);
+      /* đảo thứ tự các lựa chọn để Kim không đoán theo vị trí */
+      const ord = shuffle(q.a.map((_, k) => k)); const viTri = (k) => "ABCD"[ord.indexOf(k)];
+      khung(`<div class="question">${esc(q.q)}</div><div class="opts">${ord.map((k, p) => `<button class="opt" data-k="${k}"><span class="k">${"ABCD"[p]}</span><span>${esc(q.a[k])}</span></button>`).join("")}</div>`);
+      app.querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
+        const k = Number(b.dataset.k); const dung = k === q.dung;
+        app.querySelectorAll(".opt").forEach((x) => { x.disabled = true; const kk = Number(x.dataset.k); if (kk === q.dung) x.classList.add("ok"); else if (kk === k) x.classList.add("bad"); });
+        ketQua(dung, q, q.a[k], q.a[q.dung], (dung ? "" : `<div class="small">Đáp án: <strong>${viTri(q.dung)}. ${esc(q.a[q.dung])}</strong></div>`) + `<div style="margin-top:6px">${esc(q.gt)}</div>`);
+      }));
+    }
+    function drawDien(q) {
+      khung(`<div class="question">${esc(q.q)}</div><textarea id="tl" class="ans" rows="2" placeholder="${esc(q.goi || "Gõ câu trả lời của Kim vào đây")}"></textarea><button class="btn sm" id="chk" style="margin-top:10px">Kiểm tra</button>`);
+      const chk = () => { const v = $("#tl").value; if (!chuanHoa(v)) return; $("#tl").disabled = true; $("#chk").disabled = true;
+        const cv = chuanHoa(v); const dung = q.dap.some((d) => cv === chuanHoa(d) || (q.chua && cv.indexOf(chuanHoa(d)) > -1));
+        ketQua(dung, q, v, q.dap[0], (dung ? "" : `<div class="small">Đáp án: <strong>${esc(q.dap[0])}</strong></div>`) + `<div style="margin-top:6px">${esc(q.gt)}</div>`); };
+      $("#chk").addEventListener("click", chk); $("#tl").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); chk(); } }); $("#tl").focus();
+    }
+    function drawSx(q) {
+      const n = q.cau.length; let tron = shuffle(q.cau.map((_, k) => k)); if (tron.every((v, k) => v === k)) tron = tron.slice(1).concat(tron[0]);
+      let pool = tron.slice(), dat = [];
+      const ve = () => {
+        $("#sxDat").innerHTML = dat.length ? dat.map((k, p) => `<button class="opt sx" data-p="${p}"><span class="k">${p + 1}</span><span>${esc(q.cau[k].c)}</span></button>`).join("") : `<p class="muted small">Chạm vào từng câu ở dưới theo thứ tự Kim muốn viết. Chạm nhầm thì chạm lại câu đó để trả về.</p>`;
+        $("#sxPool").innerHTML = pool.map((k) => `<button class="opt sx" data-k="${k}"><span class="k">·</span><span>${esc(q.cau[k].c)}</span></button>`).join("");
+        $("#sxChk").style.display = pool.length ? "none" : ""; $("#sxPoolNhan").style.display = pool.length ? "" : "none";
+        $("#sxDat").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => { const p = Number(b.dataset.p); pool.push(dat[p]); dat.splice(p, 1); ve(); }));
+        $("#sxPool").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => { const k = Number(b.dataset.k); pool = pool.filter((x) => x !== k); dat.push(k); ve(); }));
+      };
+      khung(`<div class="question">${esc(q.q)}</div><b class="small">Đoạn của Kim</b><div class="opts" id="sxDat" style="margin:6px 0 14px"></div><b class="small" id="sxPoolNhan">Các câu chưa dùng</b><div class="opts" id="sxPool" style="margin-top:6px"></div><button class="btn sm" id="sxChk" style="margin-top:12px;display:none">Chấm đoạn này</button>`);
+      ve();
+      $("#sxChk").addEventListener("click", () => {
+        const loi = []; dat.forEach((k, p) => { if (k !== p) loi.push({ k, p }); });
+        const dung = !loi.length;
+        $("#sxDat").querySelectorAll(".opt").forEach((b, p) => { b.disabled = true; b.classList.add(dat[p] === p ? "ok" : "bad"); });
+        $("#sxChk").style.display = "none";
+        const giai = loi.map(({ k, p }) => `<div class="wrong-item">“${esc(q.cau[k].c.length > 70 ? q.cau[k].c.slice(0, 70) + "…" : q.cau[k].c)}” Kim đặt ở vị trí ${p + 1}, đúng phải là vị trí <strong>${k + 1}</strong>: đây là câu <strong>${esc(q.cau[k].v)}</strong></div>`).join("");
+        const dungHtml = `<details style="margin-top:8px"><summary class="small" style="cursor:pointer;font-weight:700">Xem đoạn xếp đúng</summary>${q.cau.map((c, k) => `<div class="small" style="margin-top:6px"><strong>${k + 1}.</strong> ${esc(c.c)} <span class="muted">(${esc(c.v.split(":")[0])})</span></div>`).join("")}</details>`;
+        ketQua(dung, q, dung ? "" : `Sai ${loi.length}/${n} vị trí. Kim xếp: ${dat.map((k) => k + 1).join("-")}`, "Thứ tự đúng: " + q.cau.map((_, k) => k + 1).join("-"),
+          (dung ? "" : `<div class="small" style="margin-top:4px">Sai ${loi.length}/${n} vị trí.</div>${giai}`) + `<div style="margin-top:8px">${esc(q.gt)}</div>` + dungHtml);
+      });
+    }
+    function ketThuc() {
+      clearInterval(tm);
+      const giay = Math.round((Date.now() - batDau) / 1000);
+      S.giangLuyen = S.giangLuyen || {}; const cu = S.giangLuyen[ma]; const first = !cu;
+      S.giangLuyen[ma] = { lan: (cu ? cu.lan : 0) + 1, diem, tong: qs.length, sai, luc: todayStr(), giay, dau: cu ? cu.dau : { diem, tong: qs.length, sai } };
+      const xu = diem * C.XU_MOI_CAU_DUNG + (first ? (C.XU_LUYEN_GIANG || 15) : 0);
+      S.xu += xu; capNhatStreak(); save();
+      const pct = diem / qs.length;
+      const loi = pct === 1 ? "Xuất sắc! Không sai câu nào." : pct >= 0.7 ? "Tốt lắm. Đọc lại phần giảng đúng chỗ sai là chắc." : "Không sao. Đọc lại phần giảng rồi luyện lại, lần hai thường khá hơn nhiều.";
+      app.innerHTML = header(`Bài luyện · ${fmt(parseDate(g.ngay))}`) + `<div class="card" style="text-align:center"><div class="big pop">${diem}/${qs.length}</div><p style="margin:8px 0 4px"><b>${loi}</b></p>
+        <p class="muted">+${xu} xu${first ? " (gồm thưởng làm lần đầu)" : ""} · làm trong ${Math.max(1, Math.round(giay / 60))} phút · 🔥 chuỗi ${S.streak.count} ngày</p>
+        <p class="small muted">Kết quả đã được ghi vào Góc của mẹ.</p>
+        ${sai.length ? `<div style="text-align:left;margin-top:18px"><b>Chỗ cần xem lại:</b>${sai.map((x) => `<div class="wrong-item">${esc(x.cd)}<div class="muted">${esc(x.q)}</div></div>`).join("")}</div>` : ""}
+        <div style="margin-top:18px"><a class="btn" href="#/giang/${ma}">Đọc lại phần giảng</a> <button class="btn ghost" id="lamLai">Luyện lại</button> <a class="btn ghost" href="#/">Hôm nay</a></div></div>`;
+      $("#lamLai").addEventListener("click", () => { window.scrollTo(0, 0); viewGiangLuyen(ma); });
+    }
+    draw();
   }
 
   /* ---------- trang: phần thưởng cuối ngày ---------- */
@@ -628,6 +725,18 @@
   }
 
   /* ---------- trang: phụ huynh ---------- */
+  /* ---------- khối bài luyện theo bài mẹ giảng (hiện trong Góc của mẹ) ---------- */
+  function dsGiangLuyen() { return Object.keys(S.giangLuyen || {}).filter((k) => GIANG[k]).sort((a, b) => ((GIANG[a].ngay || "") < (GIANG[b].ngay || "") ? 1 : -1)); }
+  const dsSai = (sai) => sai.length ? sai.map((l) => `<div class="wrong-item"><div class="muted">${esc(l.cd)}</div>${esc(l.q)}<div class="small" style="white-space:pre-line">Kim chọn: <span style="color:var(--bad)">${esc(l.chon || "(bỏ trống)")}</span><br>Đúng: <span style="color:var(--ok)">${esc(l.dungLa)}</span></div></div>`).join("") : `<p class="muted small" style="margin-top:6px">Không sai câu nào.</p>`;
+  function kheGiangLuyen() {
+    const ks = dsGiangLuyen(); if (!ks.length) return "";
+    const mau = (r) => r.diem / r.tong >= 0.7 ? "var(--ok)" : "#b45309";
+    return `<div class="card"><b>✏️ Bài luyện theo bài mẹ giảng</b><p class="small muted" style="margin-top:4px">Điểm của lần làm gần nhất, trong ngoặc là lần đầu. Mở từng bài để xem câu sai và Kim đã chọn gì.</p>
+      ${ks.map((k) => { const g = GIANG[k], r = S.giangLuyen[k]; const d = g.ngay ? fmt(parseDate(g.ngay)) : "";
+        return `<details style="margin-top:8px"><summary class="small" style="cursor:pointer"><span style="color:${mau(r)};font-weight:800">${r.diem}/${r.tong}</span>${r.lan > 1 ? ` <span class="muted">(lần đầu ${r.dau.diem}/${r.dau.tong})</span>` : ""} · ${monInfo(g.mon).icon} ${d} · ${esc(g.tieuDe)} <span class="pill">${r.lan} lần · ${Math.max(1, Math.round(r.giay / 60))} phút</span></summary>
+          ${dsSai(r.sai)}${r.lan > 1 && r.dau.sai && r.dau.sai.length ? `<details style="margin-top:6px"><summary class="small muted" style="cursor:pointer">Câu sai ở lần làm đầu (${r.dau.sai.length})</summary>${dsSai(r.dau.sai)}</details>` : ""}</details>`; }).join("")}</div>`;
+  }
+
   function viewPhuHuynh() {
     setNav("ph");
     const co = tuanCoNoiDung(); const cur = tuanHienTai();
@@ -642,6 +751,7 @@
     app.innerHTML = header("Góc của mẹ") + canhBaoLuu() +
       kheDongBo() +
       `<div class="card tight"><div class="row"><div class="grow"><b>Tổng quan</b><div class="small">🔥 ${S.streak.count} ngày liên tiếp · ⭐ ${xuConLai()} xu · 🐷 heo đất ${money(heoConLai())}</div><div class="small muted" style="margin-top:4px">${Object.keys(S.luyen).length} buổi luyện tính · ${Object.keys(S.btvn).length} ngày đã chuẩn bị bài · ${Object.keys(S.ngay).length} ngày hoàn thành hết việc · thẻ cào ngày cộng ${money(Object.values(S.ngay).reduce((a, x) => a + x.tien, 0))}</div></div></div></div>
+      ${kheGiangLuyen()}
       ${rows}
       ${kheQuaHeo()}
       <div class="card"><b>Cách dùng</b><p class="small" style="margin-top:6px">Cuối tuần mở trang này, nhìn "Ba chỗ sai nhiều nhất", dạy lại đúng ba chỗ đó rồi cho Kim làm 5 câu chốt ở mục Đóng tuần. Heo đất là số tiền thưởng ảo, mẹ quy đổi thế nào tuỳ mẹ.</p>
@@ -650,6 +760,7 @@
     $("#btnCopy").addEventListener("click", () => {
       let txt = `Kim Lớp 7 – tóm tắt ${todayStr()}\nChuỗi ${S.streak.count} ngày · ${xuConLai()} xu · heo đất ${money(heoConLai())}\n`;
       co.forEach((t) => { const w = W[t]; const td = tienDoTuan(t); if (!td.xong) return; txt += `\nTuần ${t} (${w.ten}): ${td.xong}/${td.tong} lượt${td.dong ? ", đã đóng" : ""}\n`; w.ngay.forEach((n) => { const r = S.luot[luotKey(t, n.thu)]; if (r) txt += `  ${n.ten}: ${r.diem}/${r.tong}\n`; }); const top = topChuDe(loiCuaTuan(t), 3); if (top.length) txt += "  Sai nhiều: " + top.map(([cd, c]) => `${cd} (${c})`).join("; ") + "\n"; });
+      const gl = dsGiangLuyen(); if (gl.length) { txt += "\nBài luyện theo bài mẹ giảng:\n"; gl.forEach((k) => { const g = GIANG[k], r = S.giangLuyen[k]; txt += `  ${g.ngay ? fmt(parseDate(g.ngay)) + " " : ""}${g.tieuDe}: ${r.diem}/${r.tong}${r.lan > 1 ? ` (lần đầu ${r.dau.diem}/${r.dau.tong}, ${r.lan} lần)` : ""}${r.sai.length ? " · sai: " + r.sai.map((x) => x.cd).join("; ") : ""}\n`; }); }
       navigator.clipboard && navigator.clipboard.writeText(txt).then(() => { $("#btnCopy").textContent = "Đã sao chép ✓"; });
     });
     ganDongBo();
@@ -668,6 +779,7 @@
     if (h[0] === "soan") return viewSoan(Number(h[1]), Number(h[2]));
     if (h[0] === "thuong") return viewThuong();
     if (h[0] === "giang") return viewGiang(h[1]);
+    if (h[0] === "giang-luyen") return viewGiangLuyen(h[1]);
     if (h[0] === "btvn") return viewBtvn();
     if (h[0] === "luyen") return viewLuyen();
     if (h[0] === "dong") return viewDong(Number(h[1]));

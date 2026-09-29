@@ -39,7 +39,7 @@ window.KimDongBo = (function () {
   /* Hợp nhất hai bộ dữ liệu: không bên nào mất gì.
      - xu, heo, demThuong: lấy số lớn hơn (không bao giờ mất tiền của Kim)
      - streak: lấy bản có ngày gần đây hơn
-     - luot / soan / doc / dong / ngay: gộp theo khoá, trùng khoá thì ưu tiên bản ở máy đang mở */
+     - luot / soan / doc / dong / ngay / giangLuyen / luyen / btvn: gộp theo khoá, trùng khoá thì ưu tiên bản ở máy đang mở */
   function hopNhat(may, sv) {
     may = may || {}; sv = sv || {};
     const r = {
@@ -49,7 +49,7 @@ window.KimDongBo = (function () {
       streak: (may.streak && may.streak.last || "") >= (sv.streak && sv.streak.last || "")
         ? (may.streak || { count: 0, last: null }) : sv.streak,
     };
-    ["luot", "soan", "doc", "dong", "ngay"].forEach((k) => {
+    ["luot", "soan", "doc", "dong", "ngay", "giangLuyen", "luyen", "btvn"].forEach((k) => {
       r[k] = Object.assign({}, sv[k] || {}, may[k] || {});
     });
     return r;
