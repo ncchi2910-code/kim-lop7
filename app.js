@@ -88,6 +88,8 @@
   function theGiang(k) { const g = GIANG[k]; const mi = monInfo(g.mon); const d = parseDate(g.ngay);
     return `<a class="day" href="#/giang/${k}" style="border-left:5px solid var(--accent2)"><div class="icon-box" style="background:${mi.nen}">💡</div><div class="grow"><div class="muted">Mẹ giảng · ${fmt(d)}</div><b>${esc(g.tieuDe)}</b></div>${pillLuyen(k)}</a>`; }
   /* nhãn trạng thái bài luyện đi kèm bài giảng */
+  /* hình vẽ (chuỗi SVG soạn sẵn trong file bài giảng, ví dụ giang-toan-on.js) — chèn nguyên, không qua esc */
+  const hinhHtml = (h) => h ? `<div class="hinh" style="margin:10px 0;padding:8px 6px;border-radius:12px;background:#fffdfa;border:1px solid #f0e6dc">${h}</div>` : "";
   function pillLuyen(k) { const g = GIANG[k]; if (!g.luyen) return `<span class="pill">20 phút</span>`; const r = (S.giangLuyen || {})[k];
     return r ? `<span class="pill" style="color:${r.diem / r.tong >= 0.7 ? "var(--ok)" : "#b45309"}">✏️ ${r.diem}/${r.tong}</span>` : `<span class="pill" style="color:var(--accent2)">✏️ chưa luyện</span>`; }
   function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
@@ -380,6 +382,7 @@
     const phan = g.phan.map((p) => {
       let b = `<div class="card"><h3>${esc(p.ten)}</h3>`;
       (p.doan || []).forEach((d) => { b += `<p style="margin-top:8px">${esc(d)}</p>`; });
+      b += hinhHtml(p.hinh);
       (p.buoc || []).forEach((x) => {
         b += `<div class="buoc"><div class="so">${x.so}</div><div class="grow"><b>${esc(x.ten)}</b><div class="small" style="margin-top:3px">${esc(x.de)}</div><div class="vd">${esc(x.vd)}</div></div></div>`;
       });
@@ -390,7 +393,7 @@
       return b + `</div>`;
     }).join("");
     const bang = (g.doiChieu || []).map(([a, c]) => `<tr><td style="width:46%"><i>${esc(a)}</i></td><td><b>${esc(c)}</b></td></tr>`).join("");
-    const hoi = (g.tuKiemTra || []).map((x, i) => `<details class="tkt"><summary>${i + 1}. ${esc(x.q)}</summary><div class="dap">${esc(x.a)}</div></details>`).join("");
+    const hoi = (g.tuKiemTra || []).map((x, i) => `<details class="tkt"><summary>${i + 1}. ${esc(x.q)}</summary>${hinhHtml(x.hinh)}<div class="dap">${esc(x.a)}</div></details>`).join("");
     const rl = g.luyen ? (S.giangLuyen || {})[ma] : null;
     const khoiLuyen = g.luyen ? `<div class="card" style="border-left:5px solid var(--accent)"><b>Hôm nay có hai phần</b>
         <div class="buoc"><div class="so">1</div><div class="grow"><b>Đọc phần giảng</b><div class="small">Khoảng 10 phút. Mỗi mục là một câu hỏi “vì sao”, Kim đọc chậm và tự trả lời trước khi đọc tiếp.</div></div></div>
@@ -410,6 +413,7 @@
 
   /* ---------- trang: bài luyện đi kèm bài mẹ giảng (trường luyen trong KIM_GIANG) ----------
      Ba dạng câu: tn (trắc nghiệm: q, a[], dung, gt) · dien (gõ câu trả lời: q, dap[], gt, chua=true thì chỉ cần chứa đáp án)
+     Câu tn/dien có thể kèm hinh (chuỗi SVG) — hiện phía trên câu hỏi. Phần giảng (phan[].hinh) và câu tự kiểm tra (tuKiemTra[].hinh) cũng vậy.
      · sx (sắp xếp câu thành đoạn: q, cau[{c: câu, v: vai trò}] theo đúng thứ tự, gt). Kết quả lưu S.giangLuyen[ma], mẹ xem ở Góc của mẹ. */
   const chuanHoa = (s) => String(s || "").toLowerCase().replace(/[“”"'‘’.,;:!?()\[\]…–—-]/g, " ").replace(/\s+/g, " ").trim();
   function viewGiangLuyen(ma) {
@@ -439,7 +443,7 @@
       if (q.loai === "dien") return drawDien(q);
       /* đảo thứ tự các lựa chọn để Kim không đoán theo vị trí */
       const ord = shuffle(q.a.map((_, k) => k)); const viTri = (k) => "ABCD"[ord.indexOf(k)];
-      khung(`<div class="question">${esc(q.q)}</div><div class="opts">${ord.map((k, p) => `<button class="opt" data-k="${k}"><span class="k">${"ABCD"[p]}</span><span>${esc(q.a[k])}</span></button>`).join("")}</div>`);
+      khung(`${hinhHtml(q.hinh)}<div class="question">${esc(q.q)}</div><div class="opts">${ord.map((k, p) => `<button class="opt" data-k="${k}"><span class="k">${"ABCD"[p]}</span><span>${esc(q.a[k])}</span></button>`).join("")}</div>`);
       app.querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         const k = Number(b.dataset.k); const dung = k === q.dung;
         app.querySelectorAll(".opt").forEach((x) => { x.disabled = true; const kk = Number(x.dataset.k); if (kk === q.dung) x.classList.add("ok"); else if (kk === k) x.classList.add("bad"); });
@@ -447,7 +451,7 @@
       }));
     }
     function drawDien(q) {
-      khung(`<div class="question">${esc(q.q)}</div><textarea id="tl" class="ans" rows="2" placeholder="${esc(q.goi || "Gõ câu trả lời của Kim vào đây")}"></textarea><button class="btn sm" id="chk" style="margin-top:10px">Kiểm tra</button>`);
+      khung(`${hinhHtml(q.hinh)}<div class="question">${esc(q.q)}</div><textarea id="tl" class="ans" rows="2" placeholder="${esc(q.goi || "Gõ câu trả lời của Kim vào đây")}"></textarea><button class="btn sm" id="chk" style="margin-top:10px">Kiểm tra</button>`);
       const chk = () => { const v = $("#tl").value; if (!chuanHoa(v)) return; $("#tl").disabled = true; $("#chk").disabled = true;
         const cv = chuanHoa(v); const dung = q.dap.some((d) => cv === chuanHoa(d) || (q.chua && cv.indexOf(chuanHoa(d)) > -1));
         ketQua(dung, q, v, q.dap[0], (dung ? "" : `<div class="small">Đáp án: <strong>${esc(q.dap[0])}</strong></div>`) + `<div style="margin-top:6px">${esc(q.gt)}</div>`); };
