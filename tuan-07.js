@@ -1,0 +1,67 @@
+/* TUẦN 7 (19–25/10/2026) — Toán: Đại Bài 6 Số vô tỉ, căn bậc hai số học; Hình Bài 13 Hai tam giác bằng nhau, trường hợp c.c.c. Văn: Viết — tập làm thơ 4/5 chữ, đoạn văn ghi lại cảm xúc. Anh: Unit 3 quá khứ đơn, Communication, Skills 1. KHTN: Bài 6 Liên kết hoá học. */
+window.KIM_WEEKS = window.KIM_WEEKS || {};
+window.KIM_WEEKS[7] = {
+  tuan: 7,
+  ten: "Tăng tốc trước giữa kì",
+  icon: "🚀",
+  monHoc: [
+    { mon: "Toán", icon: "➗", hoc: "Đại số: Bài 6 Số vô tỉ. Căn bậc hai số học (tr. 29–32) — số thập phân vô hạn không tuần hoàn, √a, dùng máy tính tính căn. Hình: Bài 13 Hai tam giác bằng nhau. Trường hợp bằng nhau thứ nhất c.c.c (tr. 63–67).", vap: "√16 = 4, không phải ±4 (căn bậc hai số học luôn không âm). Viết ΔABC = ΔDEF sai thứ tự đỉnh tương ứng — chỗ mất điểm nhiều nhất của chương IV." },
+    { mon: "Ngữ văn", icon: "✍️", hoc: "Bài 2 phần Viết: Tập làm một bài thơ bốn chữ hoặc năm chữ (tr. 48); Viết đoạn văn ghi lại cảm xúc sau khi đọc một bài thơ bốn chữ hoặc năm chữ. Nói và nghe: trình bày suy nghĩ về một vấn đề đời sống.", vap: "Đoạn văn cảm xúc mà chỉ kể lại nội dung bài thơ. Mỗi ý cần có câu nói rõ 'em cảm thấy…' kèm dẫn chứng là một từ ngữ, hình ảnh trong bài." },
+    { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Unit 3: A closer look 2 — thì quá khứ đơn (động từ có quy tắc và bất quy tắc); Communication — lời khen 'Sounds like great work!'; Skills 1 — bài đọc về các dự án tình nguyện của một trường.", vap: "Câu phủ định và câu hỏi: did / didn't + động từ nguyên mẫu (Did you join...? / They didn't plant...). Không viết 'didn't planted'." },
+    { mon: "KHTN", icon: "🔬", hoc: "Bài 6 Giới thiệu về liên kết hoá học (tr. 36–39): cấu trúc electron bền của khí hiếm, liên kết ion (NaCl), liên kết cộng hoá trị (H₂, H₂O), tính chất chất ion và chất cộng hoá trị.", vap: "Lẫn hai loại liên kết. Ion: nhường – nhận electron, thường giữa kim loại và phi kim. Cộng hoá trị: góp chung electron, thường giữa các phi kim." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: Bài 3 tiết 2 — Cải cách tôn giáo (Lu-thơ ở Đức năm 1517, Can-vanh ở Thuỵ Sĩ), tác động. Địa lí: Bài 6 Đặc điểm dân cư, xã hội châu Á — dân số đông nhất thế giới, bốn tôn giáo lớn ra đời ở châu Á, các đô thị lớn.", vap: "Nơi ra đời tôn giáo: Ấn Độ giáo và Phật giáo ở Ấn Độ, Ki-tô giáo ở Pa-le-xtin, Hồi giáo ở A-rập Xê-út. Tuần sau đã gần giữa kì, nên bắt đầu ôn Sử–Địa bằng niên biểu và lược đồ." },
+  ],
+  monKhac: "GDCD Bài 4 Giữ chữ tín · Tin học Bài 4 Mạng xã hội và một số kênh trao đổi thông tin · Công nghệ Bài 4 (tiếp) · HĐTN Chủ đề 2 (tiếp).",
+  ngay: [
+    { thu: 2, mon: "anh", ten: "Anh · Quá khứ đơn, hoạt động tình nguyện", cauHoi: [
+      { q: "Green School ______ vegetables for an orphanage last spring.", a: ["grew", "grows", "grow", "growed"], dung: 0, gt: "last spring → quá khứ đơn. grow là động từ bất quy tắc: grow → grew.", cd: "Quá khứ đơn" },
+      { q: "We ______ English to thirty children last summer.", a: ["teached", "taught", "teach", "teaches"], dung: 1, gt: "teach → taught (bất quy tắc). Không có dạng 'teached'.", cd: "Quá khứ đơn" },
+      { q: "______ you join the clean-up activity last Sunday?", a: ["Do", "Are", "Did", "Were"], dung: 2, gt: "Câu hỏi quá khứ đơn với động từ thường: Did + S + V nguyên mẫu?", cd: "Quá khứ đơn" },
+      { q: "They ______ plant trees yesterday because it rained.", a: ["didn't", "don't", "weren't", "not"], dung: 0, gt: "Phủ định quá khứ đơn: didn't + V nguyên mẫu (didn't plant).", cd: "Quá khứ đơn" },
+      { q: "Which is a past time expression?", a: ["every day", "now", "tomorrow", "a month ago"], dung: 3, gt: "a month ago = một tháng trước → dùng quá khứ đơn. every day đi với hiện tại đơn.", cd: "Dấu hiệu thời gian" },
+      { q: "A nursing home is a place where ______ live and are looked after.", a: ["homeless dogs", "elderly people", "young students", "farmers"], dung: 1, gt: "nursing home = viện dưỡng lão; elderly people = người cao tuổi.", cd: "Từ vựng Unit 3" },
+      { q: "Your friend says: 'I tutored small children last summer.' What can you say to praise him?", a: ["That's too bad.", "Sounds like great work!", "Don't worry.", "No, thanks."], dung: 1, gt: "Lời khen trong Communication: 'Sounds like great work!', 'Wonderful!'.", cd: "Lời khen" },
+    ]},
+    { thu: 3, mon: "van", ten: "Văn · Tập làm thơ, đoạn văn cảm xúc", cauHoi: [
+      { q: "Khi tập làm thơ bốn chữ, mỗi dòng thơ có:", a: ["Không giới hạn", "5 tiếng", "6 tiếng", "4 tiếng"], dung: 3, gt: "Thơ bốn chữ: mỗi dòng 4 tiếng, nhịp thường 2/2. Thơ năm chữ: mỗi dòng 5 tiếng.", cd: "Thể thơ" },
+      { q: "Bước đầu tiên khi tập làm một bài thơ là gì?", a: ["Chuẩn bị: chọn đề tài, chọn thể thơ", "Kiểm tra và chỉnh sửa", "Đọc to trước lớp", "Viết ngay không cần nghĩ ý"], dung: 0, gt: "Thứ tự: chuẩn bị → tìm ý, lập dàn ý → viết → kiểm tra, chỉnh sửa (số chữ, vần, nhịp).", cd: "Quy trình viết" },
+      { q: "Trong mấy dòng thơ: 'Mẹ đi chợ sớm / Mua bó rau xanh / Nấu nồi canh lành / Cả nhà quây quần', cặp tiếng nào gieo vần?", a: ["sớm – xanh", "chợ – rau", "xanh – lành", "lành – quần"], dung: 2, gt: "xanh và lành cùng vần 'anh', ở cuối dòng → vần chân.", cd: "Vần thơ" },
+      { q: "Mở đoạn của đoạn văn ghi lại cảm xúc về một bài thơ cần có gì?", a: ["Chép lại cả bài thơ", "Kết luận bài học", "Kể tiểu sử tác giả thật dài", "Giới thiệu nhan đề, tác giả và ấn tượng chung của em"], dung: 3, gt: "Mở đoạn ngắn: tên bài thơ, tác giả, cảm xúc chung. Thân đoạn mới đi vào chi tiết.", cd: "Đoạn văn cảm xúc" },
+      { q: "Thân đoạn cần làm gì?", a: ["Kể chuyện của em không liên quan", "Chỉ tóm tắt bài thơ", "Trình bày cảm xúc về nội dung và nghệ thuật, có dẫn chứng từ ngữ, hình ảnh trong bài", "Liệt kê các bài thơ khác"], dung: 2, gt: "Mỗi cảm xúc kèm một dẫn chứng: 'Khi đọc câu…, em cảm thấy… vì…'.", cd: "Đoạn văn cảm xúc" },
+      { q: "Đoạn văn ghi lại cảm xúc thường viết ở ngôi thứ mấy?", a: ["Ngôi thứ nhất", "Ngôi thứ hai", "Ngôi thứ ba", "Không cần ngôi"], dung: 0, gt: "Người viết xưng 'em' hoặc 'tôi' để bày tỏ cảm xúc của chính mình.", cd: "Đoạn văn cảm xúc" },
+      { q: "Câu nào thể hiện cảm xúc, chứ không chỉ kể lại?", a: ["Bài thơ có năm chữ mỗi dòng.", "Đọc câu 'Mẹ già và đất nước / Chia đều nỗi nhớ thương', em thấy rưng rưng vì tình con thương mẹ lớn như tình yêu đất nước.", "Tác giả bài thơ là Thanh Thảo.", "Bài thơ được in trong sách Ngữ văn 7."], dung: 1, gt: "Câu đúng có đủ ba thứ: dẫn chứng, cảm xúc của em (rưng rưng), lí do (vì…).", cd: "Đoạn văn cảm xúc" },
+    ]},
+    { thu: 4, mon: "toan", ten: "Toán · Số vô tỉ, căn bậc hai số học", cauHoi: [
+      { q: "√16 bằng:", a: ["−4", "8", "4", "±4"], dung: 2, gt: "Căn bậc hai số học luôn không âm: √16 = 4 vì 4 ≥ 0 và 4² = 16.", cd: "Căn bậc hai số học" },
+      { q: "Số nào là số vô tỉ?", a: ["√2", "−5/7", "√9", "0,(3)"], dung: 0, gt: "√2 = 1,414213... vô hạn không tuần hoàn. √9 = 3 là số hữu tỉ; 0,(3) = 1/3 cũng là số hữu tỉ.", cd: "Số vô tỉ" },
+      { q: "Số vô tỉ là số viết được dưới dạng:", a: ["Số thập phân hữu hạn", "Số thập phân vô hạn tuần hoàn", "Phân số", "Số thập phân vô hạn không tuần hoàn"], dung: 3, gt: "Hữu hạn và vô hạn tuần hoàn đều là số hữu tỉ. Vô hạn không tuần hoàn mới là số vô tỉ (ví dụ π, √2).", cd: "Số vô tỉ" },
+      { q: "(√7)² bằng:", a: ["49", "7", "√49", "14"], dung: 1, gt: "Với a ≥ 0 thì (√a)² = a. Vậy (√7)² = 7.", cd: "Căn bậc hai số học" },
+      { q: "√0,25 bằng:", a: ["0,05", "0,5", "0,125", "5"], dung: 1, gt: "0,5 · 0,5 = 0,25 nên √0,25 = 0,5.", cd: "Căn bậc hai số học" },
+      { q: "Tính √81 − √25.", a: ["√56", "56", "2", "4"], dung: 3, gt: "√81 = 9, √25 = 5, nên 9 − 5 = 4. Không được trừ trong căn: √81 − √25 ≠ √56.", cd: "Căn bậc hai số học" },
+      { q: "Máy tính cho √3 ≈ 1,7320508. Làm tròn đến hàng phần trăm:", a: ["1,73", "1,7", "1,732", "1,74"], dung: 0, gt: "Hàng phần trăm là chữ số thứ hai sau dấu phẩy. Chữ số bỏ đi đầu tiên là 2 < 5 → 1,73.", cd: "Làm tròn" },
+    ]},
+    { thu: 5, mon: "toan", ten: "Toán · Hai tam giác bằng nhau, c.c.c", cauHoi: [
+      { q: "Hai tam giác bằng nhau khi:", a: ["Có chu vi bằng nhau", "Có một cạnh bằng nhau", "Các cạnh tương ứng bằng nhau và các góc tương ứng bằng nhau", "Có cùng hình dạng"], dung: 2, gt: "Định nghĩa đòi đủ cả cạnh tương ứng và góc tương ứng bằng nhau.", cd: "Hai tam giác bằng nhau" },
+      { q: "Cho ΔABC = ΔMNP. Cạnh tương ứng với cạnh AB là:", a: ["MP", "NP", "PM", "MN"], dung: 3, gt: "Đỉnh tương ứng theo thứ tự: A ↔ M, B ↔ N, C ↔ P. Nên AB ↔ MN.", cd: "Thứ tự đỉnh" },
+      { q: "Cho ΔABC = ΔMNP. Góc tương ứng với góc C là:", a: ["Góc M", "Góc N", "Góc P", "Góc A"], dung: 2, gt: "C đứng thứ ba, tương ứng với đỉnh thứ ba P.", cd: "Thứ tự đỉnh" },
+      { q: "Trường hợp bằng nhau cạnh – cạnh – cạnh (c.c.c) phát biểu:", a: ["Ba cạnh của tam giác này bằng ba cạnh của tam giác kia thì hai tam giác bằng nhau", "Hai cạnh và góc xen giữa bằng nhau", "Ba góc bằng nhau thì hai tam giác bằng nhau", "Một cạnh và hai góc kề bằng nhau"], dung: 0, gt: "c.c.c chỉ cần ba cặp cạnh. Ba góc bằng nhau thì chưa đủ (tam giác to nhỏ khác nhau).", cd: "Trường hợp c.c.c" },
+      { q: "ΔABC và ΔDEF có AB = DE, BC = EF, AC = DF. Cách viết đúng là:", a: ["ΔABC = ΔEDF", "ΔABC = ΔDEF (c.c.c)", "ΔABC = ΔDFE", "ΔBAC = ΔDEF"], dung: 1, gt: "AB = DE cho A ↔ D, B ↔ E; còn lại C ↔ F. Viết ΔABC = ΔDEF.", cd: "Thứ tự đỉnh" },
+      { q: "Cho ΔABC = ΔDEF, AB = 3 cm, BC = 5 cm, AC = 4 cm. Độ dài EF là:", a: ["3 cm", "4 cm", "5 cm", "12 cm"], dung: 2, gt: "EF tương ứng với BC (đỉnh thứ hai và thứ ba), nên EF = 5 cm.", cd: "Thứ tự đỉnh" },
+      { q: "Cho ΔABC = ΔDEF, góc A = 60°, góc B = 70°. Góc F bằng:", a: ["50°", "70°", "60°", "130°"], dung: 0, gt: "Góc C = 180° − (60° + 70°) = 50°. F tương ứng với C nên góc F = 50°.", cd: "Hai tam giác bằng nhau" },
+    ]},
+    { thu: 6, mon: "khtn", ten: "KHTN · Liên kết hoá học", cauHoi: [
+      { q: "Nguyên tử các khí hiếm (trừ helium) có bao nhiêu electron ở lớp ngoài cùng?", a: ["1", "2", "7", "8"], dung: 3, gt: "8 electron lớp ngoài cùng (He có 2) là cấu trúc bền. Các nguyên tử khác liên kết để đạt cấu trúc này.", cd: "Cấu trúc electron bền" },
+      { q: "Khi tạo thành muối ăn NaCl, nguyên tử Na:", a: ["Nhận 1 electron thành ion Na⁻", "Nhường 1 electron thành ion Na⁺", "Góp chung electron với Cl", "Không thay đổi"], dung: 1, gt: "Na (2 – 8 – 1) nhường 1 electron lớp ngoài, còn lại 2 – 8 bền như neon, thành ion dương Na⁺.", cd: "Liên kết ion" },
+      { q: "Khi tạo thành NaCl, nguyên tử Cl:", a: ["Nhường 7 electron", "Nhận 1 electron thành ion Cl⁻", "Nhường 1 electron thành Cl⁺", "Góp chung 2 electron"], dung: 1, gt: "Cl (2 – 8 – 7) nhận thêm 1 electron để lớp ngoài có 8, thành ion âm Cl⁻.", cd: "Liên kết ion" },
+      { q: "Liên kết ion được hình thành do:", a: ["Lực đẩy giữa các hạt nhân", "Các cặp electron dùng chung", "Hai nguyên tử khí hiếm", "Lực hút giữa các ion mang điện tích trái dấu"], dung: 3, gt: "Na⁺ (dương) và Cl⁻ (âm) hút nhau tạo liên kết ion.", cd: "Liên kết ion" },
+      { q: "Liên kết cộng hoá trị được tạo nên bởi:", a: ["Một hay nhiều cặp electron dùng chung giữa hai nguyên tử", "Sự nhường electron", "Lực hút giữa ion dương và ion âm", "Proton dùng chung"], dung: 0, gt: "Ví dụ phân tử H₂: hai nguyên tử H góp chung một cặp electron.", cd: "Liên kết cộng hoá trị" },
+      { q: "Phân tử nào được tạo bởi liên kết cộng hoá trị?", a: ["NaCl", "KCl", "H₂O", "MgO"], dung: 2, gt: "H và O đều là phi kim, góp chung electron. NaCl, KCl, MgO là chất ion (kim loại + phi kim).", cd: "Liên kết cộng hoá trị" },
+      { q: "Ở nhiệt độ thường, chất ion (như muối ăn) thường:", a: ["Ở thể khí", "Không tan trong nước", "Ở thể lỏng, dễ bay hơi", "Ở thể rắn, khó nóng chảy, khó bay hơi"], dung: 3, gt: "Chất ion thường rắn, nhiệt độ nóng chảy cao. Chất cộng hoá trị có thể rắn, lỏng hoặc khí, thường nóng chảy và sôi ở nhiệt độ thấp.", cd: "Tính chất chất ion" },
+    ]},
+  ],
+  docTruoc: [
+    { mon: "Toán", tieuDe: "Tuần sau: Bài 7 Tập hợp các số thực · Luyện tập chung về tam giác", noiDung: "Số hữu tỉ và số vô tỉ gọi chung là số thực, kí hiệu ℝ. Mỗi số thực ứng với một điểm trên trục số. Giá trị tuyệt đối |a| là khoảng cách từ a đến 0 trên trục số, nên luôn không âm: |−5| = 5, |5| = 5, |0| = 0. Hình: tiếp tục luyện chứng minh hai tam giác bằng nhau theo c.c.c, nhớ đánh dấu các cạnh bằng nhau lên hình trước khi viết." },
+    { mon: "KHTN", tieuDe: "Tuần sau: Bài 7 Hoá trị và công thức hoá học", noiDung: "Hoá trị là con số biểu thị khả năng liên kết của nguyên tử nguyên tố này với nguyên tử nguyên tố khác. Ví dụ trong H₂O, O có hoá trị II, H có hoá trị I. Quy tắc hoá trị cho hợp chất hai nguyên tố AₓBᵧ: x · (hoá trị của A) = y · (hoá trị của B). Từ quy tắc này lập được công thức hoá học." },
+    { mon: "Sử – Địa", tieuDe: "Sắp giữa kì: bắt đầu ôn Sử – Địa", noiDung: "Lịch sử bài 1–3: chế độ phong kiến Tây Âu, bốn cuộc phát kiến (1487, 1492, 1498, 1519–1522), hệ quả, Phục hưng và Cải cách tôn giáo. Địa lí: châu Âu (vị trí, dân cư, bảo vệ thiên nhiên, EU) và châu Á (tự nhiên, dân cư). Cách ôn nhanh: tự vẽ một niên biểu và một lược đồ trống, điền tên rồi so với sách." },
+  ],
+};

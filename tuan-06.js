@@ -1,0 +1,67 @@
+/* TUẦN 6 (12–18/10/2026) — Toán: Đại Bài 5 Số thập phân vô hạn tuần hoàn, làm tròn theo độ chính xác; Hình Bài 12 Tổng các góc trong một tam giác. Văn: Trở gió + thực hành tiếng Việt tr. 47. Anh: Unit 3 Getting started, A closer look 1. KHTN: Bài 5 Phân tử, đơn chất, hợp chất. */
+window.KIM_WEEKS = window.KIM_WEEKS || {};
+window.KIM_WEEKS[6] = {
+  tuan: 6,
+  ten: "Sang chương mới",
+  icon: "🚪",
+  monHoc: [
+    { mon: "Toán", icon: "➗", hoc: "Đại số: Bài 5 Làm quen với số thập phân vô hạn tuần hoàn (tr. 26–28) — chu kì, cách viết 0,(3); làm tròn số căn cứ vào độ chính xác. Hình: Bài 12 Tổng các góc trong một tam giác (tr. 60–62) — tổng ba góc 180°, tam giác nhọn, vuông, tù; hai góc nhọn của tam giác vuông phụ nhau.", vap: "Độ chính xác bằng một nửa đơn vị hàng làm tròn: độ chính xác 0,05 → làm tròn đến hàng phần mười, 0,005 → hàng phần trăm. Hay làm tròn nhầm hàng." },
+    { mon: "Ngữ văn", icon: "✍️", hoc: "Văn bản Trở gió (Nguyễn Ngọc Tư, tr. 44–46): gió chướng miền Tây báo Tết. Thực hành tiếng Việt (tr. 47): nghĩa của từ ngữ trong ngữ cảnh ('gặp', 'thơm suốt đường con'), điệp ngữ, nhân hoá.", vap: "Giải thích nghĩa từ theo từ điển mà quên nghĩa trong câu thơ. Ví dụ 'thơm' ở đây không chỉ là mùi lá mà là hương vị quê, tình mẹ." },
+    { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Unit 3 Community service: Getting started (Minh và Tom kể về câu lạc bộ tình nguyện), A closer look 1 — từ vựng hoạt động cộng đồng (donate, tutor, pick up litter...) và phát âm đuôi -ed: /t/, /d/, /ɪd/.", vap: "Đuôi -ed đọc /ɪd/ chỉ khi động từ tận cùng bằng âm /t/ hoặc /d/ (donated, needed). Sau âm vô thanh /k/, /p/, /s/... đọc /t/ (cooked, helped)." },
+    { mon: "KHTN", icon: "🔬", hoc: "Bài 5 Phân tử – Đơn chất – Hợp chất (tr. 32–35): phân tử là gì, cách tính khối lượng phân tử (amu), phân biệt đơn chất (kim loại, phi kim, khí hiếm) và hợp chất.", vap: "Tính khối lượng phân tử quên nhân với chỉ số: CO₂ = 12 + 2·16 = 44 amu, không phải 12 + 16. Đơn chất có thể gồm nhiều nguyên tử (O₂) nhưng chỉ một nguyên tố." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: Bài 3 tiết 1 — Phong trào Văn hoá Phục hưng (bắt đầu ở I-ta-li-a thế kỉ XIV; Lê-ô-na-đô đa Vin-xi, Mi-ken-lăng-giơ, Sếch-xpia, Xéc-van-tét, Cô-péc-ních...). Địa lí: Bài 5 châu Á tiếp — khí hậu, sông ngòi, các đới thiên nhiên.", vap: "Ghép nhầm tác giả với tác phẩm. Mẹo: Sếch-xpia viết kịch (Rô-mê-ô và Giu-li-ét), Xéc-van-tét viết Đôn Ki-hô-tê, Lê-ô-na-đô vẽ Mô-na Li-sa, Mi-ken-lăng-giơ tạc tượng Đa-vít." },
+  ],
+  monKhac: "GDCD Bài 3 (tiếp) · Tin học Bài 3 (tiếp) · Công nghệ Bài 4 Thu hoạch sản phẩm trồng trọt · HĐTN Chủ đề 2 (tiếp).",
+  ngay: [
+    { thu: 2, mon: "anh", ten: "Anh · Unit 3 từ vựng, đuôi -ed", cauHoi: [
+      { q: "'Community service' means:", a: ["dịch vụ ăn uống", "hoạt động phục vụ cộng đồng", "công viên khu phố", "câu lạc bộ thể thao"], dung: 1, gt: "community = cộng đồng; service = sự phục vụ. Ví dụ: picking up litter, donating books.", cd: "Từ vựng Unit 3" },
+      { q: "'Tutor' (verb) means:", a: ["tưới cây", "quyên góp", "dạy kèm", "nhặt rác"], dung: 2, gt: "tutor small children = dạy kèm trẻ nhỏ. donate = quyên góp, water = tưới, pick up = nhặt.", cd: "Từ vựng Unit 3" },
+      { q: "Our club ______ old books to children in rural areas.", a: ["donates", "picks up", "waters", "exchanges"], dung: 0, gt: "donate books to someone = quyên góp sách cho ai. rural areas = vùng nông thôn.", cd: "Từ vựng Unit 3" },
+      { q: "We ______ litter at the local park every Sunday.", a: ["water", "tutor", "donate", "pick up"], dung: 3, gt: "pick up litter = nhặt rác.", cd: "Từ vựng Unit 3" },
+      { q: "The -ed in 'watered' is pronounced:", a: ["/t/", "/d/", "/ɪd/", "không đọc"], dung: 1, gt: "water tận cùng bằng âm hữu thanh nên -ed đọc /d/.", cd: "Phát âm đuôi -ed" },
+      { q: "The -ed in 'cooked' is pronounced:", a: ["/d/", "/t/", "/ɪd/", "/ed/"], dung: 1, gt: "cook tận cùng bằng âm /k/ (vô thanh) nên -ed đọc /t/.", cd: "Phát âm đuôi -ed" },
+      { q: "Which word has the -ed ending pronounced /ɪd/?", a: ["helped", "cleaned", "played", "donated"], dung: 3, gt: "donate tận cùng bằng âm /t/ nên -ed đọc /ɪd/: do-na-ted, thêm một âm tiết.", cd: "Phát âm đuôi -ed" },
+    ]},
+    { thu: 3, mon: "van", ten: "Văn · Trở gió, nghĩa của từ", cauHoi: [
+      { q: "Tác giả của Trở gió là ai?", a: ["Nguyễn Ngọc Tư", "Thanh Thảo", "Nguyễn Khoa Điềm", "Võ Quảng"], dung: 0, gt: "Nguyễn Ngọc Tư, nhà văn quê Cà Mau, hay viết về miền Tây Nam Bộ.", cd: "Tác giả – tác phẩm" },
+      { q: "'Gió chướng' trong bài là gì?", a: ["Gió bão mùa hè", "Gió biển ban đêm", "Gió mùa cuối năm ở miền Tây Nam Bộ, báo hiệu Tết sắp đến", "Gió lạnh miền Bắc"], dung: 2, gt: "Gió chướng về là lúa chín, mía già, vú sữa chín, sắp Tết.", cd: "Nội dung văn bản" },
+      { q: "Khi gió chướng về, tâm trạng nhân vật 'tôi' thế nào?", a: ["Chỉ vui mừng", "Không có cảm xúc gì", "Buồn chán", "Vừa mừng vừa bực, ngổn ngang, thấy thời gian trôi gấp gáp"], dung: 3, gt: "Tâm trạng 'lộn xộn, ngổn ngang': mừng vì Tết, mà lo vì một năm trôi qua quá nhanh.", cd: "Cảm xúc nhân vật" },
+      { q: "Câu 'nắng thức rất trễ' dùng biện pháp tu từ nào?", a: ["So sánh", "Nói giảm nói tránh", "Nhân hoá", "Điệp ngữ"], dung: 2, gt: "'Thức' là hoạt động của người, được gán cho nắng → nhân hoá.", cd: "Biện pháp tu từ" },
+      { q: "Từ 'gấp rãi' được lặp lại nhiều lần trong đoạn văn (gấp rãi ăn, gấp rãi cười...). Đó là biện pháp gì?", a: ["Điệp ngữ", "Nhân hoá", "So sánh", "Nói giảm nói tránh"], dung: 0, gt: "Lặp lại một từ để nhấn mạnh: mọi việc đều vội vã khi Tết đến gần.", cd: "Biện pháp tu từ" },
+      { q: "Trong nhan đề 'Gặp lá cơm nếp', từ 'gặp' có gì đặc biệt?", a: ["Dùng sai từ", "Thường dùng cho người gặp người, ở đây dùng với chiếc lá như gặp người thân", "Có nghĩa là hái", "Có nghĩa là nấu"], dung: 1, gt: "Dùng 'gặp' khiến chiếc lá như một người quen, gợi tình cảm thân thiết với quê nhà.", cd: "Nghĩa của từ ngữ" },
+      { q: "'Thơm suốt đường con' — chữ 'thơm' ở đây gợi điều gì?", a: ["Chỉ mùi của lá", "Mùi nước hoa", "Hương vị quê nhà và tình mẹ theo người con suốt đường hành quân", "Mùi hoa rừng"], dung: 2, gt: "Nghĩa của từ phải hiểu trong ngữ cảnh: mùi thơm ấy là nỗi nhớ mẹ, nhớ quê.", cd: "Nghĩa của từ ngữ" },
+    ]},
+    { thu: 4, mon: "toan", ten: "Toán · Số thập phân vô hạn tuần hoàn, làm tròn", cauHoi: [
+      { q: "Phân số 1/3 viết dưới dạng số thập phân là:", a: ["0,(3)", "0,3", "0,33", "3,3"], dung: 0, gt: "1 : 3 = 0,333... chữ số 3 lặp mãi, viết gọn 0,(3). 0,33 chỉ là số làm tròn.", cd: "Số thập phân vô hạn tuần hoàn" },
+      { q: "Số 0,2777... viết gọn là:", a: ["0,(27)", "0,27", "0,(2)7", "0,2(7)"], dung: 3, gt: "Chỉ chữ số 7 lặp lại nên đặt (7): 0,2(7). Chu kì là 7.", cd: "Số thập phân vô hạn tuần hoàn" },
+      { q: "Chu kì của số 0,121212... là:", a: ["1", "12", "2", "121"], dung: 1, gt: "Nhóm '12' lặp lại mãi, viết 0,(12), chu kì là 12.", cd: "Số thập phân vô hạn tuần hoàn" },
+      { q: "Phân số nào viết được thành số thập phân hữu hạn?", a: ["1/3", "3/8", "2/9", "5/6"], dung: 1, gt: "3/8 = 0,375 (phép chia hết). 1/3, 2/9, 5/6 cho số thập phân vô hạn tuần hoàn.", cd: "Số thập phân hữu hạn" },
+      { q: "Làm tròn số 4,7362 với độ chính xác 0,05.", a: ["4,74", "5", "4,8", "4,7"], dung: 3, gt: "Độ chính xác 0,05 = một nửa của 0,1 → làm tròn đến hàng phần mười. Chữ số bỏ đi đầu tiên là 3 < 5 nên giữ nguyên: 4,7.", cd: "Làm tròn theo độ chính xác" },
+      { q: "Làm tròn với độ chính xác 0,005 nghĩa là làm tròn đến hàng nào?", a: ["Hàng phần trăm", "Hàng phần mười", "Hàng đơn vị", "Hàng phần nghìn"], dung: 0, gt: "0,005 là một nửa của 0,01 (hàng phần trăm).", cd: "Làm tròn theo độ chính xác" },
+      { q: "Làm tròn 3,14159 với độ chính xác 0,005.", a: ["3,1", "3,142", "3,14", "3,15"], dung: 2, gt: "Làm tròn đến hàng phần trăm. Chữ số bỏ đi đầu tiên là 1 < 5 → 3,14.", cd: "Làm tròn theo độ chính xác" },
+    ]},
+    { thu: 5, mon: "toan", ten: "Toán · Tổng các góc trong tam giác", cauHoi: [
+      { q: "Tổng ba góc của một tam giác bằng:", a: ["90°", "360°", "270°", "180°"], dung: 3, gt: "Đây là định lí quan trọng nhất của Bài 12, dùng suốt chương IV.", cd: "Tổng ba góc" },
+      { q: "Tam giác ABC có góc A = 50°, góc B = 70°. Góc C bằng:", a: ["120°", "70°", "60°", "50°"], dung: 2, gt: "C = 180° − (50° + 70°) = 60°.", cd: "Tính góc" },
+      { q: "Một tam giác có một góc bằng 100°. Đó là tam giác gì?", a: ["Tam giác tù", "Tam giác vuông", "Tam giác nhọn", "Tam giác đều"], dung: 0, gt: "Góc tù là góc lớn hơn 90° và nhỏ hơn 180°. Có một góc tù → tam giác tù.", cd: "Phân loại tam giác" },
+      { q: "Tam giác ABC vuông tại A, góc B = 35°. Góc C bằng:", a: ["35°", "55°", "145°", "65°"], dung: 1, gt: "Trong tam giác vuông, hai góc nhọn phụ nhau: C = 90° − 35° = 55°.", cd: "Tam giác vuông" },
+      { q: "Trong một tam giác vuông, hai góc nhọn:", a: ["Bằng nhau", "Bù nhau (tổng 180°)", "Phụ nhau (tổng 90°)", "Đều bằng 45°"], dung: 2, gt: "Góc vuông đã chiếm 90°, hai góc còn lại cộng lại 90°.", cd: "Tam giác vuông" },
+      { q: "Tam giác có ba góc 50°, 60°, 70° là tam giác gì?", a: ["Tam giác nhọn", "Tam giác vuông", "Tam giác tù", "Không phải tam giác"], dung: 0, gt: "Cả ba góc đều nhỏ hơn 90° → tam giác nhọn. Kiểm tra: 50 + 60 + 70 = 180.", cd: "Phân loại tam giác" },
+      { q: "Một tam giác có thể có hai góc tù không?", a: ["Có", "Chỉ khi là tam giác vuông", "Có, nếu tam giác lớn", "Không, vì tổng hai góc tù đã lớn hơn 180°"], dung: 3, gt: "Hai góc đều lớn hơn 90° thì tổng đã vượt 180°, không còn chỗ cho góc thứ ba.", cd: "Tổng ba góc" },
+    ]},
+    { thu: 6, mon: "khtn", ten: "KHTN · Phân tử, đơn chất, hợp chất", cauHoi: [
+      { q: "Phân tử là gì?", a: ["Hạt nhỏ nhất trong hạt nhân", "Hạt đại diện cho chất, gồm một số nguyên tử liên kết với nhau, thể hiện đầy đủ tính chất hoá học của chất", "Một nguyên tố hoá học", "Một ion mang điện"], dung: 1, gt: "Ví dụ phân tử nước H₂O gồm 2 nguyên tử H và 1 nguyên tử O.", cd: "Phân tử" },
+      { q: "Khối lượng phân tử nước H₂O là bao nhiêu? (H = 1, O = 16)", a: ["17 amu", "18 amu", "32 amu", "34 amu"], dung: 1, gt: "2 · 1 + 16 = 18 amu. Nhớ nhân khối lượng nguyên tử với chỉ số.", cd: "Khối lượng phân tử" },
+      { q: "Khối lượng phân tử CO₂ là bao nhiêu? (C = 12, O = 16)", a: ["28 amu", "56 amu", "40 amu", "44 amu"], dung: 3, gt: "12 + 2 · 16 = 44 amu.", cd: "Khối lượng phân tử" },
+      { q: "Đơn chất là:", a: ["Chất tạo nên từ một nguyên tố hoá học", "Chất tạo nên từ hai nguyên tố trở lên", "Chất chỉ có một nguyên tử", "Chất ở thể rắn"], dung: 0, gt: "O₂ có 2 nguyên tử nhưng chỉ một nguyên tố (oxygen) nên vẫn là đơn chất.", cd: "Đơn chất – hợp chất" },
+      { q: "Chất nào là hợp chất?", a: ["O₂", "Cu", "NaCl (muối ăn)", "He"], dung: 2, gt: "NaCl tạo từ hai nguyên tố Na và Cl → hợp chất. O₂, Cu, He là đơn chất.", cd: "Đơn chất – hợp chất" },
+      { q: "Chất nào là đơn chất kim loại?", a: ["S", "N₂", "CO₂", "Fe"], dung: 3, gt: "Fe (sắt) là kim loại. S, N₂ là đơn chất phi kim; CO₂ là hợp chất.", cd: "Đơn chất – hợp chất" },
+      { q: "Ở nhiệt độ thường, thuỷ ngân (Hg) ở thể nào?", a: ["Rắn", "Khí", "Lỏng", "Không xác định"], dung: 2, gt: "Các kim loại ở thể rắn, riêng thuỷ ngân ở thể lỏng.", cd: "Đơn chất – hợp chất" },
+    ]},
+  ],
+  docTruoc: [
+    { mon: "Toán", tieuDe: "Tuần sau: Bài 6 Căn bậc hai số học · Bài 13 Hai tam giác bằng nhau", noiDung: "Có những số không viết được thành phân số, ví dụ √2 = 1,414213... (thập phân vô hạn không tuần hoàn), gọi là số vô tỉ. Căn bậc hai số học của a (a ≥ 0) là số x ≥ 0 sao cho x² = a: √9 = 3, không phải −3. Hình: hai tam giác bằng nhau khi các cạnh và các góc tương ứng bằng nhau; viết tên hai tam giác phải đúng thứ tự đỉnh tương ứng." },
+    { mon: "KHTN", tieuDe: "Tuần sau: Bài 6 Liên kết hoá học", noiDung: "Khí hiếm rất bền vì lớp electron ngoài cùng có 8 electron (He có 2). Các nguyên tử khác liên kết với nhau để đạt được cấu trúc bền như khí hiếm: hoặc nhường, nhận electron (liên kết ion, ví dụ muối ăn NaCl), hoặc góp chung electron (liên kết cộng hoá trị, ví dụ nước H₂O)." },
+    { mon: "Tiếng Anh", tieuDe: "Thì quá khứ đơn (past simple)", noiDung: "Dùng cho việc đã xảy ra và kết thúc, thường đi với yesterday, last week, a month ago. Động từ có quy tắc thêm -ed (volunteer → volunteered). Động từ bất quy tắc phải thuộc cột 2: teach → taught, grow → grew, go → went, give → gave. Câu phủ định và câu hỏi dùng did / didn't + động từ nguyên mẫu." },
+  ],
+};

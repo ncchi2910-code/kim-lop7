@@ -1,0 +1,67 @@
+/* TUẦN 5 (05–11/10/2026) — Toán: Đại luyện tập chung + bài tập cuối chương I; Hình bài tập cuối chương III. Văn: Bài 2 thực hành tiếng Việt tr. 42 + Gặp lá cơm nếp. Anh: hết Unit 2. KHTN: hết Bài 4, ôn chương I. */
+window.KIM_WEEKS = window.KIM_WEEKS || {};
+window.KIM_WEEKS[5] = {
+  tuan: 5,
+  ten: "Chốt chương",
+  icon: "🧩",
+  monHoc: [
+    { mon: "Toán", icon: "➗", hoc: "Đại số: Luyện tập chung (tr. 24) và Bài tập cuối chương I (tr. 25) — gom lại bốn phép tính, luỹ thừa, thứ tự phép tính, chuyển vế. Hình: Bài tập cuối chương III (tr. 59) — góc kề bù, đối đỉnh, so le trong, đồng vị, tiên đề Euclid, định lí.", vap: "Đại: dấu của luỹ thừa cơ số âm, quên đổi dấu khi chuyển vế. Hình: lẫn dấu hiệu nhận biết (dùng để chứng minh song song) với tính chất (dùng khi đã biết song song)." },
+    { mon: "Ngữ văn", icon: "✍️", hoc: "Bài 2 Khúc nhạc tâm hồn: Thực hành tiếng Việt (tr. 42) — nói giảm nói tránh, điệp ngữ, nghĩa của từ 'xuân'. Văn bản Gặp lá cơm nếp (Thanh Thảo, tr. 43–44), thơ năm chữ.", vap: "Nhận ra nói giảm nói tránh nhưng không nói được tác dụng. Cần trả lời đủ: tránh cảm giác đau buồn, nặng nề, thể hiện sự tế nhị, trân trọng." },
+    { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Hết Unit 2 Healthy living: Skills 2 (nghe lời khuyên giữ sức khoẻ, viết đoạn khuyên khoảng 70 từ), Looking back, Project 'Build healthy habits'.", vap: "Câu có chủ ngữ ghép (My brother and I play...) vẫn là câu đơn. Đừng nhầm với câu có hai mệnh đề nối bằng and, so." },
+    { mon: "KHTN", icon: "🔬", hoc: "Hết Bài 4 Bảng tuần hoàn: nhóm IA (kim loại kiềm), VIIA (halogen), VIIIA (khí hiếm); 7 chu kì. Ôn cả chương I: nguyên tử, nguyên tố, bảng tuần hoàn.", vap: "Xác định vị trí từ sơ đồ electron: số lớp → chu kì, số electron lớp ngoài cùng → nhóm A. Hay đảo ngược hai quy tắc này." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: Bài 2 tiết 2 — hệ quả của phát kiến địa lí và sự hình thành quan hệ sản xuất tư bản chủ nghĩa (tư sản, vô sản, công trường thủ công). Địa lí: hết Bài 4 Liên minh châu Âu, bắt đầu Bài 5 châu Á (vị trí, địa hình).", vap: "Hệ quả có cả mặt tích cực và tiêu cực (buôn nô lệ, cướp thuộc địa); đề hay hỏi cả hai. Tư sản giàu nhưng chưa có địa vị chính trị." },
+  ],
+  monKhac: "GDCD Bài 3 Học tập tự giác, tích cực · Tin học Bài 3 Quản lí dữ liệu trong máy tính · Công nghệ Bài 3 (tiếp) · HĐTN Chủ đề 2 Khám phá bản thân.",
+  ngay: [
+    { thu: 2, mon: "anh", ten: "Anh · Hết Unit 2, ôn sức khoẻ", cauHoi: [
+      { q: "Healthy habits help us keep fit and avoid ______.", a: ["exercise", "vegetables", "disease", "water"], dung: 2, gt: "avoid disease = tránh bệnh tật. Câu mở đầu bài nghe Skills 2.", cd: "Từ vựng sức khoẻ" },
+      { q: "Which is NOT good advice for a healthy life?", a: ["Stay up late every night.", "Drink enough water.", "Eat more fruit and vegetables.", "Do exercise outdoors."], dung: 0, gt: "stay up late = thức khuya. Ba lời khuyên còn lại đều có trong bài nghe Skills 2.", cd: "Lời khuyên sức khoẻ" },
+      { q: "'Chapped lips' means:", a: ["mắt mỏi", "da cháy nắng", "mụn trứng cá", "môi nứt nẻ"], dung: 3, gt: "chapped lips = môi nứt nẻ; sunburn = cháy nắng; acne = mụn trứng cá.", cd: "Từ vựng sức khoẻ" },
+      { q: "You should use ______ when you have chapped lips.", a: ["eye drops", "lip balm", "tofu", "a virus"], dung: 1, gt: "lip balm = son dưỡng môi. eye drops = thuốc nhỏ mắt.", cd: "Từ vựng sức khoẻ" },
+      { q: "Which is a simple sentence?", a: ["I was tired, so I went to bed early.", "My brother and I play football every afternoon.", "I eat vegetables, and I drink milk.", "Because I want to keep fit."], dung: 1, gt: "Câu đơn chỉ có một mệnh đề. 'My brother and I' là chủ ngữ ghép, vẫn chỉ một động từ chính 'play'.", cd: "Câu đơn" },
+      { q: "A person who does a lot of sports and moves a lot is ______.", a: ["dim", "dirty", "tidy", "active"], dung: 3, gt: "active = năng động. tidy = gọn gàng, dirty = bẩn, dim = mờ, tối.", cd: "Tính từ" },
+      { q: "Which word has the sound /v/?", a: ["vitamin", "fat", "fit", "fruit"], dung: 0, gt: "vitamin /ˈvɪtəmɪn/ có /v/ (rung cổ). fat, fit, fruit có /f/.", cd: "Phát âm /f/ – /v/" },
+    ]},
+    { thu: 3, mon: "van", ten: "Văn · Gặp lá cơm nếp, nói giảm nói tránh", cauHoi: [
+      { q: "Tác giả bài thơ Gặp lá cơm nếp là ai?", a: ["Nguyễn Khoa Điềm", "Nguyễn Ngọc Tư", "Thanh Thảo", "Tế Hanh"], dung: 2, gt: "Thanh Thảo (quê Quảng Ngãi), từng là phóng viên ở chiến trường miền Nam. Nguyễn Khoa Điềm viết Đồng dao mùa xuân.", cd: "Tác giả – tác phẩm" },
+      { q: "Gặp lá cơm nếp viết theo thể thơ nào?", a: ["Thơ bốn chữ", "Thơ tự do", "Thơ lục bát", "Thơ năm chữ"], dung: 3, gt: "Mỗi dòng 5 tiếng: 'Mẹ ở đâu, chiều nay / Nhặt lá về đun bếp'. Nhịp linh hoạt 2/3 hoặc 3/2.", cd: "Thể thơ" },
+      { q: "Điều gì khơi dậy nỗi nhớ của người con trong bài thơ?", a: ["Lá thư mẹ gửi", "Tiếng hát đồng dao", "Mùi thơm của lá cơm nếp gặp trên đường hành quân", "Bức ảnh quê nhà"], dung: 2, gt: "Người lính gặp lá cơm nếp, mùi lá gợi nhớ nồi xôi mẹ thổi, rồi nhớ mẹ, nhớ quê.", cd: "Nội dung bài thơ" },
+      { q: "Hai câu 'Mẹ già và đất nước / Chia đều nỗi nhớ thương' cho thấy điều gì?", a: ["Tình yêu mẹ hoà làm một với tình yêu đất nước", "Người con chỉ nhớ đất nước", "Mẹ không nhớ con", "Đất nước quan trọng hơn mẹ"], dung: 0, gt: "Hai đối tượng được đặt ngang hàng, 'chia đều'. Tình mẹ con gắn liền với tình yêu quê hương, đất nước.", cd: "Chủ đề, cảm xúc" },
+      { q: "Trong 'Một ngày hoà bình / Anh không về nữa' (Đồng dao mùa xuân), cụm 'không về nữa' dùng biện pháp gì?", a: ["So sánh", "Nói giảm nói tránh", "Nhân hoá", "Điệp ngữ"], dung: 1, gt: "'Không về nữa' thay cho sự hi sinh, cái chết của người lính, để giảm cảm giác đau thương.", cd: "Nói giảm nói tránh" },
+      { q: "Nói giảm nói tránh có tác dụng gì?", a: ["Làm câu văn dài hơn", "Phóng đại sự việc", "Tránh gây cảm giác đau buồn, nặng nề, thô tục; thể hiện sự tế nhị", "Làm câu văn có vần"], dung: 2, gt: "Nói giảm nói tránh là cách diễn đạt tế nhị, uyển chuyển. Ngược với nói quá (phóng đại).", cd: "Nói giảm nói tránh" },
+      { q: "Câu nào có dùng nói giảm nói tránh?", a: ["Bác đã đi rồi sao, Bác ơi!", "Trời mưa rất to.", "Em học bài rất chăm chỉ.", "Lá cơm nếp có mùi thơm."], dung: 0, gt: "'Đi rồi' thay cho 'mất', nói về sự ra đi của Bác Hồ (thơ Tố Hữu).", cd: "Nói giảm nói tránh" },
+    ]},
+    { thu: 4, mon: "toan", ten: "Toán · Ôn tập chương I", cauHoi: [
+      { q: "Tính (−2/3) + 1/2.", a: ["−1/5", "1/6", "−7/6", "−1/6"], dung: 3, gt: "Quy đồng mẫu 6: −4/6 + 3/6 = −1/6. Không cộng tử với tử, mẫu với mẫu.", cd: "Cộng trừ số hữu tỉ" },
+      { q: "Tính (−3/4) · (8/9).", a: ["2/3", "−2/3", "−3/2", "−11/13"], dung: 1, gt: "Tử nhân tử, mẫu nhân mẫu: −24/36 = −2/3. Âm nhân dương ra âm.", cd: "Nhân chia số hữu tỉ" },
+      { q: "Tính (−0,5)³.", a: ["0,125", "−0,125", "−1,5", "−0,15"], dung: 1, gt: "(−0,5)·(−0,5)·(−0,5) = −0,125. Số mũ lẻ nên kết quả âm.", cd: "Luỹ thừa" },
+      { q: "Viết gọn 2⁵ · 2³ : 2⁴ dưới dạng một luỹ thừa.", a: ["2¹²", "2²", "4⁴", "2⁴"], dung: 3, gt: "Nhân cùng cơ số: cộng số mũ 5 + 3 = 8. Chia: trừ số mũ 8 − 4 = 4. Được 2⁴.", cd: "Luỹ thừa" },
+      { q: "Tính 3/4 − 1/4 · 2².", a: ["−1/4", "2", "1/2", "3/4"], dung: 0, gt: "Luỹ thừa trước: 2² = 4. Nhân: 1/4 · 4 = 1. Cuối cùng 3/4 − 1 = −1/4.", cd: "Thứ tự phép tính" },
+      { q: "Tìm x biết 2x − 1/3 = 1.", a: ["x = 1/3", "x = 4/3", "x = 2/3", "x = 1/2"], dung: 2, gt: "Chuyển vế: 2x = 1 + 1/3 = 4/3. Rồi x = 4/3 : 2 = 2/3. Thử lại: 2 · 2/3 − 1/3 = 1 đúng.", cd: "Tìm x" },
+      { q: "So sánh −5/6 và −4/5.", a: ["−5/6 > −4/5", "−5/6 = −4/5", "Không so sánh được", "−5/6 < −4/5"], dung: 3, gt: "Quy đồng mẫu 30: −25/30 và −24/30. Vì −25 < −24 nên −5/6 < −4/5. Với số âm, số nào 'xa 0 hơn' thì nhỏ hơn.", cd: "So sánh số hữu tỉ" },
+    ]},
+    { thu: 5, mon: "toan", ten: "Toán · Ôn tập chương III (góc, song song)", cauHoi: [
+      { q: "Hai góc kề bù, một góc bằng 65°. Góc còn lại bằng bao nhiêu?", a: ["25°", "65°", "115°", "125°"], dung: 2, gt: "Hai góc kề bù có tổng 180°: 180° − 65° = 115°. Nếu tổng 90° thì là hai góc phụ nhau.", cd: "Góc kề bù, đối đỉnh" },
+      { q: "Tia Ot là tia phân giác của góc xOy = 80°. Góc xOt bằng:", a: ["40°", "80°", "160°", "20°"], dung: 0, gt: "Tia phân giác chia góc thành hai góc bằng nhau: 80° : 2 = 40°.", cd: "Tia phân giác" },
+      { q: "Đường thẳng c cắt hai đường thẳng a, b và có một cặp góc so le trong bằng nhau. Kết luận gì?", a: ["a ⊥ b", "a ∥ b", "a cắt b", "Không kết luận được"], dung: 1, gt: "Đây là dấu hiệu nhận biết hai đường thẳng song song (hoặc một cặp góc đồng vị bằng nhau).", cd: "Dấu hiệu song song" },
+      { q: "Cho a ∥ b, đường thẳng c cắt a tại A và cắt b tại B. Góc tại A bằng 70° và góc tại B đồng vị với nó. Góc tại B bằng:", a: ["110°", "20°", "70°", "180°"], dung: 2, gt: "Hai đường thẳng song song thì các cặp góc đồng vị bằng nhau, nên góc tại B = 70°.", cd: "Tính chất song song" },
+      { q: "Cho a ∥ b, một đường thẳng cắt cả hai. Hai góc trong cùng phía có tổng bằng:", a: ["180°", "360°", "90°", "Bằng nhau"], dung: 0, gt: "Hai góc trong cùng phía bù nhau (tổng 180°). So le trong và đồng vị thì bằng nhau.", cd: "Tính chất song song" },
+      { q: "Tiên đề Euclid phát biểu:", a: ["Hai đường thẳng song song thì vuông góc", "Hai góc đối đỉnh thì bằng nhau", "Qua hai điểm có vô số đường thẳng", "Qua một điểm ở ngoài một đường thẳng chỉ có một đường thẳng song song với đường thẳng đó"], dung: 3, gt: "Tiên đề được thừa nhận, không chứng minh. Từ tiên đề này suy ra tính chất hai đường thẳng song song.", cd: "Tiên đề Euclid" },
+      { q: "Đã biết a ∥ b, Kim suy ra 'các góc so le trong bằng nhau'. Kim đang dùng điều gì?", a: ["Dấu hiệu nhận biết hai đường thẳng song song", "Tính chất của hai đường thẳng song song", "Định nghĩa góc đối đỉnh", "Tiên đề về góc kề bù"], dung: 1, gt: "Biết song song rồi suy ra góc → dùng tính chất. Biết góc rồi suy ra song song → dùng dấu hiệu. Hai chiều ngược nhau.", cd: "Tính chất song song" },
+    ]},
+    { thu: 6, mon: "khtn", ten: "KHTN · Bảng tuần hoàn, ôn chương I", cauHoi: [
+      { q: "Nguyên tử chlorine (Cl) có 17 electron, xếp thành các lớp 2 – 8 – 7. Cl ở đâu trong bảng tuần hoàn?", a: ["Chu kì 7, nhóm IIIA", "Chu kì 3, nhóm VIIA", "Chu kì 2, nhóm VIIIA", "Chu kì 3, nhóm IA"], dung: 1, gt: "3 lớp electron → chu kì 3. Lớp ngoài cùng có 7 electron → nhóm VIIA.", cd: "Xác định vị trí" },
+      { q: "Các nguyên tố nhóm VIIA (F, Cl, Br, I) được gọi là:", a: ["Kim loại kiềm", "Khí hiếm", "Kim loại kiềm thổ", "Halogen"], dung: 3, gt: "Nhóm VIIA là nhóm halogen, đều là phi kim hoạt động mạnh.", cd: "Nhóm" },
+      { q: "Nhóm IA (trừ hydrogen) gồm các nguyên tố:", a: ["Kim loại kiềm", "Halogen", "Khí hiếm", "Phi kim"], dung: 0, gt: "Li, Na, K… là kim loại kiềm, rất hoạt động. Hydrogen tuy ở nhóm IA nhưng là phi kim.", cd: "Nhóm" },
+      { q: "Bảng tuần hoàn có bao nhiêu chu kì?", a: ["4", "8", "7", "18"], dung: 2, gt: "7 chu kì (hàng ngang): chu kì 1, 2, 3 là chu kì nhỏ; 4 đến 7 là chu kì lớn.", cd: "Chu kì" },
+      { q: "Nguyên tử oxygen có 8 proton. Nguyên tử này có bao nhiêu electron?", a: ["16", "6", "2", "8"], dung: 3, gt: "Nguyên tử trung hoà về điện nên số electron = số proton = 8.", cd: "Cấu tạo nguyên tử" },
+      { q: "Kí hiệu hoá học của nguyên tố calcium là:", a: ["C", "Cl", "Ca", "Co"], dung: 2, gt: "Ca là calcium. C là carbon, Cl là chlorine. Chữ cái đầu viết hoa, chữ thứ hai viết thường.", cd: "Kí hiệu hoá học" },
+      { q: "Nguyên tố hoá học là:", a: ["Tập hợp những nguyên tử cùng loại, có cùng số proton trong hạt nhân", "Một phân tử bất kì", "Tập hợp những nguyên tử có cùng khối lượng", "Một chất có màu"], dung: 0, gt: "Số proton quyết định nguyên tố. Mọi nguyên tử có 8 proton đều là oxygen.", cd: "Nguyên tố hoá học" },
+    ]},
+  ],
+  docTruoc: [
+    { mon: "Toán", tieuDe: "Tuần sau: Bài 5 Số thập phân vô hạn tuần hoàn · Bài 12 Tổng các góc trong tam giác", noiDung: "Đại số sang chương II. Chia 1 cho 3 được 0,333... chữ số 3 lặp mãi, viết gọn 0,(3) và gọi 3 là chu kì. Bài này còn dạy làm tròn theo độ chính xác: độ chính xác 0,05 thì làm tròn đến hàng phần mười. Hình sang chương IV: tổng ba góc của một tam giác luôn bằng 180°. Thử cắt ba góc của một tam giác giấy rồi ghép lại, sẽ thấy chúng nằm vừa một đường thẳng." },
+    { mon: "KHTN", tieuDe: "Tuần sau: Bài 5 Phân tử, đơn chất, hợp chất", noiDung: "Chương II bắt đầu. Phân tử gồm một số nguyên tử liên kết với nhau, ví dụ phân tử nước H₂O gồm 2 nguyên tử H và 1 nguyên tử O. Khối lượng phân tử = tổng khối lượng các nguyên tử: H₂O = 2·1 + 16 = 18 amu. Chất tạo từ một nguyên tố là đơn chất (Fe, O₂), từ hai nguyên tố trở lên là hợp chất (H₂O, NaCl)." },
+    { mon: "Tiếng Anh", tieuDe: "Unit 3 Community service — từ cần thuộc", noiDung: "community service (phục vụ cộng đồng) · volunteer (tình nguyện viên) · donate (quyên góp) · tutor (dạy kèm) · pick up litter (nhặt rác) · water the plants (tưới cây) · exchange (trao đổi) · homeless (vô gia cư) · elderly people (người già) · orphanage (trại trẻ mồ côi) · nursing home (viện dưỡng lão) · rural area (vùng nông thôn)." },
+  ],
+};
