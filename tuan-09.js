@@ -1,0 +1,67 @@
+/* TUẦN 9 (02–08/11/2026) — Kiểm tra giữa kì I. Toán: Đại Luyện tập chung + Bài tập cuối chương II; Hình Bài 14 Trường hợp bằng nhau c.g.c và g.c.g. Văn: Người thầy đầu tiên, phó từ. Anh: Review 1 + kiểm tra. KHTN: kiểm tra; Bài 8 Tốc độ chuyển động. Sử: Bài 4 Trung Quốc (tiết 2, văn hoá). Địa: Bài 7 Bản đồ chính trị châu Á, các khu vực. */
+window.KIM_WEEKS = window.KIM_WEEKS || {};
+window.KIM_WEEKS[9] = {
+  tuan: 9,
+  ten: "Kiểm tra giữa kì I",
+  icon: "🎯",
+  monHoc: [
+    { mon: "Toán", icon: "➗", hoc: "Đại số: Luyện tập chung và Bài tập cuối chương II (khoảng tr. 37–38) — số thập phân vô hạn tuần hoàn, làm tròn, căn bậc hai, số thực, giá trị tuyệt đối; có thể kiểm tra giữa kì trong tuần. Hình: Bài 14 Trường hợp bằng nhau thứ hai và thứ ba của tam giác c.g.c, g.c.g (khoảng tr. 70–74).", vap: "c.g.c: góc phải XEN GIỮA hai cạnh (góc tạo bởi đúng hai cạnh đó). g.c.g: cạnh phải KỀ với cả hai góc. Cho hai cạnh và một góc không xen giữa thì không kết luận được." },
+    { mon: "Ngữ văn", icon: "✍️", hoc: "Người thầy đầu tiên (Trin-ghi-dơ Ai-tơ-ma-tốp, tr. 65–71): thầy Đuy-sen và cô bé An-tư-nai ở làng Ku-ku-rêu; truyện có hai người kể 'tôi' (người hoạ sĩ và An-tư-nai). Thực hành tiếng Việt: phó từ (tr. 72).", vap: "Đề hay hỏi 'người kể chuyện thay đổi có tác dụng gì' — trả lời: câu chuyện được nhìn từ nhiều phía, chân thực và xúc động hơn. Phó từ đi kèm động từ/tính từ (đã, đang, rất, không, vẫn) hoặc danh từ (những, các, mọi); phó từ không đứng một mình làm chủ ngữ." },
+    { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Review 1 (tr. 38–39): Language (phát âm, từ vựng, ngữ pháp Unit 1–3) và Skills (đọc, nói, nghe, viết). Kiểm tra giữa kì.", vap: "Bài viết: đề thường cho viết đoạn 60–80 từ về sở thích hoặc một hoạt động tình nguyện. Viết câu ngắn, đúng thì; mỗi câu một ý; đếm từ trước khi nộp." },
+    { mon: "KHTN", icon: "🔬", hoc: "Ôn và kiểm tra giữa kì (Bài 1–7). Bắt đầu chương III Tốc độ: Bài 8 Tốc độ chuyển động (khoảng tr. 45–47) — công thức v = s/t, đơn vị m/s và km/h, đổi đơn vị.", vap: "Đổi đơn vị: 1 m/s = 3,6 km/h (nhân 3,6 khi đổi m/s → km/h, chia 3,6 khi ngược lại). Thời gian phải cùng đơn vị với tốc độ: 15 phút = 0,25 giờ, không phải 0,15 giờ." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: Bài 4 tiết 2 — thành tựu văn hoá Trung Quốc: Nho giáo, thơ Đường, tiểu thuyết Minh – Thanh, sử học, kiến trúc, bốn phát minh lớn. Địa lí: Bài 7 Bản đồ chính trị châu Á, các khu vực của châu Á (khoảng tr. 118–121) — 6 khu vực và đặc điểm tự nhiên nổi bật.", vap: "Ghép đúng tác phẩm – tác giả: Tam quốc diễn nghĩa (La Quán Trung), Thuỷ hử (Thi Nại Am), Tây du kí (Ngô Thừa Ân), Hồng lâu mộng (Tào Tuyết Cần). Địa: Tây Á (Tây Nam Á) nhiều dầu mỏ và khô hạn; Nam Á có gió mùa và dãy Hi-ma-lay-a chắn phía bắc." },
+  ],
+  monKhac: "Kiểm tra giữa kì các môn · GDCD Bài 4 (tiếp) · Tin học Bài 5 Ứng xử trên mạng · Công nghệ Bài 5 (tiếp) · HĐTN Chủ đề 3 (tiếp).",
+  ngay: [
+    { thu: 2, mon: "anh", ten: "Anh · Review 1 tổng hợp", cauHoi: [
+      { q: "Which word does NOT have the sound /ɜː/?", a: ["ago", "early", "learn", "nurse"], dung: 0, gt: "ago có âm /ə/ ở âm tiết đầu; nurse, early, learn có /ɜː/.", cd: "Phát âm /ə/ /ɜː/" },
+      { q: "I love ______ photos of birds. It's a cheap and relaxing hobby.", a: ["take", "taking", "takes", "took"], dung: 1, gt: "love + V-ing: love taking photos.", cd: "V-ing sau love/enjoy" },
+      { q: "Eating a lot of ______ is good for your health.", a: ["junk food", "sweets", "vegetables", "soft drinks"], dung: 2, gt: "Rau củ tốt cho sức khoẻ; ba thứ còn lại nên hạn chế.", cd: "Từ vựng Unit 2" },
+      { q: "Which word has /v/?", a: ["fit", "coffee", "half", "leave"], dung: 3, gt: "leave /liːv/. fit, coffee, half có âm /f/.", cd: "Phát âm /f/ /v/" },
+      { q: "They ______ food to homeless people two days ago.", a: ["gave", "give", "gives", "giving"], dung: 0, gt: "two days ago → quá khứ đơn; give → gave (bất quy tắc).", cd: "Quá khứ đơn" },
+      { q: "'Did your class ______ the beach last month?' – 'Yes, we did.'", a: ["cleaned up", "clean up", "cleans up", "cleaning up"], dung: 1, gt: "Sau Did dùng động từ nguyên mẫu: Did … clean up?", cd: "Quá khứ đơn" },
+      { q: "Choose the correct simple sentence.", a: ["Because she is tired.", "My sister a doctor.", "The students planted trees.", "Running in the park."], dung: 2, gt: "Câu đơn đầy đủ có chủ ngữ và vị ngữ: The students (S) planted (V) trees (O).", cd: "Câu đơn" },
+    ]},
+    { thu: 3, mon: "van", ten: "Văn · Người thầy đầu tiên, phó từ", cauHoi: [
+      { q: "Người thầy đầu tiên trong truyện là ai?", a: ["Thầy giáo làng Ku-ku-rêu tên An-tư-nai", "Bác A-li-sơ", "Người hoạ sĩ", "Thầy Đuy-sen"], dung: 3, gt: "Thầy Đuy-sen mở lớp học đầu tiên ở làng Ku-ku-rêu và dạy An-tư-nai.", cd: "Nhân vật" },
+      { q: "Truyện có mấy người kể chuyện xưng 'tôi'?", a: ["Hai: người hoạ sĩ và An-tư-nai", "Một: người hoạ sĩ", "Một: An-tư-nai", "Ba người"], dung: 0, gt: "Phần đầu và cuối do người hoạ sĩ kể, phần giữa là lời kể của bà viện sĩ An-tư-nai.", cd: "Ngôi kể" },
+      { q: "Chi tiết nào thể hiện rõ nhất tấm lòng của thầy Đuy-sen với học trò?", a: ["Thầy mặc áo mới đến lớp", "Thầy bế, cõng các em nhỏ lội qua suối lạnh giữa mùa đông", "Thầy cho học trò nghỉ học", "Thầy bán ngựa lấy tiền"], dung: 1, gt: "Thầy cõng học trò qua suối, đắp đất đá làm cầu, bất chấp lời chế giễu của bọn nhà giàu.", cd: "Chi tiết tiêu biểu" },
+      { q: "Vì sao An-tư-nai khi đã thành viện sĩ vẫn nhờ người hoạ sĩ kể lại câu chuyện về thầy?", a: ["Để khoe thành tích của mình", "Vì giận thầy", "Vì muốn mọi người biết ơn người thầy đã thay đổi cuộc đời cô", "Vì thầy yêu cầu"], dung: 2, gt: "Câu chuyện thể hiện lòng biết ơn sâu sắc và mong muốn thầy được ghi nhận xứng đáng.", cd: "Chủ đề" },
+      { q: "Trong câu 'Trời đã về chiều', từ 'đã' là phó từ bổ sung ý nghĩa gì?", a: ["Mức độ", "Phủ định", "Số lượng", "Thời gian"], dung: 3, gt: "'đã' chỉ sự việc diễn ra trước thời điểm nói → ý nghĩa thời gian.", cd: "Phó từ" },
+      { q: "Phó từ trong câu 'Các em học sinh rất chăm chỉ' là:", a: ["các, rất", "học sinh", "chăm chỉ", "em"], dung: 0, gt: "'các' đi kèm danh từ (số lượng), 'rất' đi kèm tính từ (mức độ).", cd: "Phó từ" },
+      { q: "Từ nào sau đây là phó từ chỉ sự phủ định?", a: ["đang", "chưa", "lắm", "những"], dung: 1, gt: "'chưa', 'không', 'chẳng' là phó từ phủ định.", cd: "Phó từ" },
+    ]},
+    { thu: 4, mon: "toan", ten: "Toán · Đề thử chương I–II", cauHoi: [
+      { q: "Viết 7/9 dưới dạng số thập phân:", a: ["0,7", "0,79", "0,(7)", "0,7(9)"], dung: 2, gt: "7 : 9 = 0,777… = 0,(7).", cd: "Số thập phân vô hạn tuần hoàn" },
+      { q: "Số nào là số thập phân vô hạn tuần hoàn?", a: ["3/8", "√3", "1/4", "5/6"], dung: 3, gt: "5/6 = 0,8(3). 3/8 = 0,375 và 1/4 = 0,25 hữu hạn; √3 vô tỉ.", cd: "Số thập phân vô hạn tuần hoàn" },
+      { q: "√(1/16) bằng:", a: ["1/4", "1/2", "1/16", "1/8"], dung: 0, gt: "(1/4)² = 1/16 nên √(1/16) = 1/4.", cd: "Căn bậc hai" },
+      { q: "Giá trị của biểu thức √25 − √9 + |−2| là:", a: ["0", "4", "6", "2"], dung: 1, gt: "5 − 3 + 2 = 4.", cd: "Căn bậc hai" },
+      { q: "Sắp xếp theo thứ tự tăng dần: −√2; 0; 1,5; −2", a: ["0 < −√2 < −2 < 1,5", "−√2 < −2 < 0 < 1,5", "−2 < −√2 < 0 < 1,5", "−2 < 0 < −√2 < 1,5"], dung: 2, gt: "−√2 ≈ −1,41 lớn hơn −2. Thứ tự: −2; −√2; 0; 1,5.", cd: "So sánh số thực" },
+      { q: "Tìm x biết |x − 2| = 5.", a: ["x = 7", "x = −3", "x = 3 hoặc x = −7", "x = 7 hoặc x = −3"], dung: 3, gt: "x − 2 = 5 → x = 7; x − 2 = −5 → x = −3.", cd: "Giá trị tuyệt đối" },
+      { q: "Tìm x biết 2x − 3/4 = 1/4.", a: ["x = 1/2", "x = 1", "x = −1/4", "x = 1/4"], dung: 0, gt: "2x = 1/4 + 3/4 = 1 → x = 1/2.", cd: "Quy tắc chuyển vế" },
+    ]},
+    { thu: 5, mon: "toan", ten: "Toán Hình · c.g.c và g.c.g", cauHoi: [
+      { q: "Trường hợp c.g.c yêu cầu:", a: ["Hai cạnh và một góc bất kì bằng nhau", "Hai cạnh và góc xen giữa bằng nhau", "Ba góc bằng nhau", "Một cạnh và hai góc bằng nhau"], dung: 1, gt: "Góc phải xen giữa hai cạnh đã cho.", cd: "Trường hợp c.g.c" },
+      { q: "Trong ΔABC, góc xen giữa hai cạnh AB và AC là:", a: ["Góc B", "Góc C", "Góc A", "Góc ngoài tại A"], dung: 2, gt: "Hai cạnh AB, AC cùng xuất phát từ A nên góc xen giữa là góc A.", cd: "Trường hợp c.g.c" },
+      { q: "ΔABC và ΔDEF có AB = DE, góc A = góc D, AC = DF. Kết luận:", a: ["Chưa đủ dữ kiện", "ΔABC = ΔDFE (c.g.c)", "ΔABC = ΔDEF (g.c.g)", "ΔABC = ΔDEF (c.g.c)"], dung: 3, gt: "Góc A xen giữa AB, AC; góc D xen giữa DE, DF → c.g.c, đỉnh tương ứng A-D, B-E, C-F.", cd: "Trường hợp c.g.c" },
+      { q: "Trường hợp g.c.g yêu cầu:", a: ["Hai góc và một cạnh bất kì", "Hai góc và cạnh kề với cả hai góc đó", "Ba cạnh", "Hai cạnh và một góc"], dung: 1, gt: "Cạnh phải là cạnh nối hai đỉnh có hai góc đã cho.", cd: "Trường hợp g.c.g" },
+      { q: "Trong ΔMNP, cạnh kề với hai góc M và N là:", a: ["MN", "MP", "NP", "Không có"], dung: 0, gt: "Cạnh MN nối hai đỉnh M và N.", cd: "Trường hợp g.c.g" },
+      { q: "ΔABC và ΔA'B'C' có góc B = góc B', BC = B'C', góc C = góc C'. Hai tam giác bằng nhau theo trường hợp:", a: ["c.c.c", "c.g.c", "g.c.g", "Không bằng nhau"], dung: 2, gt: "Cạnh BC kề với góc B và góc C → g.c.g.", cd: "Trường hợp g.c.g" },
+      { q: "Cho ΔABC = ΔMNP có AB = 5 cm, góc N = 40°. Khi đó:", a: ["MN = 5 cm và góc A = 40°", "MP = 5 cm và góc A = 40°", "NP = 5 cm và góc C = 40°", "MN = 5 cm và góc B = 40°"], dung: 3, gt: "AB ↔ MN; góc B ↔ góc N.", cd: "Tam giác bằng nhau" },
+    ]},
+    { thu: 6, mon: "khtn", ten: "KHTN · Tốc độ chuyển động", cauHoi: [
+      { q: "Công thức tính tốc độ là:", a: ["v = s / t", "v = t / s", "v = s · t", "v = s + t"], dung: 0, gt: "Tốc độ = quãng đường chia thời gian.", cd: "Công thức tốc độ" },
+      { q: "Một bạn chạy 60 m trong 12 s. Tốc độ của bạn là:", a: ["720 m/s", "5 m/s", "0,2 m/s", "72 m/s"], dung: 1, gt: "v = 60 : 12 = 5 m/s.", cd: "Tính tốc độ" },
+      { q: "Đổi 72 km/h ra m/s:", a: ["7,2 m/s", "25,9 m/s", "20 m/s", "200 m/s"], dung: 2, gt: "72 : 3,6 = 20 m/s.", cd: "Đổi đơn vị" },
+      { q: "Đổi 15 m/s ra km/h:", a: ["4,2 km/h", "15 km/h", "150 km/h", "54 km/h"], dung: 3, gt: "15 × 3,6 = 54 km/h.", cd: "Đổi đơn vị" },
+      { q: "Ô tô đi với tốc độ 60 km/h trong 30 phút. Quãng đường đi được là:", a: ["30 km", "180 km", "60 km", "1800 km"], dung: 0, gt: "30 phút = 0,5 h; s = v · t = 60 × 0,5 = 30 km.", cd: "Bài toán tốc độ" },
+      { q: "Xe đạp đi 12 km với tốc độ 4 m/s hết bao lâu?", a: ["3 s", "3000 s", "48 s", "300 s"], dung: 1, gt: "12 km = 12 000 m; t = s : v = 12 000 : 4 = 3000 s (= 50 phút).", cd: "Bài toán tốc độ" },
+      { q: "Vật A đi 100 m hết 25 s, vật B đi 150 m hết 30 s. Vật nào nhanh hơn?", a: ["A nhanh hơn", "Bằng nhau", "B nhanh hơn", "Không so sánh được"], dung: 2, gt: "vA = 4 m/s; vB = 5 m/s → B nhanh hơn. Luôn tính tốc độ trước khi so sánh.", cd: "So sánh tốc độ" },
+    ]},
+  ],
+  docTruoc: [
+    { mon: "Toán", tieuDe: "Tuần sau: Bài 17 Thu thập và phân loại dữ liệu · Hình luyện c.g.c, g.c.g", noiDung: "Đại số sang chương V (thống kê). Dữ liệu chia hai loại: dữ liệu định tính là các từ ngữ (màu sắc, môn học yêu thích), dữ liệu định lượng là các số (chiều cao, điểm). Thu thập bằng phỏng vấn, quan sát, phiếu hỏi, tìm trên internet. Dữ liệu phải đại diện: hỏi ý kiến cả lớp thì không thể chỉ hỏi các bạn nam. Hình: tiếp tục luyện c.g.c và g.c.g — bước đầu tiên luôn là đánh dấu các yếu tố bằng nhau lên hình." },
+    { mon: "KHTN", tieuDe: "Tuần sau: Bài 9 Đo tốc độ · Bài 10 Đồ thị quãng đường – thời gian", noiDung: "Đo tốc độ cần đo quãng đường (thước) và thời gian (đồng hồ bấm giây, hoặc cổng quang điện với đồng hồ hiện số cho chính xác hơn; ngoài đường dùng thiết bị bắn tốc độ). Đồ thị quãng đường – thời gian: trục ngang là thời gian, trục dọc là quãng đường; đoạn dốc lên nghĩa là đang chuyển động, đoạn nằm ngang nghĩa là đứng yên." },
+    { mon: "Tiếng Anh", tieuDe: "Tuần sau: Unit 4 Music and arts — từ vựng cần thuộc", noiDung: "painting (tranh vẽ), photography (nhiếp ảnh), sculpture (điêu khắc), portrait (chân dung), puppet show (múa rối), water puppetry (múa rối nước), musical instrument (nhạc cụ), art gallery (phòng tranh), museum, exhibition (triển lãm), performance (buổi biểu diễn), anthem (quốc ca), composer (nhà soạn nhạc), painter, photographer. Phát âm mới: /ʃ/ (show, sure, musician) và /ʒ/ (usual, television, leisure)." },
+  ],
+};

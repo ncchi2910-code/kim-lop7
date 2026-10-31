@@ -1,0 +1,67 @@
+/* TUẦN 8 (26/10–01/11/2026) — Ôn giữa kì I. Toán: Đại Bài 7 Tập hợp các số thực + ôn chương I–II; Hình Luyện tập chung + ôn chương III. Văn: Bài 3 Vừa nhắm mắt vừa mở cửa sổ, số từ. Anh: Unit 3 Skills 2, Looking back, Project; ôn Unit 1–3. KHTN: Bài 7 Hoá trị và công thức hoá học. Sử: Bài 4 Trung Quốc (tiết 1). Địa: ôn Bài 1–6. */
+window.KIM_WEEKS = window.KIM_WEEKS || {};
+window.KIM_WEEKS[8] = {
+  tuan: 8,
+  ten: "Ôn giữa kì I",
+  icon: "📝",
+  monHoc: [
+    { mon: "Toán", icon: "➗", hoc: "Đại số: Bài 7 Tập hợp các số thực (tr. 33–36) — số thực ℝ gồm số hữu tỉ và số vô tỉ, trục số thực, số đối, giá trị tuyệt đối; sau đó ôn chương I–II. Hình: Luyện tập chung (tr. 68–69) và ôn chương III (góc, hai đường thẳng song song, định lí).", vap: "|x| = 3 có hai nghiệm x = 3 và x = −3; |x| = −2 vô nghiệm. Với hình: dấu hiệu nhận biết song song (Bài 9) và tính chất hai đường thẳng song song (Bài 10) là hai chiều ngược nhau, đề hay hỏi 'vì sao'." },
+    { mon: "Ngữ văn", icon: "✍️", hoc: "Bài 3 Cội nguồn yêu thương: đọc Vừa nhắm mắt vừa mở cửa sổ (Nguyễn Ngọc Thuần, tr. 59–64) — cậu bé học cách nhận ra các loài hoa bằng mùi hương, câu chuyện về món quà và việc cứu thằng Tí. Thực hành tiếng Việt: số từ (tr. 65).", vap: "Số từ chỉ số lượng đứng trước danh từ (hai bông hoa); số từ chỉ thứ tự đứng sau danh từ (tầng hai, lớp bảy). Đừng nhầm 'đôi, cặp, chục' là số từ — đó là danh từ chỉ đơn vị." },
+    { mon: "Tiếng Anh", icon: "🇬🇧", hoc: "Unit 3: Skills 2 (viết email kể hoạt động đã làm), Looking back, Project. Cả tuần ôn Unit 1–3 cho kiểm tra giữa kì: hiện tại đơn, V-ing sau love/enjoy, câu đơn, quá khứ đơn, phát âm /ə/ /ɜː/, /f/ /v/, đuôi -ed.", vap: "Đuôi -ed: /ɪd/ chỉ sau âm /t/ và /d/ (wanted, needed); /t/ sau âm vô thanh (helped, washed); còn lại /d/. Đề thường cho một câu đọc hiểu về hoạt động tình nguyện — đọc câu hỏi trước rồi mới đọc bài." },
+    { mon: "KHTN", icon: "🔬", hoc: "Bài 7 Hoá trị và công thức hoá học (khoảng tr. 40–44): hoá trị, quy tắc hoá trị x·a = y·b, lập công thức hoá học khi biết hoá trị, tính phần trăm khối lượng nguyên tố trong hợp chất.", vap: "Lập công thức: lấy hoá trị của nguyên tố này làm chỉ số của nguyên tố kia rồi rút gọn (Mg II, O II → MgO chứ không phải Mg₂O₂). Tính % phải chia cho khối lượng cả phân tử." },
+    { mon: "Sử – Địa", icon: "🗺️", hoc: "Lịch sử: Bài 4 Trung Quốc từ thế kỉ VII đến giữa thế kỉ XIX (tiết 1) — tiến trình các triều đại Đường, Tống, Nguyên, Minh, Thanh; sự thịnh vượng thời Đường; kinh tế thời Minh – Thanh. Địa lí: ôn Bài 1–6 (châu Âu, EU, tự nhiên và dân cư châu Á) chuẩn bị kiểm tra.", vap: "Thứ tự triều đại hay lẫn: Đường (618–907) → Tống (960–1279) → Nguyên (1271–1368, người Mông Cổ) → Minh (1368–1644) → Thanh (1644–1911, người Mãn). Địa: đừng nhầm châu Âu giáp Thái Bình Dương — nó chỉ giáp Bắc Băng Dương và Đại Tây Dương." },
+  ],
+  monKhac: "GDCD Bài 4 Giữ chữ tín (tiếp) · Tin học Bài 4 Mạng xã hội (tiếp) · Công nghệ Bài 5 Nhân giống vô tính cây trồng · HĐTN Chủ đề 3 Trách nhiệm với bản thân.",
+  ngay: [
+    { thu: 2, mon: "anh", ten: "Anh · Ôn Unit 1–3 trước giữa kì", cauHoi: [
+      { q: "My brother ______ playing football every afternoon.", a: ["enjoys", "enjoy", "enjoying", "is enjoy"], dung: 0, gt: "Chủ ngữ ngôi thứ ba số ít → enjoys; sau enjoy dùng V-ing.", cd: "Hiện tại đơn" },
+      { q: "Which word has the ending -ed pronounced differently from the others?", a: ["washed", "played", "helped", "looked"], dung: 1, gt: "played đọc /d/ (sau âm hữu thanh); ba từ kia đọc /t/.", cd: "Phát âm -ed" },
+      { q: "You have a sunburn. You ______ stay in the sun too long.", a: ["should", "must", "shouldn't", "do"], dung: 2, gt: "Lời khuyên không nên: shouldn't + V. sunburn = cháy nắng.", cd: "should/shouldn't" },
+      { q: "Last weekend, we ______ the park and ______ a lot of rubbish.", a: ["clean – pick", "cleans – picks", "cleaning – picking", "cleaned – picked up"], dung: 3, gt: "Last weekend → quá khứ đơn: cleaned, picked up.", cd: "Quá khứ đơn" },
+      { q: "Which sentence has the pattern S + V + O?", a: ["She donated old books.", "It is raining.", "The children laughed.", "They arrived late."], dung: 0, gt: "She (S) donated (V) old books (O). Các câu kia không có tân ngữ.", cd: "Câu đơn" },
+      { q: "The word 'volunteer' means a person who ______.", a: ["works for money", "works without being paid to help others", "lives in a nursing home", "collects stamps"], dung: 1, gt: "volunteer = tình nguyện viên, làm việc giúp người khác mà không nhận lương.", cd: "Từ vựng Unit 3" },
+      { q: "Find the word with /ɜː/: ", a: ["about", "teacher", "bird", "banana"], dung: 2, gt: "bird /bɜːd/. teacher, about, banana có âm /ə/ (âm yếu).", cd: "Phát âm /ə/ /ɜː/" },
+    ]},
+    { thu: 3, mon: "van", ten: "Văn · Vừa nhắm mắt vừa mở cửa sổ, số từ", cauHoi: [
+      { q: "Trong truyện, người bố dạy nhân vật 'tôi' trò chơi gì trong vườn?", a: ["Trốn tìm sau các gốc cây", "Vẽ lại từng bông hoa", "Đếm số cánh hoa", "Nhắm mắt, sờ hoặc ngửi để đoán tên loài hoa"], dung: 3, gt: "Bố bảo nhắm mắt lại, chạm vào từng bông hoa rồi đoán tên; sau đó nâng lên: đoán bằng mùi hương.", cd: "Nội dung truyện" },
+      { q: "Nhờ trò chơi ấy, 'tôi' có khả năng đặc biệt gì giúp cứu thằng Tí?", a: ["Nghe tiếng hét và biết ngay tiếng kêu phát ra từ đâu", "Bơi rất giỏi", "Nhìn xa trong đêm", "Chạy nhanh hơn mọi người"], dung: 0, gt: "Vì quen cảm nhận bằng tai và mũi, 'tôi' nhận ra chỗ Tí ngã xuống sông nên gọi bố ra cứu kịp.", cd: "Nội dung truyện" },
+      { q: "Theo người bố, 'món quà' quý nhất là gì?", a: ["Trái ổi to nhất của Tí", "Bất cứ thứ gì được trao tặng bằng tình cảm, kể cả một tiếng gọi tên", "Chiếc áo mới", "Khu vườn nhiều hoa"], dung: 1, gt: "Bố nói: món quà nào cũng đẹp khi người tặng trao bằng lòng yêu thương; được gọi tên cũng là một món quà.", cd: "Chủ đề" },
+      { q: "Truyện được kể theo ngôi nào, người kể là ai?", a: ["Ngôi thứ nhất, người bố", "Ngôi thứ ba, người kể giấu mình", "Ngôi thứ nhất, cậu bé xưng 'tôi'", "Ngôi thứ ba, thằng Tí"], dung: 2, gt: "Nhân vật 'tôi' là cậu bé, kể lại chuyện của mình và bố.", cd: "Ngôi kể" },
+      { q: "Trong câu 'Tôi có mười ngón tay và mười ngón chân', từ 'mười' là:", a: ["Danh từ", "Số từ chỉ thứ tự", "Phó từ", "Số từ chỉ số lượng"], dung: 3, gt: "'mười' đứng trước danh từ, chỉ số lượng → số từ chỉ số lượng.", cd: "Số từ" },
+      { q: "Từ nào là số từ chỉ thứ tự?", a: ["tầng ba", "vài người", "ba quyển vở", "ba mươi học sinh"], dung: 0, gt: "'tầng ba': 'ba' đứng sau danh từ, chỉ thứ tự. Các trường hợp kia chỉ số lượng.", cd: "Số từ" },
+      { q: "Trong câu 'Mẹ mua một chục trứng', từ nào KHÔNG phải số từ?", a: ["một", "chục", "cả hai đều là số từ", "cả hai đều không phải"], dung: 1, gt: "'chục' là danh từ chỉ đơn vị (như 'đôi', 'cặp', 'tá'); 'một' mới là số từ.", cd: "Số từ" },
+    ]},
+    { thu: 4, mon: "toan", ten: "Toán · Số thực, ôn chương I–II", cauHoi: [
+      { q: "Tập hợp số thực ℝ gồm:", a: ["Chỉ số hữu tỉ", "Chỉ số vô tỉ", "Số hữu tỉ và số vô tỉ", "Số nguyên và phân số"], dung: 2, gt: "ℝ = ℚ ∪ 𝕀: mọi số hữu tỉ và mọi số vô tỉ đều là số thực.", cd: "Số thực" },
+      { q: "Số đối của −√5 là:", a: ["5", "−√5", "1/√5", "√5"], dung: 3, gt: "Số đối của a là −a; số đối của −√5 là √5.", cd: "Số thực" },
+      { q: "|−7,5| + |2,5| bằng:", a: ["10", "5", "−5", "−10"], dung: 0, gt: "|−7,5| = 7,5; |2,5| = 2,5; tổng 10.", cd: "Giá trị tuyệt đối" },
+      { q: "Tìm x biết |x| = 4.", a: ["x = 4", "x = 4 hoặc x = −4", "Không có x", "x = −4"], dung: 1, gt: "Hai số có khoảng cách đến 0 bằng 4 là 4 và −4.", cd: "Giá trị tuyệt đối" },
+      { q: "So sánh: √10 ___ 3", a: ["√10 < 3", "√10 = 3", "√10 > 3", "Không so sánh được"], dung: 2, gt: "3 = √9, mà 10 > 9 nên √10 > √9 = 3.", cd: "So sánh số thực" },
+      { q: "Kết quả của (−1/2)² · 4 − 1/3 là:", a: ["−1/3", "−2/3", "1/3", "2/3"], dung: 3, gt: "(−1/2)² = 1/4; 1/4 · 4 = 1; 1 − 1/3 = 2/3.", cd: "Thứ tự phép tính" },
+      { q: "Làm tròn 7,2461 với độ chính xác 0,05 ta được:", a: ["7,2", "7,25", "7,24", "7"], dung: 0, gt: "Độ chính xác 0,05 → làm tròn đến hàng phần mười: 7,2461 ≈ 7,2.", cd: "Làm tròn" },
+    ]},
+    { thu: 5, mon: "toan", ten: "Toán Hình · Ôn chương III, c.c.c", cauHoi: [
+      { q: "Hai đường thẳng cắt nhau tạo thành góc 35°. Ba góc còn lại lần lượt là:", a: ["35°, 35°, 35°", "145°, 35°, 145°", "55°, 35°, 55°", "145°, 145°, 145°"], dung: 1, gt: "Góc đối đỉnh bằng 35°; hai góc kề bù bằng 180° − 35° = 145°.", cd: "Góc đặc biệt" },
+      { q: "Đường thẳng c cắt a và b. Nếu một cặp góc đồng vị bằng nhau thì:", a: ["a ⊥ b", "a cắt b", "a // b", "Chưa kết luận được"], dung: 2, gt: "Dấu hiệu nhận biết: cặp góc so le trong hoặc đồng vị bằng nhau → song song.", cd: "Dấu hiệu song song" },
+      { q: "Cho a // b, một góc so le trong bằng 110°. Góc trong cùng phía với nó bằng:", a: ["110°", "90°", "180°", "70°"], dung: 3, gt: "Hai góc trong cùng phía bù nhau: 180° − 110° = 70°.", cd: "Tính chất song song" },
+      { q: "Tiên đề Euclid nói gì?", a: ["Qua một điểm ngoài đường thẳng chỉ có một đường thẳng song song với nó", "Hai đường thẳng luôn cắt nhau", "Ba điểm bất kì luôn thẳng hàng", "Mọi góc đều bằng 90°"], dung: 0, gt: "Tiên đề Euclid về đường thẳng song song.", cd: "Tiên đề Euclid" },
+      { q: "Trong định lí 'Nếu hai góc đối đỉnh thì chúng bằng nhau', phần kết luận là:", a: ["Hai góc đối đỉnh", "Chúng bằng nhau", "Nếu … thì …", "Hai góc kề bù"], dung: 1, gt: "Sau 'nếu' là giả thiết, sau 'thì' là kết luận.", cd: "Định lí" },
+      { q: "ΔABC = ΔDEF. Cạnh tương ứng với AC là:", a: ["DE", "EF", "DF", "FE"], dung: 2, gt: "A ↔ D, C ↔ F nên AC ↔ DF.", cd: "Tam giác bằng nhau" },
+      { q: "Cho ΔMNP và ΔQRS có MN = QR, NP = RS, MP = QS. Hai tam giác bằng nhau theo trường hợp:", a: ["c.g.c", "g.c.g", "Chưa đủ dữ kiện", "c.c.c"], dung: 3, gt: "Ba cạnh bằng ba cạnh → c.c.c; viết ΔMNP = ΔQRS.", cd: "Trường hợp c.c.c" },
+    ]},
+    { thu: 6, mon: "khtn", ten: "KHTN · Hoá trị và công thức hoá học", cauHoi: [
+      { q: "Trong các hợp chất, H luôn có hoá trị:", a: ["I", "II", "IV", "III"], dung: 0, gt: "Quy ước: H hoá trị I, O hoá trị II; dùng chúng để suy hoá trị nguyên tố khác.", cd: "Hoá trị" },
+      { q: "Hoá trị của S trong SO₃ là:", a: ["II", "VI", "IV", "III"], dung: 1, gt: "Quy tắc: 1·a = 3·II → a = VI.", cd: "Quy tắc hoá trị" },
+      { q: "Hoá trị của N trong NH₃ là:", a: ["II", "I", "III", "V"], dung: 2, gt: "1·a = 3·I → a = III.", cd: "Quy tắc hoá trị" },
+      { q: "Công thức hoá học của hợp chất tạo bởi Ca (II) và Cl (I) là:", a: ["CaCl", "Ca₂Cl₂", "Ca₂Cl", "CaCl₂"], dung: 3, gt: "Đảo hoá trị: Ca lấy chỉ số 1, Cl lấy chỉ số 2 → CaCl₂.", cd: "Lập công thức" },
+      { q: "Công thức nào viết SAI theo quy tắc hoá trị?", a: ["KO", "Al₂O₃", "H₂O", "CO₂"], dung: 0, gt: "K hoá trị I, O hoá trị II nên phải là K₂O.", cd: "Lập công thức" },
+      { q: "Phần trăm khối lượng của O trong CO₂ (C = 12, O = 16) là khoảng:", a: ["27,3%", "72,7%", "66,7%", "50%"], dung: 1, gt: "Khối lượng phân tử 44; O chiếm 32/44 ≈ 72,7%.", cd: "Phần trăm khối lượng" },
+      { q: "Phân tử khối của Al₂O₃ (Al = 27, O = 16) là:", a: ["43", "70", "102", "86"], dung: 2, gt: "2·27 + 3·16 = 54 + 48 = 102 amu.", cd: "Khối lượng phân tử" },
+    ]},
+  ],
+  docTruoc: [
+    { mon: "Toán", tieuDe: "Tuần sau: Bài tập cuối chương II · Hình Bài 14 c.g.c và g.c.g", noiDung: "Đại số: chương II kết thúc bằng Luyện tập chung và Bài tập cuối chương II, có thể kèm kiểm tra giữa kì. Hình: hai trường hợp bằng nhau mới. c.g.c: hai cạnh và góc xen giữa hai cạnh đó. g.c.g: hai góc và cạnh kề với cả hai góc. Chữ 'xen giữa' và 'kề' là mấu chốt — góc phải nằm giữa hai cạnh đã cho, cạnh phải nối hai đỉnh có góc đã cho." },
+    { mon: "KHTN", tieuDe: "Tuần sau: sang Vật lí — Bài 8 Tốc độ chuyển động", noiDung: "Tốc độ cho biết vật chuyển động nhanh hay chậm: v = s : t (quãng đường chia thời gian). Đơn vị m/s hoặc km/h; 1 m/s = 3,6 km/h. Ví dụ: đi 100 m hết 20 s thì v = 5 m/s = 18 km/h. Chuẩn bị máy tính cầm tay để đổi đơn vị." },
+    { mon: "Sử – Địa", tieuDe: "Tuần sau: văn hoá Trung Quốc · Bản đồ chính trị châu Á", noiDung: "Lịch sử: thành tựu văn hoá Trung Quốc — Nho giáo, thơ Đường (Lý Bạch, Đỗ Phủ, Bạch Cư Dị), bốn tiểu thuyết lớn thời Minh – Thanh (Tam quốc diễn nghĩa, Thuỷ hử, Tây du kí, Hồng lâu mộng), Tử Cấm Thành, bốn phát minh (giấy, in, la bàn, thuốc súng). Địa lí: châu Á chia 6 khu vực: Bắc Á, Trung Á, Tây Á, Nam Á, Đông Á, Đông Nam Á — tìm vị trí Việt Nam trên lược đồ." },
+  ],
+};
